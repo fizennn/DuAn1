@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Trungnt_Register"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:text="Register"
+        android:textStyle="bold"
+        android:textColor="#FF5722"
+        android:textSize="40dp"
+        android:layout_marginRight="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:text="Enter your information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:layout_marginRight="95dp"
+        android:textSize="20dp"
+        android:paddingTop="20dp"/>
+
+    <EditText
+        android:id="@+id/edtUserNameRegis"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:padding="15dp"
+        android:background="@drawable/edt_background"
+        android:drawableLeft="@drawable/user_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User Name or Email" />
+
+    <EditText
+        android:layout_marginTop="15dp"
+
+        android:id="@+id/edtEmailRegis"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:padding="15dp"
+        android:background="@drawable/edt_background"
+        android:drawableLeft="@drawable/user_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User Name or Email" />
+
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edtPasswordRegis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@drawable/edt_background"
+            android:drawableLeft="@drawable/lock_icon"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <ImageView
+            android:id="@+id/ivEye1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/hide_icon"
+            android:contentDescription="Hiện mật khẩu" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edtConfirmRegis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@drawable/edt_background"
+            android:drawableLeft="@drawable/lock_icon"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <ImageView
+            android:id="@+id/ivEye2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/hide_icon"
+            android:contentDescription="Hiện mật khẩu" />
+    </RelativeLayout>
+    <!-- Dòng chữ Forgot Password -->
+
+
+    <!-- Nút Đăng Nhập -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Login"
+        android:textSize="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/button_background"
+
+        android:textColor="#FFFFFF"
+        />
+
+    <!-- Dòng chữ Don't have an account? -->
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:text="Already have an account?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text=" Login Now"
+            android:textColor="#FF5722"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
