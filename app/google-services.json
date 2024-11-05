@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "656378008181",
+    "project_id": "polyfood-890e3",
+    "storage_bucket": "polyfood-890e3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656378008181:android:8dee31e85f8760ff081e3c",
+        "android_client_info": {
+          "package_name": "com.duan1.polyfood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhKdX9075GBPmGYU1QFAhvfGWrZXiTGhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

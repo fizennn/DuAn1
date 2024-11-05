@@ -37,7 +37,7 @@
         android:drawableLeft="@drawable/user_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="User Name or Email" />
+        android:hint="User Name" />
 
     <EditText
         android:layout_marginTop="15dp"
@@ -50,7 +50,7 @@
         android:drawableLeft="@drawable/user_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="User Name or Email" />
+        android:hint="Email" />
 
     <RelativeLayout
         android:layout_marginTop="15dp"
@@ -94,7 +94,7 @@
             android:padding="15dp"
             android:background="@drawable/edt_background"
             android:drawableLeft="@drawable/lock_icon"
-            android:hint="Password"
+            android:hint="Confirm Password"
             android:inputType="textPassword" />
 
         <ImageView
@@ -111,11 +111,11 @@
 
     <!-- Nút Đăng Nhập -->
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Login"
+        android:text="Register"
         android:textSize="25dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
@@ -138,6 +138,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:id="@+id/txtLoginNow"
             android:text=" Login Now"
             android:textColor="#FF5722"
             android:layout_width="wrap_content"
