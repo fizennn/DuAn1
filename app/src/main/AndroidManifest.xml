@@ -12,14 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PolyFood"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Trungnt_ResetPassword"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-        </activity>
-
+            android:exported="false"/>
         <activity
-            android:name=".test"
+            android:name=".Trungnt_Register"
+            android:exported="false"/>
+        <activity
+            android:name=".Trungnt_Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
