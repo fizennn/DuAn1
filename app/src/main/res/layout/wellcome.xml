@@ -1,0 +1,146 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background Image -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"
+        android:contentDescription="background image" />
+
+    <!-- Main Content Layout -->
+    <LinearLayout
+        android:layout_marginHorizontal="10px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <!-- Welcome Text -->
+        <TextView
+
+            android:paddingTop="100px"
+            android:layout_gravity="left"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome to"
+            android:textColor="#000000"
+            android:textSize="50sp"
+            android:fontFamily="@font/splinesans_bold"
+            android:textStyle="bold" />
+
+        <!-- App Name Text -->
+        <TextView
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FolyFood"
+            android:textColor="#FF6B35"
+            android:textSize="40sp"
+            android:fontFamily="@font/splinesans_bold"
+            android:textStyle="bold" />
+
+        <!-- Tagline Text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your favourite foods delivered fast at your door."
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:fontFamily="@font/spline_sans"
+            android:paddingTop="8dp"
+            android:layout_marginBottom="700px"
+           />
+
+
+        <!-- Spacer -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+        <!-- Login Button -->
+        <Button
+            android:background="@drawable/btn1"
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF6B35"
+            android:textSize="20sp"
+            android:fontFamily="@font/splinesans_bold"
+            android:paddingVertical="15dp"
+            android:textAllCaps="false"/>
+
+        <!-- Or Text -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Or"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:paddingVertical="5dp" />
+
+        <!-- Google Sign-In Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/btn2"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="100px"
+                android:layout_height="100px"
+                android:src="@drawable/goglelogo"
+                android:layout_gravity="center"/>
+            <Button
+                android:layout_marginLeft="10px"
+                android:id="@+id/btnGoogleSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Continue With Google"
+                android:background="@null"
+                android:textSize="18sp"
+                android:textColor="#6A6A6A"
+                android:fontFamily="@font/splinesans_bold"
+                android:drawablePadding="8dp"
+                android:paddingVertical="15dp"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+
+        <!-- Register Text -->
+        <LinearLayout
+            android:layout_gravity=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account?"
+                android:textColor="#ffff"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Register Now"
+                android:textColor="#FE724C"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:paddingStart="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

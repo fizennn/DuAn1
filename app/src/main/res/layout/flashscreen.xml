@@ -1,0 +1,51 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FE724C"> <!-- Màu nền màn hình chào -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+            android:background="@drawable/round"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp"
+            >
+
+            <!-- Logo ở giữa -->
+            <ImageView
+                android:id="@+id/logoImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/logobee" /> <!-- Thay "logobee" bằng tên ảnh logo của bạn -->
+        </LinearLayout>
+
+        <!-- Tên ứng dụng nằm dưới hộp -->
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/appNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:text="FolyFood"
+            android:textColor="#ffff"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/splinesans_bold"
+            />
+    </LinearLayout>
+    <!-- Hộp chứa logo và tên ứng dụng, bo góc với màu nền trắng -->
+
+
+</RelativeLayout>
