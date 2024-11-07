@@ -8,10 +8,11 @@ public class ThucDon {
     private String moTa;
     private int danhGia;
     private String phanHoi;
+    private String hinhAnh; // Add image URL attribute
 
     public ThucDon() {}
 
-    public ThucDon(String id_td, String id_nh, String ten, int gia, String moTa, int danhGia, String phanHoi) {
+    public ThucDon(String id_td, String id_nh, String ten, int gia, String moTa, int danhGia, String phanHoi, String hinhAnh) {
         this.id_td = id_td;
         this.id_nh = id_nh;
         this.ten = ten;
@@ -19,6 +20,7 @@ public class ThucDon {
         this.moTa = moTa;
         this.danhGia = danhGia;
         this.phanHoi = phanHoi;
+        this.hinhAnh = hinhAnh;
     }
 
     public String getId_td() { return id_td; }
@@ -41,4 +43,7 @@ public class ThucDon {
 
     public String getPhanHoi() { return phanHoi; }
     public void setPhanHoi(String phanHoi) { this.phanHoi = phanHoi; }
+
+    public String getHinhAnh() { return hinhAnh; }
+    public void setHinhAnh(String hinhAnh) { this.hinhAnh = hinhAnh; }
 }
