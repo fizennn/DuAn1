@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -21,6 +22,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Fragment.BillFragment;
 import com.duan1.polyfood.Fragment.FavoriteFragment;
 import com.duan1.polyfood.Fragment.HomeFragment;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public ActivityResultLauncher<Intent> launcherTool;
     public NavigationView navigationView;
+    public AuthenticationFireBaseHelper authHelper;
 
     private DrawerLayout drawer;
 
@@ -42,6 +45,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        //Khai Bao
+
+        authHelper = new AuthenticationFireBaseHelper();
+
+        //Hien Thi Thong Tin Nav
+
+
+        Log.d(TAG, "onCreate: "+authHelper.getEmail());
 
         launcherTool = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -61,6 +72,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        View headerView = navigationView.getHeaderView(0);
+        TextView txvHeaderName = headerView.findViewById(R.id.txv_heaher_name);
+        txvHeaderName.setText(authHelper.getEmail());
+
+
 
         navigationView.setCheckedItem(R.id.nav_client);
 

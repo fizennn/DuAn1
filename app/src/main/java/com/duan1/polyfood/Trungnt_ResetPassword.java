@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,7 +26,7 @@ public class Trungnt_ResetPassword extends AppCompatActivity {
         edtEmailReset = findViewById(R.id.edtEmailReset);
         btnSendEmailReset = findViewById(R.id.btnSendEmailReset);
         txtRegisNowReset.setOnClickListener(view -> {
-            Intent intent = new Intent(this, Trungnt_Register.class);
+            Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
         });
         // Lấy email người dùng nhập vào

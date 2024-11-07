@@ -13,11 +13,11 @@
         android:layout_marginTop="100px"
         android:text="Login"
         android:textColor="#FF5722"
-        android:textSize="50dp"
+        android:textSize="45dp"
         android:textStyle="bold" />
 
     <TextView
-        android:layout_marginBottom="170px"
+        android:layout_marginBottom="200dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -36,11 +36,13 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
+            android:textSize="12dp"
+            android:id="@+id/edtEmail"
             android:fontFamily="@font/spline_sans"
             android:background="@drawable/boder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="         User Name or Email"
+            android:hint="User Name or Email"
             android:inputType="textEmailAddress"
             android:padding="16dp" />
 
@@ -55,11 +57,13 @@
         app:startIconTint="@null">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:textSize="12dp"
+            android:id="@+id/edtPassword"
             android:fontFamily="@font/spline_sans"
             android:background="@drawable/boder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="         Password"
+            android:hint="Password"
             android:inputType="textPassword"
             android:padding="16dp" />
 
@@ -73,20 +77,21 @@
         android:text="Forgot Password?"
         android:textColor="#FF5722" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
+        android:id="@+id/btnLogin"
         android:textColor="#ffff"
         android:background="@drawable/btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100px"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#FF5722"
-        android:padding="16dp"
+        android:padding="13dp"
         android:text="Login"
         android:textAllCaps="false"
         android:textSize="20sp" />
 
     <LinearLayout
-        android:paddingBottom="200px"
+        android:paddingBottom="100sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -94,12 +99,15 @@
         android:orientation="horizontal">
 
         <TextView
+            android:textSize="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Don't have an account? "
             android:textColor="#757575" />
 
         <TextView
+            android:textSize="12dp"
+            android:id="@+id/txtRegisNow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register Now"
