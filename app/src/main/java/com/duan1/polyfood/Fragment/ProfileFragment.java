@@ -17,6 +17,8 @@ import com.duan1.polyfood.R;
 public class ProfileFragment extends Fragment {
     private TextView name,address,gender,age,email,phone;
     private NguoiDungDAO nguoiDungDAO;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
