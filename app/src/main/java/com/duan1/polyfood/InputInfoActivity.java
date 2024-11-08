@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Models.NguoiDung;
 
@@ -25,6 +26,7 @@ public class InputInfoActivity extends AppCompatActivity {
     private Button btnGetInfo;
     private String TAG = "zzzzzzzzzzzz";
     private NguoiDungDAO nguoiDungDAO;
+    private AuthenticationFireBaseHelper fireBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class InputInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_input_info);
 
         nguoiDungDAO = new NguoiDungDAO();
+        fireBaseHelper = new AuthenticationFireBaseHelper();
 
         edtName = findViewById(R.id.edtName);
         edtAge = findViewById(R.id.edtAge);
@@ -40,7 +43,7 @@ public class InputInfoActivity extends AppCompatActivity {
         btnGetInfo = findViewById(R.id.btnGetInfo);
 
         Spinner spinnerGender = findViewById(R.id.spinnerGender);
-        String[] genders = {"Nam", "Nữ", "Khác"};
+        String[] genders = {"Male", "Female", "Other"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genders);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
@@ -65,6 +68,7 @@ public class InputInfoActivity extends AppCompatActivity {
                     nguoiDung.setDiaChi(address);
                     nguoiDung.setSdt(phone);
                     nguoiDung.setSex(gender);
+                    nguoiDung.setEmail(fireBaseHelper.getEmail());
 
 
                     String info = "Họ tên: " + name + "\nTuổi: " + age + "\nGiới tính: " + gender + "\nĐịa chỉ: " + address + "\nSĐT: " + phone;
