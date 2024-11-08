@@ -1,5 +1,7 @@
 package com.duan1.polyfood.Database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -9,54 +11,54 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class NguoiDungDAO {
+    String TAG = "zzzzzzzzzzzzz";
     private DatabaseReference database;
-    private AuthenticationFireBaseHelper authen;
+    private AuthenticationFireBaseHelper auth;
+    private ArrayList<NguoiDung> nguoiDungList;
+
+
+    public interface FirebaseCallback {
+        void onCallback(NguoiDung nguoiDung);
+    }
 
     public NguoiDungDAO() {
         database = FirebaseDatabase.getInstance().getReference();
-        authen = new AuthenticationFireBaseHelper();
+        auth = new AuthenticationFireBaseHelper();
     }
 
-    public void getAllNguoiDung(ArrayList<NguoiDung> nguoiDungList, Runnable onComplete) {
-        database.child("NguoiDung").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                NguoiDung nguoiDung = snapshot.getValue(NguoiDung.class);
-                nguoiDungList.add(nguoiDung);
-                onComplete.run();  // Cập nhật giao diện khi có dữ liệu mới
-            }
+    public void getAllNguoiDung(FirebaseCallback callback) {
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                NguoiDung nguoiDung = snapshot.getValue(NguoiDung.class);
-                for (int i = 0; i < nguoiDungList.size(); i++) {
-                    if (nguoiDungList.get(i).getId_nd().equals(nguoiDung.getId_nd())) {
-                        nguoiDungList.set(i, nguoiDung);  // Cập nhật người dùng trong danh sách
-                        break;
-                    }
+            database.child(auth.getUID()).child("NguoiDung").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
+                    callback.onCallback(nguoidung);
                 }
-                onComplete.run();  // Cập nhật giao diện khi dữ liệu được sửa
-            }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                NguoiDung nguoiDung = snapshot.getValue(NguoiDung.class);
-                nguoiDungList.removeIf(nd -> nd.getId_nd().equals(nguoiDung.getId_nd()));  // Xóa người dùng khỏi danh sách
-                onComplete.run();  // Cập nhật giao diện khi dữ liệu bị xóa
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
+                }
+            });
+    }
+
+    public void getAllNguoiDungRealTime(FirebaseCallback callback) {
+
+        database.child(auth.getUID()).child("NguoiDung").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Không cần xử lý nếu không quan tâm đến thứ tự
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
+                callback.onCallback(nguoidung);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Xử lý lỗi nếu cần
+
             }
         });
     }
@@ -64,14 +66,16 @@ public class NguoiDungDAO {
     public void addNguoiDung(NguoiDung nguoiDung) {
         String key = database.child("NguoiDung").push().getKey();
         nguoiDung.setId_nd(key);
-        database.child(authen.getUID()).child("NguoiDung").child(key).setValue(nguoiDung);
+        database.child(auth.getUID()).child("NguoiDung").setValue(nguoiDung);
     }
 
     public void updateNguoiDung(NguoiDung nguoiDung) {
-        database.child(authen.getUID()).child("NguoiDung").child(nguoiDung.getId_nd()).setValue(nguoiDung);
+        database.child(auth.getUID()).child("NguoiDung").child(nguoiDung.getId_nd()).setValue(nguoiDung);
     }
 
     public void deleteNguoiDung(String id) {
-        database.child(authen.getUID()).child("NguoiDung").child(id).removeValue();
+        database.child(auth.getUID()).child("NguoiDung").child(id).removeValue();
     }
+
+
 }

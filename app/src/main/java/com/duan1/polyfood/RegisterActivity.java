@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
                             FirebaseUser currentUser = auth.getCurrentUser();
                             Toast.makeText(RegisterActivity.this, "Dang ky Thanh cong"+currentUser, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+                            Intent intent = new Intent(RegisterActivity.this,InputInfoActivity.class);
                             startActivity(intent);
                         }else{
                             Log.e("FirebaseAuthError", "Đăng ký thất bại", task.getException());
