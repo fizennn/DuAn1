@@ -32,11 +32,11 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
-        <activity android:name=".WellcomeActivity"></activity>
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".ResetPasswordActivity"></activity>
+            android:exported="false" />
+        <activity android:name=".WellcomeActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ResetPasswordActivity" />
     </application>
 
 </manifest>
