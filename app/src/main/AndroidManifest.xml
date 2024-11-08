@@ -13,6 +13,9 @@
         android:theme="@style/Theme.PolyFood"
         tools:targetApi="31">
         <activity
+            android:name=".InputInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".FlashScreenActivity"
             android:exported="true">
             <intent-filter>
@@ -29,18 +32,11 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-        </activity>
-        <activity android:name=".WellcomeActivity">
-        </activity>
-        <activity android:name=".RegisterActivity">
-        </activity>
-        <activity android:name=".LoginActivity">
-        </activity>
-        <activity android:name=".ResetPasswordActivity">
-        </activity>
-
-
+            android:exported="false"></activity>
+        <activity android:name=".WellcomeActivity"></activity>
+        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".ResetPasswordActivity"></activity>
     </application>
 
 </manifest>
