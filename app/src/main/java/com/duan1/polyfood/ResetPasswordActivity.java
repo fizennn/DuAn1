@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Trungnt_ResetPassword extends AppCompatActivity {
+public class ResetPasswordActivity extends AppCompatActivity {
     private TextView txtRegisNowReset;
     private EditText edtEmailReset;
     private Button btnSendEmailReset;
@@ -35,15 +35,15 @@ public class Trungnt_ResetPassword extends AppCompatActivity {
         btnSendEmailReset.setOnClickListener(view -> {
             String email = edtEmailReset.getText().toString().trim();
 
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(this, "Email khôi phục đã được gửi", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e("FirebaseAuthError", "Gửi email khôi phục thất bại", task.getException());
-                            Toast.makeText(this, "Gửi email khôi phục thất bại", Toast.LENGTH_SHORT).show();
-                        }
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.sendPasswordResetEmail(email)
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(this, "Email khôi phục đã được gửi", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Log.e("FirebaseAuthError", "Gửi email khôi phục thất bại", task.getException());
+                                        Toast.makeText(this, "Gửi email khôi phục thất bại", Toast.LENGTH_SHORT).show();
+                                    }
                     });
         });
 

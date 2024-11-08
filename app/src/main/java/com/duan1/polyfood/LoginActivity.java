@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView txtRegisNow;
     private Button btnLogin;
     private FirebaseAuth auth;
+    private TextView txvForgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,12 @@ public class LoginActivity extends AppCompatActivity {
         txtRegisNow = findViewById(R.id.txtRegisNow);
         btnLogin = findViewById(R.id.btnLogin);
         edtEmail = findViewById(R.id.edtEmail);
+        txvForgotPass = findViewById(R.id.txvForgotPass);
+
+        txvForgotPass.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+            startActivity(intent);
+        });
 
 
         txtRegisNow.setOnClickListener(view -> {
