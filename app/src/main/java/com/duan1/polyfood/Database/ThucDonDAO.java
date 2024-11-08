@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -21,42 +22,25 @@ public class ThucDonDAO {
         authen = new AuthenticationFireBaseHelper();
     }
 
-    public void getAllThucDon(ArrayList<ThucDon> thucDonList, Runnable onComplete) {
-        database.child("ThucDon").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ThucDon thucDon = snapshot.getValue(ThucDon.class);
-                thucDonList.add(thucDon);
-                onComplete.run();  // Cập nhật giao diện khi có dữ liệu mới
-            }
+    public interface FirebaseCallback {
+        void onCallback(ArrayList<ThucDon> thucDonList);
+    }
 
+    public void getAllThucDon(FirebaseCallback callback) {
+        database.child("ThucDon").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ThucDon thucDon = snapshot.getValue(ThucDon.class);
-                for (int i = 0; i < thucDonList.size(); i++) {
-                    if (thucDonList.get(i).getId_td().equals(thucDon.getId_td())) {
-                        thucDonList.set(i, thucDon);  // Cập nhật thực đơn trong danh sách
-                        break;
-                    }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<ThucDon> thucDonList = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    ThucDon thucDon = data.getValue(ThucDon.class);
+                    thucDonList.add(thucDon);
                 }
-                onComplete.run();  // Cập nhật giao diện khi dữ liệu được sửa
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                ThucDon thucDon = snapshot.getValue(ThucDon.class);
-                thucDonList.removeIf(td -> td.getId_td().equals(thucDon.getId_td()));  // Xóa thực đơn khỏi danh sách
-                onComplete.run();  // Cập nhật giao diện khi dữ liệu bị xóa
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Không cần xử lý nếu không quan tâm đến thứ tự
+                callback.onCallback(thucDonList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Xử lý lỗi nếu cần
+
             }
         });
     }

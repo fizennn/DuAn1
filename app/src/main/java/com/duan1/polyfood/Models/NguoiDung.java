@@ -8,6 +8,8 @@ public class NguoiDung {
     private String email;
     private String diaChi;
     private String sdt;
+    private String sex;
+    private String age;
 
     public NguoiDung() {}
 
@@ -41,4 +43,20 @@ public class NguoiDung {
 
     public String getSdt() { return sdt; }
     public void setSdt(String sdt) { this.sdt = sdt; }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
 }

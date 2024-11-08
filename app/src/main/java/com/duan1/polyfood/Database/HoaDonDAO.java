@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -21,45 +22,29 @@ public class HoaDonDAO {
         authen = new AuthenticationFireBaseHelper();
     }
 
-    public void getAllHoaDon(ArrayList<HoaDon> hoaDonList, Runnable onComplete) {
-        database.child("HoaDon").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                HoaDon hoaDon = snapshot.getValue(HoaDon.class);
-                hoaDonList.add(hoaDon);
-                onComplete.run();  // Cập nhật giao diện khi có dữ liệu mới
-            }
+    public interface FirebaseCallback {
+        void onCallback(ArrayList<HoaDon> hoaDonList);
+    }
 
+    public void getAllHoaDon(FirebaseCallback callback) {
+        database.child("HoaDon").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                HoaDon hoaDon = snapshot.getValue(HoaDon.class);
-                for (int i = 0; i < hoaDonList.size(); i++) {
-                    if (hoaDonList.get(i).getId_tt().equals(hoaDon.getId_tt())) {
-                        hoaDonList.set(i, hoaDon);  // Cập nhật hóa đơn trong danh sách
-                        break;
-                    }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<HoaDon> hoaDonList = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    HoaDon hoaDon = data.getValue(HoaDon.class);
+                    hoaDonList.add(hoaDon);
                 }
-                onComplete.run();  // Cập nhật giao diện khi dữ liệu được sửa
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                HoaDon hoaDon = snapshot.getValue(HoaDon.class);
-                hoaDonList.removeIf(hd -> hd.getId_tt().equals(hoaDon.getId_tt()));  // Xóa hóa đơn khỏi danh sách
-                onComplete.run();  // Cập nhật giao diện khi dữ liệu bị xóa
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Không cần xử lý nếu không quan tâm đến thứ tự
+                callback.onCallback(hoaDonList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Xử lý lỗi nếu cần
+
             }
         });
     }
+
 
     public void addHoaDon(HoaDon hoaDon) {
         String key = database.child("HoaDon").push().getKey();

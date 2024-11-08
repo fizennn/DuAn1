@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+   >
+
+    <!-- Nút Trở Về -->
+    <ImageButton
+        android:layout_marginTop="20dp"
+        android:padding="13dp"
+        android:background="@drawable/btn2"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back"
+        android:layout_width="50sp"
+        android:layout_height="50sp"/>
+
+    <!-- Khung nhập thông tin -->
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginBottom="70dp"
+                android:fontFamily="@font/splinesans_bold"
+                android:gravity="center"
+                android:textSize="27dp"
+                android:text="Enter Your Infomation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <!-- Trường Họ Tên -->
+            <EditText
+                android:layout_marginBottom="10sp"
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:hint="Họ Tên"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                />
+
+            <EditText
+                android:layout_marginBottom="10sp"
+                android:id="@+id/edtAge"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:hint="Age"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                />
+
+            <!-- Trường Giới Tính (Spinner) -->
+            <Spinner
+                android:background="@drawable/spiner1"
+                android:id="@+id/spinnerGender"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+               android:backgroundTint="#ffff"
+                android:layout_marginBottom="15dp"/>
+
+
+            <!-- Trường Địa Chỉ -->
+            <EditText
+                android:layout_marginBottom="10sp"
+                android:id="@+id/edtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:hint="Địa Chỉ"
+                android:inputType="textPostalAddress"
+                android:padding="12dp"
+                />
+
+            <!-- Trường SĐT -->
+            <EditText
+
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:hint="SĐT"
+                android:inputType="phone"
+                android:padding="12dp"
+                android:layout_marginBottom="50dp"/>
+
+            <Button
+                android:id="@+id/btnGetInfo"
+                android:text="Entry"
+                android:layout_marginBottom="100sp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+        </LinearLayout>
+
+
+</LinearLayout>

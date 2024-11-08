@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.duan1.polyfood.Database.NguoiDungDAO;
+import com.duan1.polyfood.Models.NguoiDung;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,10 +29,14 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private FirebaseAuth auth;
     private TextView txvForgotPass;
+    private NguoiDungDAO nguoiDungDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        nguoiDungDAO = new NguoiDungDAO();
+
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
         edtPassword = findViewById(R.id.edtPassword);
@@ -51,9 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         });
         btnLogin.setOnClickListener(view -> {
             String email = edtEmail.getText().toString().trim();
-            Log.e("aa", "onCreate: "+email );
             String password = edtPassword.getText().toString().trim();
-            Log.e("aa", "onCreate: "+password );
+
             boolean isValid = validate(email, password);
             if (isValid){
                 auth.signInWithEmailAndPassword(email, password).
@@ -62,8 +67,19 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
                                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent);
+                                    nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
+                                        @Override
+                                        public void onCallback(NguoiDung nguoiDung) {
+                                            if (nguoiDung==null){
+                                                Intent intent = new Intent(LoginActivity.this,InputInfoActivity.class);
+                                                startActivity(intent);
+                                            }else{
+                                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
+
                                 }else{
                                     Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                                 }
