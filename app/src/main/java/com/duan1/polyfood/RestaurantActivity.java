@@ -45,5 +45,24 @@ public class RestaurantActivity extends AppCompatActivity {
             }
         });
 
+        btnupdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = edtid.getText().toString();
+                String ten = edtten.getText().toString();
+                String diachi = edtdiachi.getText().toString();
+                NhaHang nhaHang = new NhaHang(id, ten, diachi, "null", "null","null");
+                nhaHangDAO.updateNhaHang(nhaHang);
+            }
+        });
+
+        btndelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = edtid.getText().toString();
+                nhaHangDAO.deleteNhaHang(id);
+            }
+        });
+
     }
 }

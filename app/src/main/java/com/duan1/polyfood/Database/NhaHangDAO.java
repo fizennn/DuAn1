@@ -64,7 +64,7 @@ public class NhaHangDAO {
 
     public void addNhaHang(NhaHang nhaHang) {
         String idNh = nhaHang.getId_nh();
-        database.child(authen.getUID()).child("DonHang").child(idNh).setValue(nhaHang);
+        database.child(authen.getUID()).child("NhaHang").child(idNh).setValue(nhaHang);
     }
 
     public void updateNhaHang(NhaHang nhaHang) {
