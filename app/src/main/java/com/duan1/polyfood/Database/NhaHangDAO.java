@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.duan1.polyfood.Models.NhaHang;
+import com.duan1.polyfood.Models.ThucDon;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,4 +73,5 @@ public class NhaHangDAO {
             }
         });
     }
+
 }
