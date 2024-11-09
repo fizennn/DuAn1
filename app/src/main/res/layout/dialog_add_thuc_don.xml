@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edtIhnh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Id nh"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtTen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên món ăn"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtGia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Giá"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/edtMoTa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mô tả"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtDanhgia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="danh gia"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/edtPhanhoi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="phan hoi"
+        android:inputType="text" />
+
+    <ImageView
+        android:id="@+id/imgSelectedImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center" />
+
+    <Button
+        android:id="@+id/btnChooseImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn hình ảnh" />
+
+    <Button
+        android:id="@+id/btnAddThucDon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm món ăn" />
+</LinearLayout>
+
