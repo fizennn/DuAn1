@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.duan1.polyfood.Adapter.FoodAdapter;
+import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
 
@@ -19,9 +20,11 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView,recyclerViewNgang;
     private FoodAdapter foodAdapter;
-    private List<ThucDon> foodList;
+    private List<ThucDon> foodList,foodListNgang;
+    private ThucDonNgangAdapter thucDonNgangAdapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +52,20 @@ public class HomeFragment extends Fragment {
 
         foodAdapter = new FoodAdapter(getContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
+
+
+        recyclerViewNgang = view.findViewById(R.id.recyclerview2);
+        recyclerViewNgang.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        foodListNgang = new ArrayList<>();
+
+        foodListNgang.add(thucDon);
+        foodListNgang.add(thucDon);
+        foodListNgang.add(thucDon);
+
+
+        thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang);
+        recyclerViewNgang.setAdapter(thucDonNgangAdapter);
 
         return view;
     }
