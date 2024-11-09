@@ -22,6 +22,7 @@ public class NhaHangDAO {
 
     public interface FirebaseCallback {
         void onCallback(ArrayList<NhaHang> nhaHangList);
+        void onCallback(NhaHang nhaHang);
     }
 
     public void getAllNhaHang(FirebaseCallback callback) {
@@ -54,5 +55,21 @@ public class NhaHangDAO {
 
     public void deleteNhaHang(String id) {
         database.child("NhaHang").child(id).removeValue();
+    }
+
+
+    public void getThongTin(FirebaseCallback callback) {
+        database.child("NhaHang").child("ThongTin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                NhaHang nhaHang = snapshot.getValue(NhaHang.class);
+                callback.onCallback(nhaHang);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

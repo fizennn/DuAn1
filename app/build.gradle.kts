@@ -42,21 +42,19 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-// Import the BoM for the Firebase platform
+
+
+
+
+
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
 
-    // Add the dependency for the Realtime Database library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-database")
-
-    // Add the dependency for the Firebase Authentication library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-storage")
 
-    implementation("com.google.firebase:firebase-storage:20.2.1")
+
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    
-    implementation("com.github.bumptech.glide:compiler:4.12.0")
-
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 }

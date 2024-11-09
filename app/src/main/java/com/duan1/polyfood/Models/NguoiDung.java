@@ -10,7 +10,17 @@ public class NguoiDung {
     private String sdt;
     private String sex;
     private String age;
+    private String profileImageUrl;
 
+    // ... other methods ...
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
     public NguoiDung() {}
 
     public NguoiDung(String id_nd, String hoTen, String matKhau, int role, String email, String diaChi, String sdt) {

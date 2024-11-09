@@ -21,6 +21,13 @@
             android:src="@drawable/header_profile"
              />
 
+        <Button
+            android:layout_marginBottom="20dp"
+            android:id="@+id/btnImgProfile"
+            android:text="Add IMG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
