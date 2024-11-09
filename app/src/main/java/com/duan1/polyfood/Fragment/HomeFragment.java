@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.duan1.polyfood.Adapter.FoodAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
+import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
 
@@ -20,10 +22,12 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    String TAG = "zzzzzzzzzzzz";
     private RecyclerView recyclerView,recyclerViewNgang;
     private FoodAdapter foodAdapter;
     private List<ThucDon> foodList,foodListNgang;
     private ThucDonNgangAdapter thucDonNgangAdapter;
+    private ThucDonDAO thucDonDAO;
 
 
     @Override
@@ -31,6 +35,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        thucDonDAO = new ThucDonDAO();
 
         recyclerView = view.findViewById(R.id.recyclerview1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -44,7 +50,7 @@ public class HomeFragment extends Fragment {
         ThucDon thucDon = new ThucDon();
 
         thucDon.setTen("Pho Sieu Ngon");
-        thucDon.setDanhGia(5);
+        thucDon.setDanhGia("5");
 
         foodList.add(thucDon);
         foodList.add(thucDon);
@@ -59,13 +65,20 @@ public class HomeFragment extends Fragment {
 
         foodListNgang = new ArrayList<>();
 
-        foodListNgang.add(thucDon);
-        foodListNgang.add(thucDon);
-        foodListNgang.add(thucDon);
+        thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThucDon> thucDonList) {
+                foodListNgang.clear();
+                for (ThucDon don : thucDonList){
+                    foodListNgang.add(don);
+                }
+                thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang,getContext());
+                recyclerViewNgang.setAdapter(thucDonNgangAdapter);
+            }
+        });
 
 
-        thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang);
-        recyclerViewNgang.setAdapter(thucDonNgangAdapter);
+
 
         return view;
     }

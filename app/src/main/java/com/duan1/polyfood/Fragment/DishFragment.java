@@ -125,7 +125,7 @@ public class DishFragment extends Fragment {
             }
             thucDon.setMoTa(edtMoTa.getText().toString());
             try {
-                thucDon.setDanhGia(Integer.parseInt(edtDanhGia.getText().toString()));
+                thucDon.setDanhGia(edtDanhGia.getText().toString());
             } catch (NumberFormatException e) {
                 Toast.makeText(getContext(), "Invalid rating", Toast.LENGTH_SHORT).show();
                 return;

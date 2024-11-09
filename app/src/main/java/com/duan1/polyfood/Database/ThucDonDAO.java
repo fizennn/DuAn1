@@ -2,6 +2,7 @@ package com.duan1.polyfood.Database;
 
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,7 @@ public class ThucDonDAO {
     private DatabaseReference database;
     private StorageReference storageReference;
     private AuthenticationFireBaseHelper authen;
+
 
     public ThucDonDAO() {
         database = FirebaseDatabase.getInstance().getReference();

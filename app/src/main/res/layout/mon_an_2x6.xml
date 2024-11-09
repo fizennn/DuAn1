@@ -63,6 +63,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"/>
             <TextView
+                android:id="@+id/txvgia"
                 android:layout_marginLeft="3dp"
                 android:fontFamily="@font/spline_sans"
                 android:gravity="center"
