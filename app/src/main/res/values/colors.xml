@@ -5,4 +5,5 @@
     <color name="colorAccent">#ffff</color>
     <color name="statusBarColor">#FFFFFF</color>
     <color name="baseColor">#FE724C</color>
+    <color name="tag">#E91E63</color>
 </resources>

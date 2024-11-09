@@ -15,10 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+           >
 
             <!-- Welcome Text -->
             <TextView
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/splinesans_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,6 +31,7 @@
 
             <!-- Search Bar -->
             <androidx.cardview.widget.CardView
+                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -70,6 +73,7 @@
 
             <!-- Featured Restaurants -->
             <LinearLayout
+                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -93,9 +97,10 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-
+                android:id="@+id/recyclerview1"
+                android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:clipToPadding="false"
                 android:paddingStart="16dp"
@@ -105,6 +110,7 @@
 
             <!-- Popular Items -->
             <LinearLayout
+                android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
