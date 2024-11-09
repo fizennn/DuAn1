@@ -22,6 +22,7 @@ public class NguoiDungDAO {
     private ArrayList<NguoiDung> nguoiDungList;
 
 
+
     public interface FirebaseCallback {
         void onCallback(NguoiDung nguoiDung);
     }
@@ -32,7 +33,7 @@ public class NguoiDungDAO {
     }
 
     public void getAllNguoiDung(FirebaseCallback callback) {
-
+        Log.d(TAG, "getAllNguoiDung: "+auth.getUID());
             database.child(auth.getUID()).child("NguoiDung").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

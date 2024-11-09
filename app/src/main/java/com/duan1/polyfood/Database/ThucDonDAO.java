@@ -58,27 +58,22 @@ public class ThucDonDAO {
 //        database.child(authen.getUID()).child("ThucDon").child(key).setValue(thucDon);
 //    }
 
-    public void addThucDon(ThucDon thucDon, String imageName) {
+    public void addThucDon(ThucDon thucDon, Uri imageUri) {
         String key = database.child("ThucDon").push().getKey();
         if (key != null) {
             thucDon.setId_td(key);
+            StorageReference imgRef = storageReference.child(key + ".jpg");
 
-            StorageReference imgRef = storageReference.child(imageName + ".jpg");
-
-            // Lấy URL của ảnh từ Storage và lưu vào Realtime Database
-            imgRef.getDownloadUrl()
-                    .addOnSuccessListener(uri -> {
-                        thucDon.setHinhAnh(uri.toString());
-                        database.child("ThucDon").child(key).setValue(thucDon);
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e("Firebase", "Image not found in Storage: " + e.getMessage());
-                        // Optionally handle missing images here
-                    });
-        } else {
-            Log.e("Firebase", "Không thể tạo khóa cho thực đơn");
+            imgRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+                                thucDon.setHinhAnh(uri.toString());
+                                database.child("ThucDon").child(key).setValue(thucDon);
+                            })
+                            .addOnFailureListener(e -> Log.e("Firebase", "Failed to get download URL: " + e.getMessage())))
+                    .addOnFailureListener(e -> Log.e("Firebase", "Failed to upload image: " + e.getMessage()));
         }
     }
+
 
     public void updateThucDon(ThucDon thucDon) {
         database.child(authen.getUID()).child("ThucDon").child(thucDon.getId_td()).setValue(thucDon);

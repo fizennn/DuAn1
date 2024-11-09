@@ -39,8 +39,6 @@ public class ThucDonAdapter extends RecyclerView.Adapter<ThucDonAdapter.ThucDonV
         holder.tvTen.setText(thucDon.getTen());
         holder.tvGia.setText(String.valueOf(thucDon.getGia()));
         holder.tvMoTa.setText(thucDon.getMoTa());
-
-        // Sử dụng Glide để tải ảnh từ URL
         Glide.with(context).load(thucDon.getHinhAnh()).into(holder.imgThucDon);
     }
 
