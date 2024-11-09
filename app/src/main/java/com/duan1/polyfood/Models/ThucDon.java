@@ -6,13 +6,13 @@ public class ThucDon {
     private String ten;
     private int gia;
     private String moTa;
-    private int danhGia;
+    private String danhGia;
     private String phanHoi;
     private String hinhAnh; // Add image URL attribute
 
     public ThucDon() {}
 
-    public ThucDon(String id_td, String id_nh, String ten, int gia, String moTa, int danhGia, String phanHoi, String hinhAnh) {
+    public ThucDon(String id_td, String id_nh, String ten, Integer gia, String moTa, String danhGia, String phanHoi, String hinhAnh) {
         this.id_td = id_td;
         this.id_nh = id_nh;
         this.ten = ten;
@@ -38,8 +38,8 @@ public class ThucDon {
     public String getMoTa() { return moTa; }
     public void setMoTa(String moTa) { this.moTa = moTa; }
 
-    public int getDanhGia() { return danhGia; }
-    public void setDanhGia(int danhGia) { this.danhGia = danhGia; }
+    public String getDanhGia() { return danhGia; }
+    public void setDanhGia(String danhGia) { this.danhGia = danhGia; }
 
     public String getPhanHoi() { return phanHoi; }
     public void setPhanHoi(String phanHoi) { this.phanHoi = phanHoi; }

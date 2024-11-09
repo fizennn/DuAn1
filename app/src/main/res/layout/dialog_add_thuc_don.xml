@@ -8,7 +8,7 @@
         android:id="@+id/edtIhnh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Id nh"
+        android:hint="ID nhà hàng"
         android:inputType="text" />
 
     <EditText
@@ -36,14 +36,14 @@
         android:id="@+id/edtDanhgia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="danh gia"
+        android:hint="Đánh giá ( 1.0 - 5.0 )"
         android:inputType="text" />
 
     <EditText
         android:id="@+id/edtPhanhoi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="phan hoi"
+        android:hint="Phản hồi"
         android:inputType="text" />
 
     <ImageView

@@ -1,6 +1,7 @@
 package com.duan1.polyfood.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class ThucDonAdapter extends RecyclerView.Adapter<ThucDonAdapter.ThucDonV
     @NonNull
     @Override
     public ThucDonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_thuc_don, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.mon_an_2x6, parent, false);
         return new ThucDonViewHolder(view);
     }
 
@@ -38,8 +39,14 @@ public class ThucDonAdapter extends RecyclerView.Adapter<ThucDonAdapter.ThucDonV
         ThucDon thucDon = thucDonList.get(position);
         holder.tvTen.setText(thucDon.getTen());
         holder.tvGia.setText(String.valueOf(thucDon.getGia()));
-        holder.tvMoTa.setText(thucDon.getMoTa());
-        Glide.with(context).load(thucDon.getHinhAnh()).into(holder.imgThucDon);
+        holder.tvDanhGia.setText(thucDon.getMoTa());
+        // Check if the image URI is null
+
+        Glide.with(context)
+                .load(thucDon.getHinhAnh())
+                .placeholder(R.drawable.hide_icon) // This image appears if hinhAnh is null
+                .into(holder.imgThucDon);
+
     }
 
     @Override
@@ -48,14 +55,14 @@ public class ThucDonAdapter extends RecyclerView.Adapter<ThucDonAdapter.ThucDonV
     }
 
     public static class ThucDonViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTen, tvGia, tvMoTa;
+        TextView tvTen, tvGia, tvDanhGia;
         ImageView imgThucDon;
 
         public ThucDonViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTen = itemView.findViewById(R.id.tvTen);
-            tvGia = itemView.findViewById(R.id.tvGia);
-            tvMoTa = itemView.findViewById(R.id.tvMoTa);
+            tvTen = itemView.findViewById(R.id.tvName);
+            tvGia = itemView.findViewById(R.id.tvPrice);
+            tvDanhGia = itemView.findViewById(R.id.tvFeedback);
             imgThucDon = itemView.findViewById(R.id.ivHinhAnh);
         }
     }

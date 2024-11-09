@@ -11,6 +11,7 @@ import com.duan1.polyfood.Models.ThucDon;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -22,11 +23,9 @@ import java.util.ArrayList;
 public class ThucDonDAO {
     private DatabaseReference database;
     private StorageReference storageReference;
-    private AuthenticationFireBaseHelper authen;
 
     public ThucDonDAO() {
         database = FirebaseDatabase.getInstance().getReference();
-        authen = new AuthenticationFireBaseHelper();
         storageReference = FirebaseStorage.getInstance().getReference("ThucDonImages");
     }
 
@@ -40,18 +39,28 @@ public class ThucDonDAO {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<ThucDon> thucDonList = new ArrayList<>();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    ThucDon thucDon = data.getValue(ThucDon.class);
-                    thucDonList.add(thucDon);
+                    try {
+                        ThucDon thucDon = data.getValue(ThucDon.class);
+                        thucDonList.add(thucDon);
+                    } catch (DatabaseException e) {
+                        Log.e("Firebase", "Failed to convert data: " + e.getMessage());
+                    }
+                }
+                if (thucDonList.isEmpty()) {
+                    Log.d("Firebase", "Data snapshot is empty");
+                } else {
+                    Log.d("Firebase", "Retrieved data: " + thucDonList.toString());
                 }
                 callback.onCallback(thucDonList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("Firebase", "Database error: " + error.getMessage());
             }
         });
     }
+
 
     public void addThucDon(ThucDon thucDon, Uri imageUri) {
         String key = database.child("NhaHang").child("ThucDon").push().getKey();
@@ -71,11 +80,11 @@ public class ThucDonDAO {
 
 
     public void updateThucDon(ThucDon thucDon) {
-        database.child(authen.getUID()).child("NhaHang").child("ThucDon").child(thucDon.getId_td()).setValue(thucDon);
+        database.child("NhaHang").child("ThucDon").child(thucDon.getId_td()).setValue(thucDon);
     }
 
     public void deleteThucDon(String id) {
-        database.child(authen.getUID()).child("NhaHang").child("ThucDon").child(id).removeValue();
+        database.child("NhaHang").child("ThucDon").child(id).removeValue();
     }
 
 }

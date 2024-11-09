@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
         ThucDon thucDon = new ThucDon();
 
         thucDon.setTen("Pho Sieu Ngon");
-        thucDon.setDanhGia(5);
+        thucDon.setDanhGia("5");
 
         foodList.add(thucDon);
         foodList.add(thucDon);
