@@ -34,6 +34,9 @@ public class NguoiDungDAO {
 
     public void getAllNguoiDung(FirebaseCallback callback) {
         Log.d(TAG, "getAllNguoiDung: "+auth.getUID());
+            if (auth.getUID()==null){
+                callback.onCallback(null);
+            }
             database.child(auth.getUID()).child("NguoiDung").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -47,6 +50,25 @@ public class NguoiDungDAO {
                 }
             });
     }
+
+    public void check(FirebaseCallback callback,String UID) {
+
+
+        database.child(UID).child("NguoiDung").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
+                callback.onCallback(nguoidung);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 
     public void getAllNguoiDungRealTime(FirebaseCallback callback) {
 

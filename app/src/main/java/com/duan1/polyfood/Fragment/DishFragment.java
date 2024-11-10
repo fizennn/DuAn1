@@ -82,6 +82,11 @@ public class DishFragment extends Fragment {
                 thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang,getContext());
                 recyclerViewNgang.setAdapter(thucDonNgangAdapter);
             }
+
+            @Override
+            public void onCallback(ThucDon thucDon) {
+
+            }
         });
 
 

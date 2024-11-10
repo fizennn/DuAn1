@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private TextView txvForgotPass;
     private NguoiDungDAO nguoiDungDAO;
+    private int login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +63,19 @@ public class LoginActivity extends AppCompatActivity {
 
             boolean isValid = validate(email, password);
             if (isValid){
-                auth.signInWithEmailAndPassword(email, password).
-                        addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    FirebaseUser currentUser = auth.getCurrentUser();
+
+                                    String UID = auth.getUid();
+
                                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                    nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
+
+                                    nguoiDungDAO.check(new NguoiDungDAO.FirebaseCallback() {
                                         @Override
                                         public void onCallback(NguoiDung nguoiDung) {
-                                            if (nguoiDung==null){
+                                            if (nguoiDung == null){
                                                 Intent intent = new Intent(LoginActivity.this,InputInfoActivity.class);
                                                 startActivity(intent);
                                             }else{
@@ -80,7 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                             }
                                         }
-                                    });
+                                    },UID);
+
+
 
                                 }else{
                                     Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();

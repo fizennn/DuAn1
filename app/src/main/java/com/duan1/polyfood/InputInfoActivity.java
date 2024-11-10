@@ -28,6 +28,8 @@ public class InputInfoActivity extends AppCompatActivity {
     private NguoiDungDAO nguoiDungDAO;
     private AuthenticationFireBaseHelper fireBaseHelper;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,14 @@ public class InputInfoActivity extends AppCompatActivity {
 
         nguoiDungDAO = new NguoiDungDAO();
         fireBaseHelper = new AuthenticationFireBaseHelper();
+
+        Log.d(TAG, "onCreate: "+fireBaseHelper.getUID());
+
+
+
+
+        Intent intent = new Intent(InputInfoActivity.this,MainActivity.class);
+        startActivity(intent);
 
         edtName = findViewById(R.id.edtName);
         edtAge = findViewById(R.id.edtAge);
@@ -47,6 +57,7 @@ public class InputInfoActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genders);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);
+
 
         btnGetInfo.setOnClickListener(new View.OnClickListener() {
             @Override

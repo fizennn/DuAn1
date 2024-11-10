@@ -33,6 +33,7 @@ public class ThucDonDAO {
 
     public interface FirebaseCallback {
         void onCallback(ArrayList<ThucDon> thucDonList);
+        void onCallback(ThucDon thucDon);
     }
 
     public void getAllThucDon(FirebaseCallback callback) {
@@ -87,6 +88,22 @@ public class ThucDonDAO {
 
     public void deleteThucDon(String id) {
         database.child("NhaHang").child("ThucDon").child(id).removeValue();
+    }
+
+
+    public void getAThucDon(FirebaseCallback callback,String UID) {
+        database.child("NhaHang").child("ThucDon").child(UID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ThucDon thucDon = snapshot.getValue(ThucDon.class);
+                callback.onCallback(thucDon);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 }
