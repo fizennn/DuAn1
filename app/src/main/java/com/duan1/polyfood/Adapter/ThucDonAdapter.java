@@ -42,6 +42,8 @@ public class ThucDonAdapter extends RecyclerView.Adapter<ThucDonAdapter.ThucDonV
         holder.tvDanhGia.setText(thucDon.getMoTa());
         // Check if the image URI is null
 
+        Log.d("zzzz1", "onBindViewHolder: " + thucDon.getTen());
+
         Glide.with(context)
                 .load(thucDon.getHinhAnh())
                 .placeholder(R.drawable.hide_icon) // This image appears if hinhAnh is null
@@ -61,8 +63,8 @@ public class ThucDonAdapter extends RecyclerView.Adapter<ThucDonAdapter.ThucDonV
         public ThucDonViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTen = itemView.findViewById(R.id.tvName);
-            tvGia = itemView.findViewById(R.id.tvPrice);
-            tvDanhGia = itemView.findViewById(R.id.tvFeedback);
+            tvGia = itemView.findViewById(R.id.txvgia);
+            tvDanhGia = itemView.findViewById(R.id.tvPrice);
             imgThucDon = itemView.findViewById(R.id.ivHinhAnh);
         }
     }

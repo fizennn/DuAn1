@@ -12,7 +12,7 @@ public class ThucDon {
 
     public ThucDon() {}
 
-    public ThucDon(String id_td, String id_nh, String ten, Integer gia, String moTa, String danhGia, String phanHoi, String hinhAnh) {
+    public ThucDon(String id_td, String id_nh, String ten, int gia, String moTa, String danhGia, String phanHoi, String hinhAnh) {
         this.id_td = id_td;
         this.id_nh = id_nh;
         this.ten = ten;

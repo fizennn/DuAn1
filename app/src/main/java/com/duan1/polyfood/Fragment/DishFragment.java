@@ -16,20 +16,22 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.duan1.polyfood.Adapter.ThucDonAdapter;
+import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -38,14 +40,13 @@ import java.util.List;
 
 public class DishFragment extends Fragment {
 
-
     private ImageView imgSelectedImage;
     private Uri imageUri;
-    private ThucDonDAO thucDonDAO = new ThucDonDAO();
+    private ThucDonDAO thucDonDAO;
     private StorageReference storageReference;
-    private RecyclerView recyclerView;
-    private ThucDonAdapter thucDonAdapter;
-    private List<ThucDon> thucDonList = new ArrayList<>();
+    private RecyclerView recyclerViewNgang;
+    private ThucDonNgangAdapter thucDonNgangAdapter;
+    private List<ThucDon> foodListNgang;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -56,34 +57,40 @@ public class DishFragment extends Fragment {
                 }
             });
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dish, container, false);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-
-        recyclerView = view.findViewById(R.id.recyclerViewDishes);
+        thucDonDAO = new ThucDonDAO();
         FloatingActionButton btnAdd = view.findViewById(R.id.floatAdd);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        thucDonAdapter = new ThucDonAdapter(getContext(), thucDonList);
-        recyclerView.setAdapter(thucDonAdapter);
+        recyclerViewNgang = view.findViewById(R.id.recyclerViewDishes);
+        recyclerViewNgang.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        loadThucDon();
+        foodListNgang = new ArrayList<>();
+
+        thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThucDon> thucDonList) {
+                foodListNgang.clear();
+                for (ThucDon don : thucDonList){
+                    foodListNgang.add(don);
+                }
+                thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang,getContext());
+                recyclerViewNgang.setAdapter(thucDonNgangAdapter);
+            }
+        });
+
 
         btnAdd.setOnClickListener(v -> showAddThucDonDialog());
 
         return view;
     }
 
-    private void loadThucDon() {
-        thucDonDAO.getAllThucDon(thucDonList -> {
-            this.thucDonList.addAll(thucDonList);
-            thucDonAdapter.notifyDataSetChanged();
-        });
-    }
+
 
     private void showAddThucDonDialog() {
         Dialog dialog = new Dialog(getContext());
@@ -96,7 +103,7 @@ public class DishFragment extends Fragment {
         EditText edtMoTa = dialog.findViewById(R.id.edtMoTa);
         EditText edtDanhGia = dialog.findViewById(R.id.edtDanhgia);
         EditText edtPhanHoi = dialog.findViewById(R.id.edtPhanhoi);
-        Button btnChooseImage = dialog.findViewById(R.id.btnChooseImage);
+        ImageButton btnChooseImage = dialog.findViewById(R.id.btnChooseImage);
         Button btnSaveThucDon = dialog.findViewById(R.id.btnAddThucDon);
 
         btnChooseImage.setOnClickListener(v -> {
@@ -114,7 +121,12 @@ public class DishFragment extends Fragment {
             ThucDon thucDon = new ThucDon();
             thucDon.setId_nh(edtIdNh.getText().toString());
             thucDon.setTen(edtTen.getText().toString());
-            thucDon.setGia(Integer.parseInt(edtGia.getText().toString()));
+            try {
+                thucDon.setGia(Integer.parseInt(edtGia.getText().toString()));
+            } catch (NumberFormatException e) {
+                Toast.makeText(getContext(), "Invalid price", Toast.LENGTH_SHORT).show();
+                return;
+            }
             thucDon.setMoTa(edtMoTa.getText().toString());
             thucDon.setDanhGia(edtDanhGia.getText().toString());
             thucDon.setPhanHoi(edtPhanHoi.getText().toString());

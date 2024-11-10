@@ -1,67 +1,109 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        >
+        <ImageView
+            android:id="@+id/imgSelectedImage"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_null"/>
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:src="@drawable/add_image"
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:layout_gravity="right|bottom"
+            android:id="@+id/btnChooseImage" />
+
+    </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/edtIhnh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="ID nhà hàng"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textSize="15dp"
+        android:background="@drawable/rounded_background"
+        android:padding="10dp"
+        android:layout_marginTop="4dp"/>
 
     <EditText
         android:id="@+id/edtTen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Tên món ăn"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textSize="15dp"
+        android:background="@drawable/rounded_background"
+        android:padding="10dp"
+        android:layout_marginTop="4dp"/>
 
     <EditText
         android:id="@+id/edtGia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Giá"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:textSize="15dp"
+        android:background="@drawable/rounded_background"
+        android:padding="10dp"
+        android:layout_marginTop="4dp"/>
 
     <EditText
         android:id="@+id/edtMoTa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mô tả"
-        android:inputType="text" />
+        android:textSize="15dp"
+        android:inputType="text"
+        android:background="@drawable/rounded_background"
+        android:padding="10dp"
+        android:layout_marginTop="4dp"/>
 
     <EditText
         android:id="@+id/edtDanhgia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="15dp"
         android:hint="Đánh giá ( 1.0 - 5.0 )"
-        android:inputType="text" />
+        android:inputType="text"
+        android:background="@drawable/rounded_background"
+        android:padding="10dp"
+        android:layout_marginTop="4dp"/>
 
     <EditText
         android:id="@+id/edtPhanhoi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Phản hồi"
-        android:inputType="text" />
-
-    <ImageView
-        android:id="@+id/imgSelectedImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center" />
-
-    <Button
-        android:id="@+id/btnChooseImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chọn hình ảnh" />
+        android:textSize="15dp"
+        android:inputType="text"
+        android:background="@drawable/rounded_background"
+        android:padding="10dp"
+        android:layout_marginTop="4dp"/>
 
     <Button
         android:id="@+id/btnAddThucDon"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm món ăn" />
+        android:layout_gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:padding="15dp"
+        android:background="@drawable/button_background"
+        android:text="Thêm món ăn"
+        android:layout_marginTop="15dp"/>
 </LinearLayout>
 
