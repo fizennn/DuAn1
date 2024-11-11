@@ -8,7 +8,8 @@ public class ThucDon {
     private String moTa;
     private String danhGia;
     private String phanHoi;
-    private String hinhAnh; // Add image URL attribute
+    private String hinhAnh;
+    private int soLuong;
 
     public ThucDon() {}
 
@@ -46,4 +47,12 @@ public class ThucDon {
 
     public String getHinhAnh() { return hinhAnh; }
     public void setHinhAnh(String hinhAnh) { this.hinhAnh = hinhAnh; }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
 }

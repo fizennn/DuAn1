@@ -242,6 +242,7 @@
             >
 
             <LinearLayout
+                android:id="@+id/linerAddToCart"
                 android:gravity="center"
                 android:background="@color/baseColor"
                 android:layout_width="match_parent"
