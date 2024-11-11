@@ -27,7 +27,7 @@ public class HoaDonDAO {
     }
 
     public void getAllHoaDon(FirebaseCallback callback) {
-        database.child("HoaDon").addValueEventListener(new ValueEventListener() {
+        database.child(authen.getUID()).child("HoaDon").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<HoaDon> hoaDonList = new ArrayList<>();
@@ -48,12 +48,11 @@ public class HoaDonDAO {
 
     public void addHoaDon(HoaDon hoaDon) {
         String key = database.child("HoaDon").push().getKey();
-        hoaDon.setId_tt(key);
         database.child(authen.getUID()).child("HoaDon").child(key).setValue(hoaDon);
     }
 
     public void updateHoaDon(HoaDon hoaDon) {
-        database.child(authen.getUID()).child("HoaDon").child(hoaDon.getId_tt()).setValue(hoaDon);
+        database.child(authen.getUID()).child("HoaDon").child(hoaDon.getId_hd()).setValue(hoaDon);
     }
 
     public void deleteHoaDon(String id) {

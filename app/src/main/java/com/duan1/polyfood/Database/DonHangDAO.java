@@ -27,7 +27,7 @@ public class DonHangDAO {
     }
 
     public void getAllDonHang(FirebaseCallback callback) {
-        database.child("DonHang").addValueEventListener(new ValueEventListener() {
+        database.child(authen.getUID()).child("DonHang").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<DonHang> donHangList = new ArrayList<>();

@@ -1,0 +1,162 @@
+package com.duan1.polyfood;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.bumptech.glide.Glide;
+import com.duan1.polyfood.Database.DonHangDAO;
+import com.duan1.polyfood.Database.HoaDonDAO;
+import com.duan1.polyfood.Database.ThucDonDAO;
+import com.duan1.polyfood.Fragment.BillFragment;
+import com.duan1.polyfood.Models.DonHang;
+import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.ThucDon;
+import com.duan1.polyfood.Other.IntToVND;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PayActivity extends AppCompatActivity {
+
+    private String UID;
+    private int soLuong;
+    private TextView txtTenMonAn, txtGia, txtSoluong, txtTongTien;
+    private Button btnPay;
+    private ThucDonDAO thucDonDAO;
+    private ThucDon thucDon1;
+    private ImageView img;
+    private DatabaseReference database;
+    private HoaDonDAO hoaDonDAO;
+    private SharedPreferences sharedPreferences;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_pay);
+
+        // Khởi tạo các view
+        txtTenMonAn = findViewById(R.id.txtTenMonAn);
+        txtGia = findViewById(R.id.txtGia);
+        txtSoluong = findViewById(R.id.txtSoluong);
+        txtTongTien = findViewById(R.id.txtTongTien);
+        btnPay = findViewById(R.id.btnPay);
+        img = findViewById(R.id.img);
+
+        // Khởi tạo đối tượng DAO và ThucDon
+        thucDonDAO = new ThucDonDAO();
+        thucDon1 = new ThucDon();
+        hoaDonDAO = new HoaDonDAO();
+
+        // Khởi tạo đối tượng DatabaseReference
+        database = FirebaseDatabase.getInstance().getReference();
+
+        // Lấy dữ liệu từ Intent
+        Intent intent = getIntent();
+        soLuong = intent.getIntExtra("SO_LUONG", 0);
+        UID = getIntent().getStringExtra("UID");
+
+        sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
+
+        thucDonDAO.getAThucDon(new ThucDonDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThucDon> thucDonList) { }
+
+            @Override
+            public void onCallback(ThucDon thucDon) {
+                thucDon1 = thucDon;
+                txtTenMonAn.setText(thucDon.getTen());
+                txtGia.setText(formatToVND(thucDon.getGia()));
+                txtSoluong.setText("x" + soLuong);
+
+                // Tính tổng tiền (gia món ăn * soLuong)
+                int tongTien = thucDon.getGia() * soLuong;
+                // Hiển thị tổng tiền
+                txtTongTien.setText("" + formatToVND(tongTien));
+
+                if (PayActivity.this != null) {
+                    Glide.with(PayActivity.this)
+                            .load(thucDon.getHinhAnh())
+                            .placeholder(R.drawable.load)
+                            .error(R.drawable.load)
+                            .into(img);
+                }
+
+                // Xử lý đánh giá sao (giữ nguyên đoạn mã của bạn để cập nhật sao)
+            }
+        }, UID);
+
+        // Xử lý sự kiện thanh toán
+        btnPay.setOnClickListener(v -> {
+            HoaDon hoaDon = new HoaDon();
+            hoaDon.setId_hd(FirebaseDatabase.getInstance().getReference().push().getKey());
+            hoaDon.setTenMonAn(thucDon1.getTen());
+            hoaDon.setSoLuong(soLuong);
+            hoaDon.setGia(thucDon1.getGia());
+            hoaDon.setTongTien(thucDon1.getGia() * soLuong);
+            hoaDon.setHinhAnh(thucDon1.getHinhAnh());
+
+            // Gọi phương thức addDonHang để thêm đơn hàng vào Firebase
+            hoaDonDAO.addHoaDon(hoaDon);
+
+            // Xóa món ăn khỏi giỏ hàng (SharedPreferences)
+            removeFromCart();
+
+            // Thông báo và chuyển sang màn hình BillFragment
+            Toast.makeText(PayActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+
+            Intent intent1 = new Intent(PayActivity.this, MainActivity.class);
+            startActivity(intent1);
+        });
+
+    }
+
+    private String formatToVND(int amount) {
+        return String.format("%,d VND", amount);
+    }
+
+    private void removeFromCart() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String json = sharedPreferences.getString("listCart", "");
+        if (!json.isEmpty()) {
+            try {
+                Type type = new TypeToken<ArrayList<ThucDon>>() {}.getType();
+                List<ThucDon> listCart = new Gson().fromJson(json, type);
+                if (listCart != null && !listCart.isEmpty()) {
+                    // Xóa món ăn đã thanh toán khỏi giỏ hàng
+                    for (int i = 0; i < listCart.size(); i++) {
+                        if (listCart.get(i).getId_td().equals(thucDon1.getId_td())) {
+                            listCart.remove(i);
+                            break;
+                        }
+                    }
+                    // Lưu lại giỏ hàng mới
+                    editor.putString("listCart", new Gson().toJson(listCart));
+                    editor.apply();
+                }
+            } catch (Exception e) {
+                Log.e("PayActivity", "Error parsing or saving cart: " + e.getMessage());
+            }
+        }
+    }
+
+
+}

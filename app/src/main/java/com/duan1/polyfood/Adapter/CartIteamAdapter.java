@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.Other.IntToVND;
+import com.duan1.polyfood.PayActivity;
 import com.duan1.polyfood.R;
 
 import java.util.List;
@@ -60,6 +61,17 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
 
             }
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PayActivity.class);
+                intent.putExtra("UID", ThucDon.getId_td());
+                intent.putExtra("SO_LUONG", ThucDon.getSoLuong());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override

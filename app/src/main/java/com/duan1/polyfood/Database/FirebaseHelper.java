@@ -279,7 +279,7 @@ public class FirebaseHelper {
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 HoaDon hoaDon = snapshot.getValue(HoaDon.class);
                 for (int i = 0; i < hoaDonList.size(); i++) {
-                    if (hoaDonList.get(i).getId_tt().equals(hoaDon.getId_tt())) {
+                    if (hoaDonList.get(i).getId_hd().equals(hoaDon.getId_hd())) {
                         hoaDonList.set(i, hoaDon);  // Cập nhật hóa đơn trong danh sách
                         break;
                     }
@@ -290,7 +290,7 @@ public class FirebaseHelper {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
                 HoaDon hoaDon = snapshot.getValue(HoaDon.class);
-                hoaDonList.removeIf(hd -> hd.getId_tt().equals(hoaDon.getId_tt()));  // Xóa hóa đơn khỏi danh sách
+                hoaDonList.removeIf(hd -> hd.getId_hd().equals(hoaDon.getId_hd()));  // Xóa hóa đơn khỏi danh sách
                 onComplete.run();  // Cập nhật giao diện khi dữ liệu bị xóa
             }
 
@@ -308,12 +308,12 @@ public class FirebaseHelper {
 
     public void addHoaDon(HoaDon hoaDon) {
         String key = database.child("HoaDon").push().getKey();
-        hoaDon.setId_tt(key);
+        hoaDon.setId_hd(key);
         database.child("HoaDon").child(key).setValue(hoaDon);
     }
 
     public void updateHoaDon(HoaDon hoaDon) {
-        database.child("HoaDon").child(hoaDon.getId_tt()).setValue(hoaDon);
+        database.child("HoaDon").child(hoaDon.getId_hd()).setValue(hoaDon);
     }
 
     public void deleteHoaDon(String id) {

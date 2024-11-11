@@ -1,6 +1,7 @@
 package com.duan1.polyfood;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -190,6 +191,13 @@ public class MonAnActivity extends AppCompatActivity {
                 for (ThucDon don : listCart) {
                     Log.d(TAG, "onClick: " + don.getTen());
                 }
+
+
+                // di chuyen sang trang Pay Acitivity
+                Intent intent = new Intent(MonAnActivity.this, PayActivity.class);
+                intent.putExtra("UID", UID);
+                intent.putExtra("SO_LUONG", soLuong);
+                startActivity(intent);
             }
         });
     }
