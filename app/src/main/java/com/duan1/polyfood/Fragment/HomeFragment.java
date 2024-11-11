@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.duan1.polyfood.Adapter.FoodAdapter;
@@ -21,6 +22,7 @@ import com.duan1.polyfood.CartActivity;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
+import com.duan1.polyfood.SearchActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -41,6 +43,7 @@ public class HomeFragment extends Fragment {
     private CardView btnOpenCart;
     private TextView txvSl;
     private CardView txvNoti;
+    private ImageView imgSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class HomeFragment extends Fragment {
         btnOpenCart = view.findViewById(R.id.btnOpenCart);
         txvSl = view.findViewById(R.id.txvSoLuongIteam);
         txvNoti = view.findViewById(R.id.txvNoti);
+        imgSearch = view.findViewById(R.id.imgSearch);
 
         // Set up RecyclerViews
         setupRecyclerViews(view);
@@ -66,6 +70,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 openCart();
+            }
+        });
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
 

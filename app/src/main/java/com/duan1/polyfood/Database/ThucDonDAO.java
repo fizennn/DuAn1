@@ -106,4 +106,30 @@ public class ThucDonDAO {
         });
     }
 
+    public void searchThucDonByName(String name, FirebaseCallback callback) {
+        database.child("NhaHang").child("ThucDon")
+                .orderByChild("ten")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<ThucDon> searchResults = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            ThucDon thucDon = data.getValue(ThucDon.class);
+                            if (thucDon != null && thucDon.getTen() != null) {
+                                // Kiểm tra nếu tên món ăn chứa từ khóa
+                                if (thucDon.getTen().toLowerCase().contains(name.toLowerCase())) {
+                                    searchResults.add(thucDon);
+                                }
+                            }
+                        }
+                        callback.onCallback(searchResults);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Database error: " + error.getMessage());
+                    }
+                });
+    }
+
 }
