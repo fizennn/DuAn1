@@ -80,20 +80,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViews(View view) {
+        // Setup cho recyclerview1
         recyclerView = view.findViewById(R.id.recyclerview1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        // Mock data for first RecyclerView
+        // Tải dữ liệu vào foodList và cập nhật adapter cho recyclerview1
         foodList = new ArrayList<>();
-        ThucDon thucDonSample = new ThucDon();
-        thucDonSample.setTen("Pho Sieu Ngon");
-        thucDonSample.setDanhGia("5");
-        foodList.add(thucDonSample);
-        foodList.add(thucDonSample);
-        foodList.add(thucDonSample);
-
         foodAdapter = new FoodAdapter(getContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
+
+        // Gọi hàm loadSuggestedDishes để lấy dữ liệu từ Firebase
+        loadSuggestedDishes();
 
         // Setup and fetch data for second RecyclerView
         recyclerViewNgang = view.findViewById(R.id.recyclerview2);
@@ -150,4 +147,26 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getContext(), CartActivity.class);
         getContext().startActivity(intent);
     }
+    private void loadSuggestedDishes() {
+        thucDonDAO.getSuggestedDishes(new ThucDonDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThucDon> suggestedDishes) {
+                if (suggestedDishes == null || suggestedDishes.isEmpty()) {
+                    Log.d(TAG, "Không có món ăn gợi ý.");
+                } else {
+                    Log.d(TAG, "Dữ liệu món ăn gợi ý đã được tải: " + suggestedDishes.size());
+                    foodList.clear();
+                    foodList.addAll(suggestedDishes);
+                    foodAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+                }
+            }
+
+            @Override
+            public void onCallback(ThucDon thucDon) {
+                // Không sử dụng callback này
+            }
+        });
+    }
+
+
 }
