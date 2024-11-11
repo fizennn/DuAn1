@@ -3,7 +3,7 @@ package com.duan1.polyfood.Models;
 public class NguoiDung {
     private String id_nd;
     private String hoTen;
-    private String matKhau;
+    private String imgUrl;
     private int role;
     private String email;
     private String diaChi;
@@ -23,10 +23,10 @@ public class NguoiDung {
     }
     public NguoiDung() {}
 
-    public NguoiDung(String id_nd, String hoTen, String matKhau, int role, String email, String diaChi, String sdt) {
+    public NguoiDung(String id_nd, String hoTen, String imgUrl, int role, String email, String diaChi, String sdt) {
         this.id_nd = id_nd;
         this.hoTen = hoTen;
-        this.matKhau = matKhau;
+        this.imgUrl = imgUrl;
         this.role = role;
         this.email = email;
         this.diaChi = diaChi;
@@ -39,8 +39,8 @@ public class NguoiDung {
     public String getHoTen() { return hoTen; }
     public void setHoTen(String hoTen) { this.hoTen = hoTen; }
 
-    public String getMatKhau() { return matKhau; }
-    public void setMatKhau(String matKhau) { this.matKhau = matKhau; }
+    public String getimgUrl() { return imgUrl; }
+    public void setimgUrl(String imgUrl) { this.imgUrl = imgUrl; }
 
     public int getRole() { return role; }
     public void setRole(int role) { this.role = role; }

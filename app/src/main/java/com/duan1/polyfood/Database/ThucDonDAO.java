@@ -72,10 +72,18 @@ public class ThucDonDAO {
 
 
     public void addThucDon(ThucDon thucDon, Uri imageUri) {
+
+        if (thucDon.getDanhGia() == null || thucDon.getDanhGia().isEmpty()) {
+            thucDon.setDanhGia("0"); // Giá trị mặc định cho đánh giá
+        }
+        if (thucDon.getPhanHoi() == null || thucDon.getPhanHoi().isEmpty()) {
+            thucDon.setPhanHoi("0"); // Giá trị mặc định cho phản hồi
+        }
+
         String key = database.child("NhaHang").child("ThucDon").push().getKey();
         if (key != null) {
             thucDon.setId_td(key);
-            StorageReference imgRef = storageReference.child(key + ".jpg");
+            StorageReference imgRef = storageReference.child(thucDon.getTen() + ".jpg");
 
             imgRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
                             .addOnSuccessListener(uri -> {
@@ -175,5 +183,31 @@ public class ThucDonDAO {
 
 
 
+
+    public void searchThucDonByName(String name, FirebaseCallback callback) {
+        database.child("NhaHang").child("ThucDon")
+                .orderByChild("ten")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<ThucDon> searchResults = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            ThucDon thucDon = data.getValue(ThucDon.class);
+                            if (thucDon != null && thucDon.getTen() != null) {
+                                // Kiểm tra nếu tên món ăn chứa từ khóa
+                                if (thucDon.getTen().toLowerCase().contains(name.toLowerCase())) {
+                                    searchResults.add(thucDon);
+                                }
+                            }
+                        }
+                        callback.onCallback(searchResults);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Database error: " + error.getMessage());
+                    }
+                });
+    }
 
 }

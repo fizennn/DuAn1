@@ -38,13 +38,8 @@ public class InputInfoActivity extends AppCompatActivity {
         nguoiDungDAO = new NguoiDungDAO();
         fireBaseHelper = new AuthenticationFireBaseHelper();
 
-        Log.d(TAG, "onCreate: "+fireBaseHelper.getUID());
+        Log.d(TAG, "onCreate: INPUT"+fireBaseHelper.getUID());
 
-
-
-
-        Intent intent = new Intent(InputInfoActivity.this,MainActivity.class);
-        startActivity(intent);
 
         edtName = findViewById(R.id.edtName);
         edtAge = findViewById(R.id.edtAge);
@@ -53,7 +48,7 @@ public class InputInfoActivity extends AppCompatActivity {
         btnGetInfo = findViewById(R.id.btnGetInfo);
 
         Spinner spinnerGender = findViewById(R.id.spinnerGender);
-        String[] genders = {"Male", "Female", "Other"};
+        String[] genders = {"Nam", "Nữ", "Khác"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, genders);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(adapter);

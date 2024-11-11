@@ -19,6 +19,7 @@
 
             <!-- Welcome Text -->
             <TextView
+                android:id="@+id/txvChao"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/splinesans_bold"
@@ -42,6 +43,7 @@
 
             <!-- Search Bar -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/imgSearch"
                 android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,13 +58,16 @@
                     android:padding="12dp">
 
                     <ImageView
+                        android:clickable="false"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/search"
                         android:contentDescription=""
                         app:tint="#757575" />
 
-                    <EditText
+                    <TextView
+                        android:enabled="false"
+                        android:clickable="false"
                         android:fontFamily="@font/spline_sans"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

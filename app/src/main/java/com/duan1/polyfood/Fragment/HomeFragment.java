@@ -5,8 +5,6 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,11 +21,6 @@ import com.duan1.polyfood.CartActivity;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -87,19 +80,20 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViews(View view) {
-        // Setup cho recyclerview1
         recyclerView = view.findViewById(R.id.recyclerview1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        // Tải dữ liệu vào foodList và cập nhật adapter cho recyclerview1
+        // Mock data for first RecyclerView
         foodList = new ArrayList<>();
+        ThucDon thucDonSample = new ThucDon();
+        thucDonSample.setTen("Pho Sieu Ngon");
+        thucDonSample.setDanhGia("5");
+        foodList.add(thucDonSample);
+        foodList.add(thucDonSample);
+        foodList.add(thucDonSample);
+
         foodAdapter = new FoodAdapter(getContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
-
-        // Gọi hàm loadSuggestedDishes để lấy dữ liệu từ Firebase
-        loadSuggestedDishes();
-
-
 
         // Setup and fetch data for second RecyclerView
         recyclerViewNgang = view.findViewById(R.id.recyclerview2);
@@ -156,20 +150,4 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getContext(), CartActivity.class);
         getContext().startActivity(intent);
     }
-    private void loadSuggestedDishes() {
-        thucDonDAO.getSuggestedDishes(new ThucDonDAO.FirebaseCallback() {
-            @Override
-            public void onCallback(ArrayList<ThucDon> suggestedDishes) {
-                foodList.clear();
-                foodList.addAll(suggestedDishes);
-                foodAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
-            }
-
-            @Override
-            public void onCallback(ThucDon thucDon) {
-                // Không sử dụng callback này
-            }
-        });
-    }
-
 }
