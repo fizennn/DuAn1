@@ -1,12 +1,18 @@
 package com.duan1.polyfood.Database;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+import static java.security.AccessController.getContext;
+
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.duan1.polyfood.Fragment.DishSuggestFragment;
 import com.duan1.polyfood.Models.NhaHang;
 import com.duan1.polyfood.Models.ThucDon;
 import com.google.firebase.database.ChildEventListener;
@@ -105,5 +111,69 @@ public class ThucDonDAO {
             }
         });
     }
+    public void addSuggestedDishToFirebase(ThucDon thucDon, Context context) {
+        // Tham chiếu đến nút "SuggestedDishes" trên Firebase
+        DatabaseReference suggestedRef = FirebaseDatabase.getInstance().getReference("NhaHang").child("ThucDonSuggestions");
+
+        // Kiểm tra xem món ăn đã tồn tại chưa
+        suggestedRef.orderByChild("ten").equalTo(thucDon.getTen()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Nếu món ăn đã tồn tại
+                    Toast.makeText(context, "Món ăn này đã có trong gợi ý", Toast.LENGTH_SHORT).show();  // Sử dụng requireContext() thay vì getContext()
+                } else {
+                    // Nếu món ăn chưa tồn tại, tạo key mới và thêm món ăn vào Firebase
+                    String id = suggestedRef.push().getKey();  // Tạo một key duy nhất cho món ăn
+
+                    if (id != null) {
+                        // Tạo đối tượng chỉ chứa các trường cần thiết
+                        ThucDon dishToUpload = new ThucDon(thucDon.getTen(), thucDon.getDanhGia(), thucDon.getHinhAnh());
+
+                        // Lưu vào Firebase
+                        suggestedRef.child(id).setValue(dishToUpload)
+                                .addOnSuccessListener(aVoid -> Log.d("Firebase", "Món ăn đã được thêm vào gợi ý"))
+                                .addOnFailureListener(e -> Log.e("Firebase", "Lỗi khi thêm món ăn vào gợi ý", e));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Firebase", "Lỗi khi kiểm tra món ăn", databaseError.toException());
+            }
+        });
+    }
+
+
+
+
+    public void getSuggestedDishes(FirebaseCallback callback) {
+        FirebaseDatabase.getInstance().getReference("NhaHang").child("ThucDonSuggestions")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<ThucDon> suggestedDishes = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            try {
+                                // Firebase tự động ánh xạ các trường trong dữ liệu vào đối tượng ThucDon
+                                ThucDon thucDon = data.getValue(ThucDon.class);
+                                suggestedDishes.add(thucDon);
+                            } catch (DatabaseException e) {
+                                Log.e("Firebase", "Failed to convert data: " + e.getMessage());
+                            }
+                        }
+                        callback.onCallback(suggestedDishes);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Database error: " + error.getMessage());
+                    }
+                });
+    }
+
+
+
 
 }

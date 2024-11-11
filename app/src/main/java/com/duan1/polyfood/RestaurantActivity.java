@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.duan1.polyfood.Fragment.DishFragment;
+import com.duan1.polyfood.Fragment.DishSuggestFragment;
 import com.duan1.polyfood.Fragment.HomeFragment;
 import com.duan1.polyfood.Fragment.OrderFragment;
 import com.duan1.polyfood.Fragment.ProfileFragment;
@@ -48,10 +49,12 @@ public class RestaurantActivity extends AppCompatActivity {
 
         // Tái sử dụng một instance của HomeFragment cho tất cả các tab, nếu không cần các fragment khác nhau
         DishFragment fragment1 = new DishFragment();
+        DishSuggestFragment fragment5 = new DishSuggestFragment();
         OrderFragment fragment2 = new OrderFragment();
         StatisticFragment fragment3 = new StatisticFragment();
         ProfileResFragment fragment4 = new ProfileResFragment();
         adapter.addFragment(fragment1, "Dish");
+        adapter.addFragment(fragment5, "Mon an goi y");
         adapter.addFragment(fragment2, "Order");
         adapter.addFragment(fragment3, "Statistic");
         adapter.addFragment(fragment4, "Profile");

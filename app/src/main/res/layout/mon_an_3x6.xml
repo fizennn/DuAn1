@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
     <ImageView
-        android:src="@drawable/phobo"
         android:id="@+id/imgFood"
         android:layout_width="match_parent"
         android:layout_height="130dp"
