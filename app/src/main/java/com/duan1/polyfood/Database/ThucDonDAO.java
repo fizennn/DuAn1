@@ -66,10 +66,18 @@ public class ThucDonDAO {
 
 
     public void addThucDon(ThucDon thucDon, Uri imageUri) {
+
+        if (thucDon.getDanhGia() == null || thucDon.getDanhGia().isEmpty()) {
+            thucDon.setDanhGia("0"); // Giá trị mặc định cho đánh giá
+        }
+        if (thucDon.getPhanHoi() == null || thucDon.getPhanHoi().isEmpty()) {
+            thucDon.setPhanHoi("0"); // Giá trị mặc định cho phản hồi
+        }
+
         String key = database.child("NhaHang").child("ThucDon").push().getKey();
         if (key != null) {
             thucDon.setId_td(key);
-            StorageReference imgRef = storageReference.child(key + ".jpg");
+            StorageReference imgRef = storageReference.child(thucDon.getTen() + ".jpg");
 
             imgRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
                             .addOnSuccessListener(uri -> {

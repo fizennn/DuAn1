@@ -28,6 +28,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -43,7 +44,8 @@ public class HomeFragment extends Fragment {
     private CardView btnOpenCart;
     private TextView txvSl;
     private CardView txvNoti;
-    private ImageView imgSearch;
+    private CardView imgSearch;
+    private TextView txvChao;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,6 +59,10 @@ public class HomeFragment extends Fragment {
         txvSl = view.findViewById(R.id.txvSoLuongIteam);
         txvNoti = view.findViewById(R.id.txvNoti);
         imgSearch = view.findViewById(R.id.imgSearch);
+        txvChao = view.findViewById(R.id.txvChao);
+
+        txvChao.setText(getGreeting());
+
 
         // Set up RecyclerViews
         setupRecyclerViews(view);
@@ -161,5 +167,20 @@ public class HomeFragment extends Fragment {
     public void openCart(){
         Intent intent = new Intent(getContext(), CartActivity.class);
         getContext().startActivity(intent);
+    }
+
+    public String getGreeting() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if (hour >= 6 && hour < 12) {
+            return "Buổi Sáng Tốt Lành";
+        } else if (hour >= 12 && hour < 18) {
+            return "Buổi Chiều Ấm Áp";
+        } else if (hour >= 18 && hour < 22) {
+            return "Buổi Tối Hạnh Phúc";
+        } else {
+            return "Chúc Bạn Ngủ Ngon";
+        }
     }
 }

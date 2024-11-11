@@ -1,5 +1,6 @@
 package com.duan1.polyfood.Database;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -20,6 +23,7 @@ public class NguoiDungDAO {
     private DatabaseReference database;
     private AuthenticationFireBaseHelper auth;
     private ArrayList<NguoiDung> nguoiDungList;
+    private StorageReference storageReference;
 
 
 
@@ -30,6 +34,7 @@ public class NguoiDungDAO {
     public NguoiDungDAO() {
         database = FirebaseDatabase.getInstance().getReference();
         auth = new AuthenticationFireBaseHelper();
+        storageReference = FirebaseStorage.getInstance().getReference("ProfileImages");
     }
 
     public void getAllNguoiDung(FirebaseCallback callback) {
@@ -37,7 +42,7 @@ public class NguoiDungDAO {
             if (auth.getUID()==null){
                 callback.onCallback(null);
             }
-            database.child(auth.getUID()).child("NguoiDung").addListenerForSingleValueEvent(new ValueEventListener() {
+            database.child("NguoiDung").child(auth.getUID()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
@@ -54,7 +59,7 @@ public class NguoiDungDAO {
     public void check(FirebaseCallback callback,String UID) {
 
 
-        database.child(UID).child("NguoiDung").addListenerForSingleValueEvent(new ValueEventListener() {
+        database.child("NguoiDung").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
@@ -72,7 +77,7 @@ public class NguoiDungDAO {
 
     public void getAllNguoiDungRealTime(FirebaseCallback callback) {
 
-        database.child(auth.getUID()).child("NguoiDung").addValueEventListener(new ValueEventListener() {
+        database.child("NguoiDung").child(auth.getUID()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
@@ -86,18 +91,30 @@ public class NguoiDungDAO {
         });
     }
 
+    public void  addNguoiDungImg(NguoiDung nguoiDung, Uri img){
+        StorageReference imgRef = storageReference.child(nguoiDung.getHoTen() + ".jpg");
+
+        imgRef.putFile(img).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            nguoiDung.setimgUrl(uri.toString());
+                            database.child("NguoiDung").child(auth.getUID()).setValue(nguoiDung);
+                        })
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to get download URL: " + e.getMessage())))
+                .addOnFailureListener(e -> Log.e("Firebase", "Failed to upload image: " + e.getMessage()));
+    }
+
     public void addNguoiDung(NguoiDung nguoiDung) {
         String key = database.child("NguoiDung").push().getKey();
         nguoiDung.setId_nd(key);
-        database.child(auth.getUID()).child("NguoiDung").setValue(nguoiDung);
+        database.child("NguoiDung").child(auth.getUID()).setValue(nguoiDung);
     }
 
     public void updateNguoiDung(NguoiDung nguoiDung) {
-        database.child(auth.getUID()).child("NguoiDung").child(nguoiDung.getId_nd()).setValue(nguoiDung);
+        database.child("NguoiDung").child(auth.getUID()).child(nguoiDung.getId_nd()).setValue(nguoiDung);
     }
 
     public void deleteNguoiDung(String id) {
-        database.child(auth.getUID()).child("NguoiDung").child(id).removeValue();
+        database.child("NguoiDung").child(auth.getUID()).child(id).removeValue();
     }
 
 

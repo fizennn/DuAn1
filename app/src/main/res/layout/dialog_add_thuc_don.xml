@@ -73,27 +73,27 @@
         android:padding="10dp"
         android:layout_marginTop="4dp"/>
 
-    <EditText
-        android:id="@+id/edtDanhgia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:hint="Đánh giá ( 1.0 - 5.0 )"
-        android:inputType="text"
-        android:background="@drawable/rounded_background"
-        android:padding="10dp"
-        android:layout_marginTop="4dp"/>
+<!--    <EditText-->
+<!--        android:id="@+id/edtDanhgia"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="15dp"-->
+<!--        android:hint="Đánh giá ( 1.0 - 5.0 )"-->
+<!--        android:inputType="text"-->
+<!--        android:background="@drawable/rounded_background"-->
+<!--        android:padding="10dp"-->
+<!--        android:layout_marginTop="4dp"/>-->
 
-    <EditText
-        android:id="@+id/edtPhanhoi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Phản hồi"
-        android:textSize="15dp"
-        android:inputType="text"
-        android:background="@drawable/rounded_background"
-        android:padding="10dp"
-        android:layout_marginTop="4dp"/>
+<!--    <EditText-->
+<!--        android:id="@+id/edtPhanhoi"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Phản hồi"-->
+<!--        android:textSize="15dp"-->
+<!--        android:inputType="text"-->
+<!--        android:background="@drawable/rounded_background"-->
+<!--        android:padding="10dp"-->
+<!--        android:layout_marginTop="4dp"/>-->
 
     <Button
         android:id="@+id/btnAddThucDon"

@@ -106,8 +106,8 @@ public class DishFragment extends Fragment {
         EditText edtTen = dialog.findViewById(R.id.edtTen);
         EditText edtGia = dialog.findViewById(R.id.edtGia);
         EditText edtMoTa = dialog.findViewById(R.id.edtMoTa);
-        EditText edtDanhGia = dialog.findViewById(R.id.edtDanhgia);
-        EditText edtPhanHoi = dialog.findViewById(R.id.edtPhanhoi);
+//        EditText edtDanhGia = dialog.findViewById(R.id.edtDanhgia);
+//        EditText edtPhanHoi = dialog.findViewById(R.id.edtPhanhoi);
         ImageButton btnChooseImage = dialog.findViewById(R.id.btnChooseImage);
         Button btnSaveThucDon = dialog.findViewById(R.id.btnAddThucDon);
 
@@ -133,8 +133,8 @@ public class DishFragment extends Fragment {
                 return;
             }
             thucDon.setMoTa(edtMoTa.getText().toString());
-            thucDon.setDanhGia(edtDanhGia.getText().toString());
-            thucDon.setPhanHoi(edtPhanHoi.getText().toString());
+//            thucDon.setDanhGia(edtDanhGia.getText().toString());
+//            thucDon.setPhanHoi(edtPhanHoi.getText().toString());
 
             thucDonDAO.addThucDon(thucDon, imageUri);
             dialog.dismiss();
