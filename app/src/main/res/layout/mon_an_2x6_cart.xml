@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:id="@+id/linearLayoutChitiet"
+  >
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <ImageView
+        android:src="@drawable/nemran"
+        android:id="@+id/imgFood"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_marginLeft="3dp"
+        android:paddingHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/shieldfood"
+                android:layout_width="20dp"
+                android:layout_height="25dp"/>
+            <TextView
+                android:fontFamily="@font/spline_sans"
+                android:gravity="center"
+                android:text="Phở Bò Việt Nam - Không Ngon Không Lấy Tien"
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="17sp"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:ellipsize="end"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/pack"
+                android:layout_width="20dp"
+                android:layout_height="25dp"/>
+            <TextView
+                android:id="@+id/txvSoluong"
+                android:layout_marginLeft="3dp"
+                android:fontFamily="@font/spline_sans"
+                android:gravity="center"
+                android:text="10 Suất"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="17sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:src="@drawable/price50"
+                android:layout_width="20dp"
+                android:layout_height="25dp"/>
+            <TextView
+                android:id="@+id/txvgia"
+                android:layout_marginLeft="3dp"
+                android:fontFamily="@font/spline_sans"
+                android:gravity="center"
+                android:text="10.000VND"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="17sp"
+              />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:text="Xóa"
+            android:textColor="@android:color/white"
+            android:visibility="gone"/> <!-- Ẩn khi không vuốt -->
+
+
+
+
+
+
+
+
+    </LinearLayout>
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

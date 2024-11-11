@@ -69,7 +69,7 @@ public class ThucDonDAO {
         String key = database.child("NhaHang").child("ThucDon").push().getKey();
         if (key != null) {
             thucDon.setId_td(key);
-            StorageReference imgRef = storageReference.child(key + ".jpg");
+            StorageReference imgRef = storageReference.child(thucDon.getTen() + ".jpg");
 
             imgRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
                             .addOnSuccessListener(uri -> {

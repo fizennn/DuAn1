@@ -36,7 +36,7 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_an_2x6, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_an_2x6_cart, parent, false);
         return new ViewHolder(view);
     }
 
@@ -44,8 +44,8 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ThucDon ThucDon = danhSachThucDon.get(position);
         holder.tenTextView.setText(ThucDon.getTen());
-        holder.soSaoTextView.setText(String.valueOf(ThucDon.getDanhGia()+""));
-        holder.txvGia.setText(vnd.convertToVND(ThucDon.getGia()));
+        holder.soSaoTextView.setText(String.valueOf(ThucDon.getSoLuong() + " Suất"));
+        holder.txvGia.setText(vnd.convertToVND(ThucDon.getGia() * ThucDon.getSoLuong()));
 
         if (context != null) {
             Glide.with(context)
@@ -57,9 +57,7 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MonAnActivity.class);
-                intent.putExtra("UID", ThucDon.getId_td()+"");
-                context.startActivity(intent);
+
             }
         });
     }
@@ -70,20 +68,17 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tenTextView, soSaoTextView,txvGia;
+        TextView tenTextView, soSaoTextView, txvGia;
         ImageView imageView;
         LinearLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tenTextView = itemView.findViewById(R.id.tvName);
-            soSaoTextView = itemView.findViewById(R.id.tvPrice);
+            soSaoTextView = itemView.findViewById(R.id.txvSoluong);
             txvGia = itemView.findViewById(R.id.txvgia);
             imageView = itemView.findViewById(R.id.imgFood);
             layout = itemView.findViewById(R.id.linearLayoutChitiet);
         }
     }
-
-
 }
-
