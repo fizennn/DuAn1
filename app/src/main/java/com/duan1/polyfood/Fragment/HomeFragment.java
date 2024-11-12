@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.duan1.polyfood.Adapter.FoodAdapter;
@@ -21,11 +22,13 @@ import com.duan1.polyfood.CartActivity;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
+import com.duan1.polyfood.SearchActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -41,6 +44,10 @@ public class HomeFragment extends Fragment {
     private CardView btnOpenCart;
     private TextView txvSl;
     private CardView txvNoti;
+    private CardView imgSearch;
+    private TextView txvChao;
+    private LinearLayout linearLayout;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +60,10 @@ public class HomeFragment extends Fragment {
         btnOpenCart = view.findViewById(R.id.btnOpenCart);
         txvSl = view.findViewById(R.id.txvSoLuongIteam);
         txvNoti = view.findViewById(R.id.txvNoti);
+        txvChao = view.findViewById(R.id.txvChao);
+        linearLayout = view.findViewById(R.id.linearLayout);
+
+        txvChao.setText(getGreeting());
 
         // Set up RecyclerViews
         setupRecyclerViews(view);
@@ -66,6 +77,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 openCart();
+            }
+        });
+
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -166,6 +186,21 @@ public class HomeFragment extends Fragment {
                 // Không sử dụng callback này
             }
         });
+    }
+
+    public String getGreeting() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if (hour >= 6 && hour < 12) {
+            return "Buổi Sáng Tốt Lành";
+        } else if (hour >= 12 && hour < 18) {
+            return "Buổi Chiều Ấm Áp";
+        } else if (hour >= 18 && hour < 22) {
+            return "Buổi Tối Hạnh Phúc";
+        } else {
+            return "Chúc Bạn Ngủ Ngon";
+        }
     }
 
 

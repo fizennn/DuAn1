@@ -1,0 +1,49 @@
+[33m814dc3b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: pull --no-stat -v --progress origin main: Fast-forward
+[33m558b942[m HEAD@{1}: rebase (finish): returning to refs/heads/main
+[33m558b942[m HEAD@{2}: rebase (pick): Rating System
+[33m62e8a27[m HEAD@{3}: rebase (start): checkout origin/main
+[33m3707530[m HEAD@{4}: commit: Rating System
+[33m7b540a2[m HEAD@{5}: commit: Cart Update
+[33m10d3a4c[m HEAD@{6}: rebase (finish): returning to refs/heads/main
+[33m10d3a4c[m HEAD@{7}: rebase (start): checkout origin/main
+[33mdd46da9[m HEAD@{8}: commit: New
+[33m051a8df[m HEAD@{9}: commit: Mon An Chi Tiet
+[33mbe49460[m HEAD@{10}: rebase (finish): returning to refs/heads/main
+[33mbe49460[m HEAD@{11}: rebase (pick): Mon An Chi Tiet
+[33ma8a870a[m HEAD@{12}: rebase (start): checkout origin/main
+[33m0b56c24[m HEAD@{13}: commit: Mon An Chi Tiet
+[33ma812b42[m HEAD@{14}: rebase (finish): returning to refs/heads/main
+[33ma812b42[m HEAD@{15}: rebase (pick): Mon An Tao
+[33m4a4beb1[m HEAD@{16}: rebase (start): checkout origin/main
+[33m4ec2030[m HEAD@{17}: commit (amend): Mon An Tao
+[33m1a785fc[m HEAD@{18}: commit: Mon An Tao
+[33m09439c5[m HEAD@{19}: commit: Mon An Tao
+[33m7df0f66[m HEAD@{20}: commit: Home Update
+[33m1262e4a[m HEAD@{21}: rebase (finish): returning to refs/heads/main
+[33m1262e4a[m HEAD@{22}: rebase (pick): Home Update
+[33m514f61c[m HEAD@{23}: rebase (start): checkout origin/main
+[33mf203914[m HEAD@{24}: commit: Home Update
+[33m8631889[m HEAD@{25}: rebase (finish): returning to refs/heads/main
+[33m8631889[m HEAD@{26}: rebase (continue): Profile Demo Image Upload
+[33m6f8e048[m HEAD@{27}: rebase (start): checkout origin/main
+[33maecde06[m HEAD@{28}: commit: Profile Demo Image Upload
+[33mea78c7c[m HEAD@{29}: commit: Tablayout Restaurant
+[33m2836d57[m HEAD@{30}: rebase (finish): returning to refs/heads/main
+[33m2836d57[m HEAD@{31}: rebase (start): checkout origin/main
+[33m91c8c3a[m HEAD@{32}: commit (amend): Demo Profile
+[33m2836d57[m HEAD@{33}: commit: Demo Profile
+[33md7eef6c[m HEAD@{34}: rebase (finish): returning to refs/heads/main
+[33md7eef6c[m HEAD@{35}: rebase (pick): Demo Profile
+[33m24bc563[m HEAD@{36}: rebase (start): checkout origin/main
+[33mfcfc1b0[m HEAD@{37}: commit: Demo Profile
+[33m7f35eab[m HEAD@{38}: rebase (finish): returning to refs/heads/main
+[33m7f35eab[m HEAD@{39}: rebase (pick): New Getdata FireBase
+[33mbfe8b41[m HEAD@{40}: rebase (start): checkout origin/main
+[33mf09dcdc[m HEAD@{41}: commit (amend): New Getdata FireBase
+[33m3fd7428[m HEAD@{42}: commit (amend): New Getdata FireBase
+[33md28c9f8[m HEAD@{43}: commit: New Getdata FireBase
+[33m0f0eab2[m HEAD@{44}: commit: New FireBase
+[33m7d18e18[m HEAD@{45}: commit: Bo Sung Layout
+[33mce26756[m HEAD@{46}: pull: Fast-forward
+[33mf021391[m HEAD@{47}: commit: HuyLQ - Noi Chuc Nang Voi Layout
+[33m3710c06[m HEAD@{48}: clone: from https://github.com/fizennn/DuAn1
