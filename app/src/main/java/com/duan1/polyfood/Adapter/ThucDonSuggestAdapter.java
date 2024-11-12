@@ -2,18 +2,20 @@ package com.duan1.polyfood.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.Other.IntToVND;
@@ -21,14 +23,14 @@ import com.duan1.polyfood.R;
 
 import java.util.List;
 
-public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapter.ViewHolder> {
+public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAdapter.ViewHolder> {
 
     private List<ThucDon> danhSachThucDon;
     private IntToVND vnd;
     private Context context;
     private String TAG = "zzzzzzzzzzzzzz";
 
-    public ThucDonNgangAdapter(List<ThucDon> danhSachThucDon,Context context) {
+    public ThucDonSuggestAdapter(List<ThucDon> danhSachThucDon,Context context) {
         this.danhSachThucDon = danhSachThucDon;
         this.context = context;
         vnd = new IntToVND();
@@ -37,7 +39,7 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_an_2x6, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_an_2x6sug, parent, false);
         return new ViewHolder(view);
     }
 
@@ -63,6 +65,12 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
                 context.startActivity(intent);
             }
         });
+        // Xử lý khi nhấn vào nút "Thêm" để thêm món ăn vào mục gợi ý
+        holder.btnAdd.setOnClickListener(v -> {
+            ThucDonDAO thucDonDAO = new ThucDonDAO();
+            thucDonDAO.addSuggestedDishToFirebase(ThucDon, context);  // Gọi phương thức thêm vào gợi ý
+            Toast.makeText(context, "Đã thêm món vào gợi ý!", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -74,6 +82,7 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
         TextView tenTextView, soSaoTextView,txvGia;
         ImageView imageView;
         LinearLayout layout;
+        Button btnAdd;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -82,12 +91,8 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
             txvGia = itemView.findViewById(R.id.txvgia);
             imageView = itemView.findViewById(R.id.imgFood);
             layout = itemView.findViewById(R.id.linearLayoutChitiet);
+            btnAdd = itemView.findViewById(R.id.btnAddSug);
         }
-    }
-    public void updateList(List<ThucDon> newThucDonList) {
-        this.danhSachThucDon.clear();
-        this.danhSachThucDon.addAll(newThucDonList);
-        notifyDataSetChanged();
     }
 
 

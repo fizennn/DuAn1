@@ -24,6 +24,12 @@ public class ThucDon {
         this.hinhAnh = hinhAnh;
     }
 
+    public ThucDon(String ten, String danhGia, String hinhAnh) {
+        this.ten = ten;
+        this.danhGia = danhGia;
+        this.hinhAnh = hinhAnh;
+    }
+
     public String getId_td() { return id_td; }
     public void setId_td(String id_td) { this.id_td = id_td; }
 

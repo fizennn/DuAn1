@@ -13,6 +13,8 @@ import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
 
 import java.util.List;
+import com.bumptech.glide.Glide;
+
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
 
@@ -37,6 +39,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.tvName.setText(food.getTen());
         holder.tvPrice.setText(food.getDanhGia()+"");
         holder.tvLabel.setText(food.getMoTa());
+        Glide.with(context)
+                .load(food.getHinhAnh()) // Đảm bảo đây là URL hoặc đường dẫn hợp lệ
+                .into(holder.imgFood);
 //        holder.imgFood.setImageResource();
     }
 
