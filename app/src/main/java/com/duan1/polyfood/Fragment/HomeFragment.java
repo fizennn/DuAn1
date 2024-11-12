@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.duan1.polyfood.Adapter.FoodAdapter;
@@ -22,13 +21,11 @@ import com.duan1.polyfood.CartActivity;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
-import com.duan1.polyfood.SearchActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -44,8 +41,6 @@ public class HomeFragment extends Fragment {
     private CardView btnOpenCart;
     private TextView txvSl;
     private CardView txvNoti;
-    private CardView imgSearch;
-    private TextView txvChao;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,11 +53,6 @@ public class HomeFragment extends Fragment {
         btnOpenCart = view.findViewById(R.id.btnOpenCart);
         txvSl = view.findViewById(R.id.txvSoLuongIteam);
         txvNoti = view.findViewById(R.id.txvNoti);
-        imgSearch = view.findViewById(R.id.imgSearch);
-        txvChao = view.findViewById(R.id.txvChao);
-
-        txvChao.setText(getGreeting());
-
 
         // Set up RecyclerViews
         setupRecyclerViews(view);
@@ -79,14 +69,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        imgSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return view;
     }
 
@@ -98,20 +80,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerViews(View view) {
+        // Setup cho recyclerview1
         recyclerView = view.findViewById(R.id.recyclerview1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        // Mock data for first RecyclerView
+        // Tải dữ liệu vào foodList và cập nhật adapter cho recyclerview1
         foodList = new ArrayList<>();
-        ThucDon thucDonSample = new ThucDon();
-        thucDonSample.setTen("Pho Sieu Ngon");
-        thucDonSample.setDanhGia("5");
-        foodList.add(thucDonSample);
-        foodList.add(thucDonSample);
-        foodList.add(thucDonSample);
-
         foodAdapter = new FoodAdapter(getContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
+
+        // Gọi hàm loadSuggestedDishes để lấy dữ liệu từ Firebase
+        loadSuggestedDishes();
 
         // Setup and fetch data for second RecyclerView
         recyclerViewNgang = view.findViewById(R.id.recyclerview2);
@@ -168,19 +147,26 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getContext(), CartActivity.class);
         getContext().startActivity(intent);
     }
+    private void loadSuggestedDishes() {
+        thucDonDAO.getSuggestedDishes(new ThucDonDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThucDon> suggestedDishes) {
+                if (suggestedDishes == null || suggestedDishes.isEmpty()) {
+                    Log.d(TAG, "Không có món ăn gợi ý.");
+                } else {
+                    Log.d(TAG, "Dữ liệu món ăn gợi ý đã được tải: " + suggestedDishes.size());
+                    foodList.clear();
+                    foodList.addAll(suggestedDishes);
+                    foodAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+                }
+            }
 
-    public String getGreeting() {
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-
-        if (hour >= 6 && hour < 12) {
-            return "Buổi Sáng Tốt Lành";
-        } else if (hour >= 12 && hour < 18) {
-            return "Buổi Chiều Ấm Áp";
-        } else if (hour >= 18 && hour < 22) {
-            return "Buổi Tối Hạnh Phúc";
-        } else {
-            return "Chúc Bạn Ngủ Ngon";
-        }
+            @Override
+            public void onCallback(ThucDon thucDon) {
+                // Không sử dụng callback này
+            }
+        });
     }
+
+
 }

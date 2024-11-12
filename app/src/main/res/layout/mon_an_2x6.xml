@@ -8,6 +8,7 @@
   >
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         >
@@ -21,7 +22,6 @@
         android:id="@+id/imgFood"
         android:layout_width="100dp"
         android:layout_height="100dp"
-
         android:scaleType="centerCrop" />
 
     <LinearLayout

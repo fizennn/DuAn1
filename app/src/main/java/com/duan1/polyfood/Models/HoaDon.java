@@ -7,17 +7,19 @@ public class HoaDon {
     private int soLuong;
     private int tongTien;
     private String hinhAnh;
+    private String phuongThucThanhToan;
 
     // Constructor
     public HoaDon() {}
 
-    public HoaDon(String id_hd, String tenMonAn, int gia, int soLuong, int tongTien, String hinhAnh) {
+    public HoaDon(String id_hd, String tenMonAn, int gia, int soLuong, int tongTien, String hinhAnh, String phuongThucThanhToan) {
         this.id_hd = id_hd;
         this.tenMonAn = tenMonAn;
         this.gia = gia;
         this.soLuong = soLuong;
         this.tongTien = tongTien;
         this.hinhAnh = hinhAnh;
+        this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
     // Getter và Setter
@@ -67,5 +69,13 @@ public class HoaDon {
 
     public void setHinhAnh(String hinhAnh) {
         this.hinhAnh = hinhAnh;
+    }
+
+    public String getPhuongThucThanhToan() {
+        return phuongThucThanhToan;
+    }
+
+    public void setPhuongThucThanhToan(String phuongThucThanhToan) {
+        this.phuongThucThanhToan = phuongThucThanhToan;
     }
 }

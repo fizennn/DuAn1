@@ -10,23 +10,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-        <androidx.cardview.widget.CardView
-            app:cardCornerRadius="150dp"
-            android:layout_gravity="center"
+
+        <ImageView
+
+            android:id="@+id/imageViewProfile"
             android:layout_width="150dp"
-            android:layout_height="150dp">
-            <ImageView
-                android:scaleType="centerCrop"
-                android:id="@+id/imageViewProfile"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
-                android:src="@drawable/load"
-                />
-        </androidx.cardview.widget.CardView>
-
-
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/header_profile"
+             />
 
         <Button
             android:layout_marginBottom="20dp"

@@ -34,9 +34,10 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         HoaDon hoaDon = hoaDonList.get(position);
         holder.txtTenMonAn.setText(hoaDon.getTenMonAn());
-        holder.txtGia.setText(formatToVND(hoaDon.getGia()));
-        holder.txtSoLuong.setText("x" + hoaDon.getSoLuong());
+        holder.txtGia.setText("Giá: " +formatToVND(hoaDon.getGia()));
+        holder.txtSoLuong.setText("Số lương: x" + hoaDon.getSoLuong());
         holder.txtTongTien.setText("Tổng tiền: " + formatToVND(hoaDon.getTongTien()));
+        holder.txtPhuongThucThanhToan.setText("Phương thức thanh toán: " + hoaDon.getPhuongThucThanhToan());
 
         Glide.with(context)
                 .load(hoaDon.getHinhAnh())
@@ -55,7 +56,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien;
+        TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan;
         ImageView imgMonAn;
 
         public ViewHolder(View itemView) {
@@ -65,6 +66,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
             txtSoLuong = itemView.findViewById(R.id.txtSoLuong);
             txtTongTien = itemView.findViewById(R.id.txtTongTien);
             imgMonAn = itemView.findViewById(R.id.imgMonAn);
+            txtPhuongThucThanhToan = itemView.findViewById(R.id.txtPhuongThucThanhToan);
         }
     }
 }

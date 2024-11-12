@@ -4,4 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+    <string-array name="payment_methods">
+        <item>Chuyển khoản</item>
+        <item>Tiền mặt</item>
+    </string-array>
 </resources>

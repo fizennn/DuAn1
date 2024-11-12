@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class PayActivity extends AppCompatActivity {
     private String UID;
     private int soLuong;
     private TextView txtTenMonAn, txtGia, txtSoluong, txtTongTien;
+    private Spinner spinnerPaymentMethod;
     private Button btnPay;
     private ThucDonDAO thucDonDAO;
     private ThucDon thucDon1;
@@ -60,6 +62,7 @@ public class PayActivity extends AppCompatActivity {
         txtTongTien = findViewById(R.id.txtTongTien);
         btnPay = findViewById(R.id.btnPay);
         img = findViewById(R.id.img);
+        spinnerPaymentMethod = findViewById(R.id.spinnerPaymentMethod);
 
         // Khởi tạo đối tượng DAO và ThucDon
         thucDonDAO = new ThucDonDAO();
@@ -113,6 +116,10 @@ public class PayActivity extends AppCompatActivity {
             hoaDon.setGia(thucDon1.getGia());
             hoaDon.setTongTien(thucDon1.getGia() * soLuong);
             hoaDon.setHinhAnh(thucDon1.getHinhAnh());
+
+            // Lấy phương thức thanh toán từ Spinner
+            String selectedPaymentMethod = spinnerPaymentMethod.getSelectedItem().toString();
+            hoaDon.setPhuongThucThanhToan(selectedPaymentMethod);
 
             // Gọi phương thức addDonHang để thêm đơn hàng vào Firebase
             hoaDonDAO.addHoaDon(hoaDon);
