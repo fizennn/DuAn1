@@ -1,7 +1,9 @@
 package com.duan1.polyfood.Fragment;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -26,6 +28,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.duan1.polyfood.Adapter.DishSuggestAdapter;
+import com.duan1.polyfood.Adapter.FoodAdapter;
 import com.duan1.polyfood.Adapter.ThucDonAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Adapter.ThucDonSuggestAdapter;
@@ -45,9 +49,15 @@ public class DishSuggestFragment extends Fragment {
     private Uri imageUri;
     private ThucDonDAO thucDonDAO;
     private StorageReference storageReference;
-    private RecyclerView recyclerViewNgang;
+    private RecyclerView recyclerView;
     private ThucDonSuggestAdapter thucDonSuggestAdapter;
+    private FloatingActionButton btnAddDishSuggest;
+    private List<ThucDon> foodList;
+    private RecyclerView recyclerViewNgang;
     private List<ThucDon> foodListNgang;
+    private ThucDonNgangAdapter thucDonNgangAdapter;
+
+
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -66,9 +76,32 @@ public class DishSuggestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dishsuggest, container, false);
 
         thucDonDAO = new ThucDonDAO();
-//        FloatingActionButton btnAdd = view.findViewById(R.id.floatAddDishSuggest);
+        btnAddDishSuggest = view.findViewById(R.id.floatAddDishSuggest);
+        recyclerView = view.findViewById(R.id.recyclerViewDishesSuggest);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        recyclerViewNgang = view.findViewById(R.id.recyclerViewDishesSuggest);
+        // Tải dữ liệu vào foodList và cập nhật adapter cho recyclerview1
+        foodList = new ArrayList<>();
+        thucDonSuggestAdapter = new ThucDonSuggestAdapter(foodList,getContext());
+        recyclerView.setAdapter(thucDonSuggestAdapter);
+
+        // Gọi hàm loadSuggestedDishes để lấy dữ liệu từ Firebase
+        loadSuggestedDishes();
+
+
+        btnAddDishSuggest.setOnClickListener(v -> showAddThucDonDialog());
+
+        return view;
+    }
+
+
+
+    private void showAddThucDonDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_dishsuggest, null);
+        builder.setView(dialogView);
+
+        recyclerViewNgang = dialogView.findViewById(R.id.recyclerViewDishes);
         recyclerViewNgang.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         foodListNgang = new ArrayList<>();
@@ -77,68 +110,40 @@ public class DishSuggestFragment extends Fragment {
             @Override
             public void onCallback(ArrayList<ThucDon> thucDonList) {
                 foodListNgang.clear();
-                for (ThucDon don : thucDonList){
-                    foodListNgang.add(don);
-                }
-                thucDonSuggestAdapter = new ThucDonSuggestAdapter(foodListNgang,getContext());
-                recyclerViewNgang.setAdapter(thucDonSuggestAdapter);
+                foodListNgang.addAll(thucDonList); // Thêm món ăn vào danh sách
+                DishSuggestAdapter dishSuggestAdapter = new DishSuggestAdapter(foodListNgang, getContext());
+                recyclerViewNgang.setAdapter(dishSuggestAdapter);
             }
 
             @Override
             public void onCallback(ThucDon thucDon) {
-
+                // Không cần xử lý callback này ở đây
             }
         });
 
-
-//        btnAdd.setOnClickListener(v -> showAddThucDonDialog());
-
-        return view;
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
-
-
-    private void showAddThucDonDialog() {
-        Dialog dialog = new Dialog(getContext());
-        dialog.setContentView(R.layout.dialog_add_thuc_don);
-
-        imgSelectedImage = dialog.findViewById(R.id.imgSelectedImage);
-        EditText edtIdNh = dialog.findViewById(R.id.edtIhnh);
-        EditText edtTen = dialog.findViewById(R.id.edtTen);
-        EditText edtGia = dialog.findViewById(R.id.edtGia);
-        EditText edtMoTa = dialog.findViewById(R.id.edtMoTa);
-        ImageButton btnChooseImage = dialog.findViewById(R.id.btnChooseImage);
-        Button btnSaveThucDon = dialog.findViewById(R.id.btnAddThucDon);
-
-        btnChooseImage.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            imagePickerLauncher.launch(intent);
-        });
-
-        btnSaveThucDon.setOnClickListener(v -> {
-            if (imageUri == null) {
-                Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
-                return;
+    private void loadSuggestedDishes() {
+        thucDonDAO.getSuggestedDishes(new ThucDonDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThucDon> suggestedDishes) {
+                if (suggestedDishes == null || suggestedDishes.isEmpty()) {
+                    Log.d(TAG, "Không có món ăn gợi ý.");
+                } else {
+                    Log.d(TAG, "Dữ liệu món ăn gợi ý đã được tải: " + suggestedDishes.size());
+                    foodList.clear();
+                    foodList.addAll(suggestedDishes);
+                    thucDonSuggestAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+                }
             }
 
-            ThucDon thucDon = new ThucDon();
-            thucDon.setId_nh(edtIdNh.getText().toString());
-            thucDon.setTen(edtTen.getText().toString());
-            try {
-                thucDon.setGia(Integer.parseInt(edtGia.getText().toString()));
-            } catch (NumberFormatException e) {
-                Toast.makeText(getContext(), "Invalid price", Toast.LENGTH_SHORT).show();
-                return;
+            @Override
+            public void onCallback(ThucDon thucDon) {
+                // Không sử dụng callback này
             }
-            thucDon.setMoTa(edtMoTa.getText().toString());
-
-            thucDonDAO.addThucDon(thucDon, imageUri);
-            dialog.dismiss();
-            Toast.makeText(getContext(), "Adding menu item...", Toast.LENGTH_SHORT).show();
         });
-
-        dialog.show();
     }
 
 }

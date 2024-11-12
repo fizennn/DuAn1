@@ -151,13 +151,7 @@
             </LinearLayout>
 
             <!-- Button bên phải trong CardView -->
-            <Button
-                android:id="@+id/btnAddSug"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thêm"
-                android:background="@drawable/button_background"
-                android:layout_gravity="center_vertical"/>
+
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

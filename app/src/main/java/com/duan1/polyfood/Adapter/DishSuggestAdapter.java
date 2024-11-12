@@ -1,11 +1,9 @@
 package com.duan1.polyfood.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,48 +15,60 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
-import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.Other.IntToVND;
 import com.duan1.polyfood.R;
 
 import java.util.List;
 
-public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAdapter.ViewHolder> {
+public class DishSuggestAdapter extends RecyclerView.Adapter<DishSuggestAdapter.ViewHolder> {
 
     private List<ThucDon> danhSachThucDon;
     private IntToVND vnd;
     private Context context;
     private String TAG = "zzzzzzzzzzzzzz";
+    private ThucDonDAO thucDonDAO;
 
-    public ThucDonSuggestAdapter(List<ThucDon> danhSachThucDon,Context context) {
+    public DishSuggestAdapter(List<ThucDon> danhSachThucDon, Context context) {
         this.danhSachThucDon = danhSachThucDon;
         this.context = context;
+        this.thucDonDAO = new ThucDonDAO();
         vnd = new IntToVND();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_an_2x6sug, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mon_an_2x6, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ThucDon ThucDon = danhSachThucDon.get(position);
-        holder.tenTextView.setText(ThucDon.getTen());
-        holder.soSaoTextView.setText(String.valueOf(ThucDon.getDanhGia()+""));
-        holder.txvGia.setText(vnd.convertToVND(ThucDon.getGia()));
+        ThucDon thucDon = danhSachThucDon.get(position);
+        holder.tenTextView.setText(thucDon.getTen());
+        holder.soSaoTextView.setText(String.valueOf(thucDon.getDanhGia()+""));
+        holder.txvGia.setText(vnd.convertToVND(thucDon.getGia()));
 
         if (context != null) {
             Glide.with(context)
-                    .load(ThucDon.getHinhAnh())
+                    .load(thucDon.getHinhAnh())
                     .placeholder(R.drawable.load)
                     .error(R.drawable.load)
                     .into(holder.imageView);
         }
 
+        // Load hình ảnh món ăn
+        Glide.with(context)
+                .load(thucDon.getHinhAnh())
+                .placeholder(R.drawable.load)
+                .error(R.drawable.load)
+                .into(holder.imageView);
 
+        // Thêm sự kiện click vào item để thêm món ăn vào gợi ý
+        holder.itemView.setOnClickListener(v -> {
+            thucDonDAO.addSuggestedDishToFirebase(thucDon, context);  // Gọi hàm thêm món ăn vào gợi ý
+            Toast.makeText(context, "Món ăn đã được thêm vào gợi ý!", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -71,7 +81,6 @@ public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAd
         ImageView imageView;
         LinearLayout layout;
 
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tenTextView = itemView.findViewById(R.id.tvName);
@@ -79,10 +88,6 @@ public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAd
             txvGia = itemView.findViewById(R.id.txvgia);
             imageView = itemView.findViewById(R.id.imgFood);
             layout = itemView.findViewById(R.id.linearLayoutChitiet);
-
         }
     }
-
-
 }
-
