@@ -24,10 +24,11 @@ public class ThucDon {
         this.hinhAnh = hinhAnh;
     }
 
-    public ThucDon(String ten, String danhGia, String hinhAnh) {
+    public ThucDon(String ten, String danhGia, String hinhAnh, int gia) {
         this.ten = ten;
         this.danhGia = danhGia;
         this.hinhAnh = hinhAnh;
+        this.gia = gia;
     }
 
     public String getId_td() { return id_td; }
