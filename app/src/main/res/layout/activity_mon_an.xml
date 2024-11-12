@@ -278,12 +278,144 @@
 
 
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginBottom="100dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="15dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
 
 
 
 
 
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/saorate1"
+                            android:layout_weight="1"
+                            android:src="@drawable/star_empty"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"/>
+                        <ImageView
+                            android:id="@+id/saorate2"
+                            android:layout_weight="1"
+                            android:src="@drawable/star_empty"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"/>
+                        <ImageView
+                            android:id="@+id/saorate3"
+                            android:layout_weight="1"
+                            android:src="@drawable/star_empty"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"/>
+                        <ImageView
+                            android:id="@+id/saorate4"
+                            android:layout_weight="1"
+                            android:src="@drawable/star_empty"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"/>
+                        <ImageView
+                            android:id="@+id/saorate5"
+                            android:layout_weight="1"
+                            android:src="@drawable/star_empty"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"/>
+
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnImgAdd"
+                        android:layout_marginLeft="3dp"
+                        android:tint="#AFAFAF"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/add_image"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+                    <ImageButton
+                        android:id="@+id/btnSendComment"
+                        android:layout_marginLeft="3dp"
+                        android:padding="5dp"
+                        android:tint="@color/baseColor"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/send"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="0dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="2dp"
+                        app:cardCornerRadius="35dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp">
+                        <ImageView
+                            android:id="@+id/imgProfileComment"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/phobo"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"/>
+                    </androidx.cardview.widget.CardView>
+
+
+
+
+                    <EditText
+                        android:id="@+id/edtComment"
+                        android:maxLines="5"
+                        android:paddingTop="9dp"
+                        android:paddingBottom="9dp"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine"
+                        android:overScrollMode="always"
+                        android:hint="Hãy nhập cảm xúc của bạn !"
+                        android:textSize="15dp"
+                        android:paddingHorizontal="10dp"
+                        android:ellipsize="end"
+                        android:background="@drawable/comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 

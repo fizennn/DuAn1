@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +41,15 @@ public class MonAnActivity extends AppCompatActivity {
     private Gson gson;
     private LinearLayout linearLayout;
 
+
+
+    private ImageView saorate1,saorate2,saorate3,saorate4,saorate5,imgProfileComment;
+    private ImageButton btnImgAdd,btnSendComment;
+    private EditText editTextComment;
+    private int rateStar;
+    private String comment;
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +80,27 @@ public class MonAnActivity extends AppCompatActivity {
         btnadd = findViewById(R.id.btnAddChiTiet);
         sl = findViewById(R.id.txvSoLuongChiTiet);
         linearLayout = findViewById(R.id.linerAddToCart);
+
+
+
+
+        saorate1 = findViewById(R.id.saorate1);
+        saorate2 = findViewById(R.id.saorate2);
+        saorate3 = findViewById(R.id.saorate3);
+        saorate4 = findViewById(R.id.saorate4);
+        saorate5 = findViewById(R.id.saorate5);
+        imgProfileComment = findViewById(R.id.imgProfileComment);
+        btnImgAdd = findViewById(R.id.btnImgAdd);
+        btnSendComment = findViewById(R.id.btnSendComment);
+        editTextComment = findViewById(R.id.edtComment);
+
+
+        rateStar = 0;
+
+
+
+
+
 
         // Lấy dữ liệu từ Firebase và cập nhật UI
         thucDonDAO.getAThucDon(new ThucDonDAO.FirebaseCallback() {
@@ -192,6 +224,67 @@ public class MonAnActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
+        saorate1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancleAll();
+                rateStar = 1;
+                choiceStar();
+            }
+        });
+
+        saorate2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancleAll();
+                rateStar = 2;
+                choiceStar();
+            }
+        });
+
+        saorate3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancleAll();
+                rateStar = 3;
+                choiceStar();
+            }
+        });
+
+        saorate4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancleAll();
+                rateStar = 4;
+                choiceStar();
+            }
+        });
+
+        saorate5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancleAll();
+                rateStar = 5;
+                choiceStar();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public void changeCost() {
@@ -224,6 +317,33 @@ public class MonAnActivity extends AppCompatActivity {
             }
         } else {
             listCart = new ArrayList<>();
+        }
+    }
+
+    public void cancleAll(){
+        saorate1.setImageResource(R.drawable.star_empty);
+        saorate2.setImageResource(R.drawable.star_empty);
+        saorate3.setImageResource(R.drawable.star_empty);
+        saorate4.setImageResource(R.drawable.star_empty);
+        saorate5.setImageResource(R.drawable.star_empty);
+    }
+
+    public void choiceStar(){
+
+        if (rateStar>=1){
+            saorate1.setImageResource(R.drawable.star50);
+        }
+        if (rateStar>=2){
+            saorate2.setImageResource(R.drawable.star50);
+        }
+        if (rateStar>=3){
+            saorate3.setImageResource(R.drawable.star50);
+        }
+        if (rateStar>=4){
+            saorate4.setImageResource(R.drawable.star50);
+        }
+        if (rateStar>=5){
+            saorate5.setImageResource(R.drawable.star50);
         }
     }
 }
