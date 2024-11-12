@@ -136,9 +136,10 @@ public class ThucDonDAO {
 
                     if (id != null) {
                         // Tạo đối tượng chỉ chứa các trường cần thiết
-                        ThucDon dishToUpload = new ThucDon(thucDon.getTen(), thucDon.getDanhGia(), thucDon.getHinhAnh());
-
+                        ThucDon dishToUpload = new ThucDon(thucDon.getTen(), thucDon.getDanhGia(), thucDon.getHinhAnh(), thucDon.getGia());
                         // Lưu vào Firebase
+                        Log.d("AddSuggestedDish", "Giá món ăn: " + thucDon.getGia());
+
                         suggestedRef.child(id).setValue(dishToUpload)
                                 .addOnSuccessListener(aVoid -> Log.d("Firebase", "Món ăn đã được thêm vào gợi ý"))
                                 .addOnFailureListener(e -> Log.e("Firebase", "Lỗi khi thêm món ăn vào gợi ý", e));
