@@ -61,14 +61,7 @@ public class ProfileFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference();
         nguoiDungDAO = new NguoiDungDAO();
 
-        storageReference.child("profile_images/" + auth.getUID() + ".jpg").getDownloadUrl().addOnSuccessListener(uri ->
-                Glide.with(ProfileFragment.this)
-                        .load(uri)
-                        .into(imageViewProfile)
-        ).addOnFailureListener(e -> {
 
-            e.printStackTrace();
-        });
 
         loadProfileImage();
 
@@ -76,7 +69,7 @@ public class ProfileFragment extends Fragment {
         button.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setAction(Intent.ACTION_PICK);
             pickImageLauncher.launch(intent);
         });
 
@@ -96,12 +89,7 @@ public class ProfileFragment extends Fragment {
                 age.setText(nguoiDung.getAge());
                 email.setText(nguoiDung.getEmail());
                 phone.setText(nguoiDung.getSdt());
-
-                if (nguoiDung.getProfileImageUrl() != null && !nguoiDung.getProfileImageUrl().isEmpty()) {
-                    loadImageFromUrl(nguoiDung.getProfileImageUrl());
-                } else {
-                    imageViewProfile.setImageResource(R.drawable.header_profile);
-                }
+                loadImageFromUrl(nguoiDung.getimgUrl());
             }
         });
     }
@@ -110,26 +98,14 @@ public class ProfileFragment extends Fragment {
         if (getContext() != null) {
             Glide.with(getContext())
                     .load(imageUrl)
-                    .placeholder(R.drawable.header_profile)
-                    .error(R.drawable.header_profile)
+                    .placeholder(R.drawable.load)
+                    .error(R.drawable.load)
                     .into(imageViewProfile);
         }
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
-        if (imageUri != null) {
-            StorageReference fileReference = storageReference.child("profile_images/" + auth.getUID() + ".jpg");
-
-            fileReference.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String imageUrl = uri.toString();
-                        });
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(getContext(), "Tải ảnh thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-        }
+        nguoiDungDAO.addNguoiDungImg(nguoiDungGet,imageUri);
     }
 
 
