@@ -1,7 +1,5 @@
 package com.duan1.polyfood.Adapter;
 
-import static android.app.PendingIntent.getActivity;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,41 +9,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Database.HoaDonDAO;
-import com.duan1.polyfood.Fragment.ChoGiaoFragment;
-import com.duan1.polyfood.Fragment.ChoXuLyFragment;
-import com.duan1.polyfood.Fragment.DangGiaoFragment;
-import com.duan1.polyfood.Fragment.HoanThanhFragment;
 import com.duan1.polyfood.Models.HoaDon;
 import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
 
-public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder> {
+public class NhaHangHDAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder>{
+
     private Context context;
     private ArrayList<HoaDon> hoaDonList;
     private HoaDonDAO hoaDonDAO;
 
-    public HoaDonAdapter(Context context, ArrayList<HoaDon> hoaDonList) {
+    public NhaHangHDAdapter(Context context, ArrayList<HoaDon> hoaDonList) {
         this.context = context;
         this.hoaDonList = hoaDonList;
         this.hoaDonDAO = new HoaDonDAO();
     }
-
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HoaDonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_hoa_don, parent, false);
-        return new ViewHolder(view);
+        return new HoaDonAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HoaDonAdapter.ViewHolder holder, int position) {
         HoaDon hoaDon = hoaDonList.get(position);
         holder.txtTenMonAn.setText(hoaDon.getTenMonAn());
         holder.txtGia.setText("Giá: " +formatToVND(hoaDon.getGia()));
@@ -60,33 +52,30 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
                 .error(R.drawable.load)
                 .into(holder.imgMonAn);
 
-        // Thiết lập hiển thị theo trạng thái
-        if ("Đang giao".equals(hoaDon.getTrangThai())) {
-            holder.btnDaNhanHang.setVisibility(View.VISIBLE); // Hiện nút "Đã nhận được hàng"
-            holder.btnDaNhanHang.setOnClickListener(v -> {
-                // Cập nhật trạng thái đơn hàng thành "Hoàn thành"
-                hoaDon.setTrangThai("Hoàn thành");
+        if ("Chờ xử lý".equals(hoaDon.getTrangThai())) {
+            holder.btnXacNhanXuLy.setVisibility(View.VISIBLE);
+            holder.btnXacNhanXuLy.setOnClickListener(v -> {
+
+                hoaDon.setTrangThai("Chờ giao");
                 hoaDonDAO.updateHoaDon(hoaDon);
 
-                // Cập nhật danh sách hiển thị và giao diện
                 hoaDonList.remove(position);
                 notifyItemRemoved(position);
 
                 notifyDataSetChanged();
             });
         } else {
-            holder.btnDaNhanHang.setVisibility(View.GONE); // Ẩn nút nếu không ở trạng thái "Đang giao"
+            holder.btnXacNhanXuLy.setVisibility(View.GONE);
         }
+    }
 
+    private String formatToVND(int amount) {
+        return String.format("%,d VND", amount);
     }
 
     @Override
     public int getItemCount() {
         return hoaDonList.size();
-    }
-
-    private String formatToVND(int amount) {
-        return String.format("%,d VND", amount);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -107,5 +96,4 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
             btnXacNhanXuLy = itemView.findViewById(R.id.btnXacNhanXuLy);
         }
     }
-
 }

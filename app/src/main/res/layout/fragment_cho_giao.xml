@@ -1,0 +1,13 @@
+<!-- res/layout/fragment_cho_xu_ly.xml (tương tự cho các trạng thái khác) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- RecyclerView để hiển thị danh sách hóa đơn theo trạng thái -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHoaDon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp" />
+</LinearLayout>

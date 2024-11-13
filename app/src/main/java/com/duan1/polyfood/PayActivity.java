@@ -31,6 +31,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +56,6 @@ public class PayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_pay);
 
         // Khởi tạo các view
@@ -120,6 +123,13 @@ public class PayActivity extends AppCompatActivity {
             // Lấy phương thức thanh toán từ Spinner
             String selectedPaymentMethod = spinnerPaymentMethod.getSelectedItem().toString();
             hoaDon.setPhuongThucThanhToan(selectedPaymentMethod);
+
+            // Thiết lập trạng thái mặc định là "Chờ xử lý"
+            hoaDon.setTrangThai("Chờ xử lý");
+
+            // Thiết lập ngày đặt hàng (ngày hiện tại)
+            String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+            hoaDon.setNgayDatHang(currentDate);
 
             // Gọi phương thức addDonHang để thêm đơn hàng vào Firebase
             hoaDonDAO.addHoaDon(hoaDon);

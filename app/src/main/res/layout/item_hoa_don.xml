@@ -11,30 +11,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <!-- Hình ảnh món ăn -->
+        <!-- Hình ảnh món ăn bên trái -->
         <ImageView
             android:id="@+id/imgMonAn"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="130dp"
+            android:layout_margin="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/phobo"
             android:contentDescription="Hình ảnh món ăn" />
 
-        <!-- Thông tin món ăn -->
+        <!-- Thông tin món ăn bên phải -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/txtTenMonAn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tên món ăn"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
                 android:paddingBottom="4dp" />
@@ -44,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Giá: 120.000 VND"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#666666"
                 android:paddingBottom="4dp" />
 
@@ -53,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số lượng: 1"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#666666"
                 android:paddingBottom="4dp" />
 
@@ -62,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phương thức thanh toán: Tiền mặt"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#666666"
                 android:paddingBottom="4dp" />
 
@@ -71,9 +73,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tổng tiền: 120.000 VND"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="#FF4081" />
+                android:textColor="#C50446" />
+
+            <TextView
+                android:id="@+id/txtTrangThai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trạng thái: Đã thanh toán"
+                android:textSize="14sp"
+                android:textColor="#FBA019"
+                />
+
+            <Button
+                android:id="@+id/btnDaNhanHang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đã nhận được hàng"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnXacNhanXuLy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xác nhận xử lý"
+                android:visibility="gone" />
 
         </LinearLayout>
     </LinearLayout>
