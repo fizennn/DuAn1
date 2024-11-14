@@ -26,7 +26,7 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
     private List<ThucDon> danhSachThucDon;
     private IntToVND vnd;
     private Context context;
-    private String TAG = "zzzzzzzzzzzzzz";
+
 
     public ThucDonNgangAdapter(List<ThucDon> danhSachThucDon,Context context) {
         this.danhSachThucDon = danhSachThucDon;

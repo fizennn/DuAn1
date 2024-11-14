@@ -33,8 +33,8 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    String TAG = "zzzzzzzzzzz";
 
+    private String TAG = "FixLoi1";
     public ActivityResultLauncher<Intent> launcherTool;
     public NavigationView navigationView;
     public AuthenticationFireBaseHelper authHelper;
@@ -47,12 +47,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         //Khai Bao
 
+        Log.d(TAG, "MainActivity OnCreate");
+
         authHelper = new AuthenticationFireBaseHelper();
 
         //Hien Thi Thong Tin Nav
 
 
-        Log.d(TAG, "onCreate: "+authHelper.getEmail());
+
 
         launcherTool = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        Log.d(TAG, "onNavigationItemSelected: SlideBar Nav");
+
 
 
         int id = item.getItemId();
@@ -164,14 +166,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onStop() {
         super.onStop();
 
-        Log.d(TAG, "onStop: STOP");
+
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         navigationView.setCheckedItem(R.id.nav_client);
-        Log.d(TAG, "onStop: Restart");
+
     }
 
     @Override

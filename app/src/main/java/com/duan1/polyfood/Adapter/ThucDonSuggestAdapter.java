@@ -28,7 +28,6 @@ public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAd
     private List<ThucDon> danhSachThucDon;
     private IntToVND vnd;
     private Context context;
-    private String TAG = "zzzzzzzzzzzzzz";
 
     public ThucDonSuggestAdapter(List<ThucDon> danhSachThucDon,Context context) {
         this.danhSachThucDon = danhSachThucDon;

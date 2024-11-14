@@ -40,14 +40,17 @@ public class FlashScreenActivity extends AppCompatActivity {
             public void run() {
                 if (fireBaseHelper.getUID()==null){
                     startActivity(i);
+                    finish();
                 }else {
                     nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
                         @Override
                         public void onCallback(NguoiDung nguoiDung) {
                             if (nguoiDung==null){
                                 startActivity(input);
+                                finish();
                             }else{
                                 startActivity(i1);
+                                finish();
                             }
                         }
                     });

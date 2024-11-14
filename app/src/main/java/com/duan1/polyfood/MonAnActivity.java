@@ -47,7 +47,7 @@ import java.util.List;
 public class MonAnActivity extends AppCompatActivity {
 
     private String UID;
-    private String TAG = "zzzzzzzzzzzz";
+    private String TAG = "FixLoi1";
     private ThucDonDAO thucDonDAO;
     private ThucDon thucDon1;
     private TextView ten, gia, mota, sao, sl;
@@ -94,6 +94,8 @@ public class MonAnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mon_an);
 
+        Log.d(TAG, "MonAnActivity OnCreate");
+
         thucDonDAO = new ThucDonDAO();
         thucDon1 = new ThucDon();
         vnd = new IntToVND();
@@ -102,7 +104,6 @@ public class MonAnActivity extends AppCompatActivity {
         soLuong = 1;
 
         UID = getIntent().getStringExtra("UID");
-        Log.d(TAG, "onCreate: " + UID);
 
         ten = findViewById(R.id.txvTenChiTiet);
         gia = findViewById(R.id.txvgiachitiet);
@@ -219,7 +220,6 @@ public class MonAnActivity extends AppCompatActivity {
             @Override
             public void onCallback(ThucDon thucDon) {
                 thucDon1 = thucDon;
-                Log.d(TAG, "onCallback: UID Thuc Don"+thucDon1.getId_td());
                 ten.setText(thucDon.getTen());
                 gia.setText(vnd.convertToVND(thucDon.getGia()));
                 mota.setText(thucDon.getMoTa());
@@ -341,7 +341,6 @@ public class MonAnActivity extends AppCompatActivity {
                 addToCart(thucDon1);
                 getCart();
                 for (ThucDon don : listCart) {
-                    Log.d(TAG, "onClick: " + don.getTen());
                 }
 
 
@@ -446,7 +445,6 @@ public class MonAnActivity extends AppCompatActivity {
             try {
                 listCart = gson.fromJson(json, type);
             } catch (Exception e) {
-                Log.e(TAG, "Lỗi khi chuyển đổi JSON: " + e.getMessage());
                 listCart = new ArrayList<>();
             }
         } else {
@@ -491,6 +489,9 @@ public class MonAnActivity extends AppCompatActivity {
         }
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "MonAnActivity onDestroy ");
+    }
 }

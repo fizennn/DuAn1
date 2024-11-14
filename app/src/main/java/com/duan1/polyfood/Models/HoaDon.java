@@ -13,6 +13,7 @@ public class HoaDon {
     private String phuongThucThanhToan;
     private String trangThai;
     private String ngayDatHang;
+    private String id_nd;
 
     // Constructor
     public HoaDon() {}
@@ -121,5 +122,13 @@ public class HoaDon {
         result.put("trangThai", trangThai);
         result.put("ngayDatHang", ngayDatHang);
         return result;
+    }
+
+    public String getId_nd() {
+        return id_nd;
+    }
+
+    public void setId_nd(String hoaDon) {
+        this.id_nd = hoaDon;
     }
 }

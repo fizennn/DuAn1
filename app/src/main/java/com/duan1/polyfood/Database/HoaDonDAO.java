@@ -30,7 +30,7 @@ public class HoaDonDAO {
     }
 
     public void getAllHoaDon(FirebaseCallback callback) {
-        database.child("HoaDon").child(authen.getUID()).addValueEventListener(new ValueEventListener() {
+        database.child("HoaDon").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<HoaDon> hoaDonList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class HoaDonDAO {
     }
 
     public void getHoaDonByStatus(String status, FirebaseCallback callback) {
-        database.child("HoaDon").child(authen.getUID())
+        database.child("HoaDon")
                 .orderByChild("trangThai").equalTo(status)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -73,10 +73,11 @@ public class HoaDonDAO {
 
 
     public void addHoaDon(HoaDon hoaDon) {
-        String key = database.child("HoaDon").child(authen.getUID()).push().getKey();
+        String key = database.child("HoaDon").push().getKey();
         if (key != null) {
+            hoaDon.setId_nd(authen.getUID());
             hoaDon.setId_hd(key);
-            database.child("HoaDon").child(authen.getUID()).child(key).setValue(hoaDon)
+            database.child("HoaDon").child(key).setValue(hoaDon)
                     .addOnSuccessListener(aVoid -> Log.d("Firebase", "Thêm hóa đơn thành công"))
                     .addOnFailureListener(e -> Log.e("Firebase", "Thêm hóa đơn thất bại", e));
         } else {
@@ -89,14 +90,14 @@ public class HoaDonDAO {
 
         Map<String, Object> hoaDonValues = hoaDon.toMap();
 
-        database.child("HoaDon").child(authen.getUID()).child(hoaDon.getId_hd())
+        database.child("HoaDon").child(hoaDon.getId_hd())
                 .updateChildren(hoaDonValues)
                 .addOnSuccessListener(aVoid -> Log.d("Firebase", "Cập nhật hóa đơn thành công"))
                 .addOnFailureListener(e -> Log.e("Firebase", "Cập nhật hóa đơn thất bại", e));
     }
 
     public void deleteHoaDon(String id) {
-        database.child(authen.getUID()).child("HoaDon").child(id).removeValue();
+        database.child("HoaDon").child(id).removeValue();
     }
 
     public void getAllHoaDonChoXuLy(FirebaseCallback callback) {

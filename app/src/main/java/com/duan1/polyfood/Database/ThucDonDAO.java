@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class ThucDonDAO {
     private DatabaseReference database;
     private StorageReference storageReference;
+    String TAG = "Zzzzzzzzzzzz";
 
 
     public ThucDonDAO() {
@@ -78,6 +79,7 @@ public class ThucDonDAO {
         }
         if (thucDon.getPhanHoi() == null || thucDon.getPhanHoi().isEmpty()) {
             thucDon.setPhanHoi("0"); // Giá trị mặc định cho phản hồi
+            Log.d(TAG, "addThucDon: ");
         }
 
         String key = database.child("NhaHang").child("ThucDon").push().getKey();
@@ -95,6 +97,10 @@ public class ThucDonDAO {
         }
     }
 
+    public void addDanhGia(ThucDon thucDon){
+        database.child("NhaHang").child("ThucDon").child(thucDon.getId_td()).setValue(thucDon);
+    }
+
 
     public void updateThucDon(ThucDon thucDon) {
         database.child("NhaHang").child("ThucDon").child(thucDon.getId_td()).setValue(thucDon);
@@ -107,6 +113,21 @@ public class ThucDonDAO {
 
     public void getAThucDon(FirebaseCallback callback,String UID) {
         database.child("NhaHang").child("ThucDon").child(UID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ThucDon thucDon = snapshot.getValue(ThucDon.class);
+                callback.onCallback(thucDon);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getAThucDon1(FirebaseCallback callback,String UID) {
+        database.child("NhaHang").child("ThucDon").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ThucDon thucDon = snapshot.getValue(ThucDon.class);

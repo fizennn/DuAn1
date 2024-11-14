@@ -33,7 +33,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private static final String TAG = "HomeFragment";
+    private String TAG = "FixLoi1";
     private RecyclerView recyclerView, recyclerViewNgang;
     private FoodAdapter foodAdapter;
     private List<ThucDon> foodList, foodListNgang;
@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        Log.d(TAG, "Home Fragment : On Create");
         // Initialize data and UI components
         thucDonDAO = new ThucDonDAO();
         gson = new Gson();
@@ -142,13 +143,13 @@ public class HomeFragment extends Fragment {
             try {
                 listCart = gson.fromJson(json, type);
                 if (listCart == null) listCart = new ArrayList<>();
-                Log.d(TAG, "Cart loaded. Items count: " + listCart.size());
+
             } catch (Exception e) {
-                Log.e(TAG, "Error parsing JSON: " + e.getMessage());
+
                 listCart = new ArrayList<>();  // Ensure list is initialized
             }
         } else {
-            Log.d(TAG, "No cart data found in SharedPreferences.");
+
             listCart = new ArrayList<>();  // Ensure list is initialized
         }
     }
@@ -173,9 +174,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCallback(ArrayList<ThucDon> suggestedDishes) {
                 if (suggestedDishes == null || suggestedDishes.isEmpty()) {
-                    Log.d(TAG, "Không có món ăn gợi ý.");
+
                 } else {
-                    Log.d(TAG, "Dữ liệu món ăn gợi ý đã được tải: " + suggestedDishes.size());
+
                     foodList.clear();
                     foodList.addAll(suggestedDishes);
                     foodAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
@@ -204,5 +205,9 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "HomeFragment onDestroy: ");
+    }
 }
