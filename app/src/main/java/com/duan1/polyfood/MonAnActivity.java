@@ -225,7 +225,7 @@ public class MonAnActivity extends AppCompatActivity {
                 mota.setText(thucDon.getMoTa());
                 sao.setText(thucDon.getDanhGia());
 
-                if (MonAnActivity.this != null) {
+                if (!isFinishing()) {
                     Glide.with(MonAnActivity.this)
                             .load(thucDon.getHinhAnh())
                             .placeholder(R.drawable.load)
