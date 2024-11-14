@@ -1,24 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Fragment.BillFragment">
+    android:orientation="vertical">
 
-    <!-- TabLayout to hold tabs like 'Chờ xử lý', 'Chờ giao', 'Đang giao', 'Hoàn thành' -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp" />
+        android:layout_height="wrap_content" />
 
-    <!-- ViewPager2 to hold the pages for each tab -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="10dp" />
-
+        android:layout_height="match_parent" />
 </LinearLayout>
