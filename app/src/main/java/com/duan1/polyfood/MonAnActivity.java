@@ -1,13 +1,19 @@
 package com.duan1.polyfood;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,10 +21,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.duan1.polyfood.Adapter.BinhLuanAdapter;
+import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
+import com.duan1.polyfood.Database.BinhLuanDao;
+import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Database.ThucDonDAO;
+import com.duan1.polyfood.Models.BinhLuan;
+import com.duan1.polyfood.Models.NguoiDung;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.Other.IntToVND;
 import com.google.gson.Gson;
@@ -44,11 +60,32 @@ public class MonAnActivity extends AppCompatActivity {
 
 
 
-    private ImageView saorate1,saorate2,saorate3,saorate4,saorate5,imgProfileComment;
+    private ImageView saorate1,saorate2,saorate3,saorate4,saorate5,imgProfileComment,imgadd,imgdelete;
     private ImageButton btnImgAdd,btnSendComment;
     private EditText editTextComment;
     private int rateStar;
     private String comment;
+    private Uri imageUri;
+    private LinearLayout linearLayout1;
+    private BinhLuanDao binhLuanDao;
+    private AuthenticationFireBaseHelper baseHelper;
+    private NguoiDungDAO nguoiDungDAO;
+    private NguoiDung nguoiDung1;
+    private RecyclerView recyclerView;
+    private List<BinhLuan> binhLuanList;
+    private BinhLuanAdapter adapter;
+
+
+
+    private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    imageUri = result.getData().getData();
+                    imgadd.setImageURI(imageUri);
+                    linearLayout1.setVisibility(View.VISIBLE); // Hiển thị lại
+                }
+            });
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -94,9 +131,80 @@ public class MonAnActivity extends AppCompatActivity {
         btnImgAdd = findViewById(R.id.btnImgAdd);
         btnSendComment = findViewById(R.id.btnSendComment);
         editTextComment = findViewById(R.id.edtComment);
+        imgadd = findViewById(R.id.imgAddHienThi);
+        imgdelete = findViewById(R.id.imgXoa);
+        linearLayout1 = findViewById(R.id.layoutAnh);
 
 
         rateStar = 0;
+
+
+        linearLayout1.setVisibility(View.GONE);
+
+        binhLuanDao = new BinhLuanDao();
+        baseHelper = new AuthenticationFireBaseHelper();
+        nguoiDungDAO = new NguoiDungDAO();
+        nguoiDung1 = new NguoiDung();
+
+        nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(NguoiDung nguoiDung) {
+                nguoiDung1=nguoiDung;
+                loadImageFromUrl(nguoiDung.getimgUrl(),imgProfileComment);
+            }
+        });
+
+
+        imgdelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageUri = null;
+                linearLayout1.setVisibility(View.GONE);
+            }
+        });
+
+        btnSendComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(MonAnActivity.this, "Da Gui Binh Luan", Toast.LENGTH_SHORT).show();
+                BinhLuan binhLuan = new BinhLuan();
+                binhLuan.setId(baseHelper.getUID());
+                binhLuan.setBl(editTextComment.getText().toString().trim());
+                binhLuan.setSao(rateStar);
+                binhLuan.setTen(nguoiDung1.getHoTen());
+                binhLuanDao.addBinhLuan(binhLuan,thucDon1.getId_td(),imageUri);
+
+                rateStar = 0;
+                cancleAll();
+                linearLayout1.setVisibility(View.GONE);
+                editTextComment.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                // Nếu bàn phím đang hiển thị, ẩn nó
+                if (imm != null && getCurrentFocus() != null) {
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                }
+            }
+        });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        binhLuanList = new ArrayList<>();
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -111,6 +219,7 @@ public class MonAnActivity extends AppCompatActivity {
             @Override
             public void onCallback(ThucDon thucDon) {
                 thucDon1 = thucDon;
+                Log.d(TAG, "onCallback: UID Thuc Don"+thucDon1.getId_td());
                 ten.setText(thucDon.getTen());
                 gia.setText(vnd.convertToVND(thucDon.getGia()));
                 mota.setText(thucDon.getMoTa());
@@ -124,9 +233,20 @@ public class MonAnActivity extends AppCompatActivity {
                             .into(img);
                 }
 
+                binhLuanDao.getBinhLuan(thucDon.getId_td(), new BinhLuanDao.FirebaseCallback() {
+                    @Override
+                    public void onCallback(ArrayList<BinhLuan> binhLuanList) {
+                        adapter = new BinhLuanAdapter(MonAnActivity.this, binhLuanList);
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
+
                 // Xử lý đánh giá sao (giữ nguyên đoạn mã của bạn để cập nhật sao)
             }
         }, UID);
+
+
+
 
         Handler handler = new Handler();
         Runnable incrementRunnable = new Runnable() {
@@ -286,6 +406,12 @@ public class MonAnActivity extends AppCompatActivity {
 
 
 
+        btnImgAdd.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_PICK);
+            pickImageLauncher.launch(intent);
+        });
 
 
 
@@ -354,4 +480,17 @@ public class MonAnActivity extends AppCompatActivity {
             saorate5.setImageResource(R.drawable.star50);
         }
     }
+
+    private void loadImageFromUrl(String imageUrl,ImageView img) {
+        if (MonAnActivity.this != null) {
+            Glide.with(MonAnActivity.this)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.load)
+                    .error(R.drawable.load)
+                    .into(img);
+        }
+    }
+
+
+
 }

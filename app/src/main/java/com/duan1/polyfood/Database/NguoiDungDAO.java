@@ -92,6 +92,7 @@ public class NguoiDungDAO {
         });
     }
 
+
     public void  addNguoiDungImg(NguoiDung nguoiDung, Uri img){
         StorageReference imgRef = storageReference.child(nguoiDung.getHoTen() + ".jpg");
 

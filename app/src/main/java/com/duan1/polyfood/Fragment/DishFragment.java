@@ -48,6 +48,8 @@ public class DishFragment extends Fragment {
     private ThucDonNgangAdapter thucDonNgangAdapter;
     private List<ThucDon> foodListNgang;
 
+
+
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
