@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -282,7 +282,7 @@
 
 
         <androidx.cardview.widget.CardView
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             app:cardCornerRadius="15dp"
             android:layout_marginHorizontal="16dp"
@@ -415,9 +415,53 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/layoutAnh"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_marginLeft="40dp"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="10dp">
+
+                    <ImageView
+                        android:id="@+id/imgAddHienThi"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/phobo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_gravity="right"
+                        android:layout_margin="3dp"
+                        app:cardCornerRadius="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/imgXoa"
+                            android:padding="3dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/dele"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+                    </androidx.cardview.widget.CardView>
+
+
+
+                </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_marginHorizontal="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -428,4 +472,4 @@
 
 
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

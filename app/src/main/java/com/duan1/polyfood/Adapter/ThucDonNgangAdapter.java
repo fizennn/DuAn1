@@ -61,6 +61,7 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
                 Intent intent = new Intent(context, MonAnActivity.class);
                 intent.putExtra("UID", ThucDon.getId_td()+"");
                 context.startActivity(intent);
+
             }
         });
     }
