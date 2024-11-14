@@ -82,7 +82,7 @@ public class OrderFragment extends Fragment {
 
         listHoaDon = new ArrayList<>();
 
-        // Lấy dữ liệu với trạng thái "Chờ xử lý"
+//         Lấy dữ liệu với trạng thái "Chờ xử lý"
         hoaDonDAO.getHoaDonByStatus("Chờ xử lý", new HoaDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<HoaDon> hoaDonList) {
@@ -94,6 +94,18 @@ public class OrderFragment extends Fragment {
                 recyclerView.setAdapter(nhaHangHDAdapter);
             }
         });
+
+//        hoaDonDAO.getAllHoaDonChoXuLy(new HoaDonDAO.FirebaseCallback() {
+//            @Override
+//            public void onCallback(ArrayList<HoaDon> hoaDonList) {
+//                listHoaDon.clear(); // Xóa danh sách cũ
+//                for (HoaDon don : hoaDonList) {
+//                    listHoaDon.add(don); // Thêm các đơn hàng mới vào danh sách
+//                }
+//                nhaHangHDAdapter = new NhaHangHDAdapter(getContext(), listHoaDon); // Cập nhật adapter
+//                recyclerView.setAdapter(nhaHangHDAdapter); // Gắn adapter cho RecyclerView
+//            }
+//        });
 
         return view;
     }

@@ -98,4 +98,36 @@ public class HoaDonDAO {
     public void deleteHoaDon(String id) {
         database.child(authen.getUID()).child("HoaDon").child(id).removeValue();
     }
+
+    public void getAllHoaDonChoXuLy(FirebaseCallback callback) {
+        // Truy vấn đến tất cả các UID và lọc theo trạng thái "Chờ xử lý"
+        database.child("HoaDon").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<HoaDon> hoaDonList = new ArrayList<>();
+
+                // Duyệt qua tất cả các UID
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    // Duyệt qua tất cả các hóa đơn của UID hiện tại
+                    for (DataSnapshot hoaDonSnapshot : userSnapshot.getChildren()) {
+                        HoaDon hoaDon = hoaDonSnapshot.getValue(HoaDon.class);
+
+                        // Kiểm tra trạng thái "Chờ xử lý"
+                        if (hoaDon != null && "Chờ xử lý".equals(hoaDon.getTrangThai())) {
+                            hoaDon.setId_hd(hoaDonSnapshot.getKey());
+                            hoaDonList.add(hoaDon);
+                        }
+                    }
+                }
+
+                // Gọi lại callback với danh sách các hóa đơn "Chờ xử lý"
+                callback.onCallback(hoaDonList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error fetching HoaDon for processing", error.toException());
+            }
+        });
+    }
 }

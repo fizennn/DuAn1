@@ -18,7 +18,7 @@ import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
 
-public class NhaHangHDAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder>{
+public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.ViewHolder>{
 
     private Context context;
     private ArrayList<HoaDon> hoaDonList;
@@ -31,13 +31,13 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHol
     }
     @NonNull
     @Override
-    public HoaDonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NhaHangHDAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_hoa_don, parent, false);
-        return new HoaDonAdapter.ViewHolder(view);
+        return new NhaHangHDAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HoaDonAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NhaHangHDAdapter.ViewHolder holder, int position) {
         HoaDon hoaDon = hoaDonList.get(position);
         holder.txtTenMonAn.setText(hoaDon.getTenMonAn());
         holder.txtGia.setText("Giá: " +formatToVND(hoaDon.getGia()));
