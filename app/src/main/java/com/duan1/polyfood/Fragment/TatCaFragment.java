@@ -9,17 +9,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.HoaDonAdapter;
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Models.HoaDon;
-import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
 
-public class HoanThanhFragment extends Fragment {
+public class TatCaFragment extends Fragment {
     private RecyclerView recyclerView;
     private HoaDonAdapter hoaDonAdapter;
     private HoaDonDAO hoaDonDAO;
@@ -28,26 +26,25 @@ public class HoanThanhFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_hoan_thanh, container, false);
+        View view = inflater.inflate(R.layout.fragment_dang_giao, container, false);
 
         hoaDonDAO = new HoaDonDAO();
-
-        baseHelper=new AuthenticationFireBaseHelper();
+        baseHelper = new AuthenticationFireBaseHelper();
 
         recyclerView = view.findViewById(R.id.recyclerViewHoaDon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         listHoaDon = new ArrayList<>();
 
-        hoaDonDAO.getHoaDonByStatus("Hoàn thành", new HoaDonDAO.FirebaseCallback() {
+
+        hoaDonDAO.getAllHoaDon(new HoaDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<HoaDon> hoaDonList) {
-
                 listHoaDon.clear();
                 for (HoaDon don : hoaDonList) {
                     String uid1 = don.getId_nd();
                     String uid2 = baseHelper.getUID();
-                    if (uid1.equalsIgnoreCase(uid2)){
+                    if (uid1.equalsIgnoreCase(uid2)) {
                         listHoaDon.add(don);
                     }
                 }

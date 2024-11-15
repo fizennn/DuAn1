@@ -50,15 +50,18 @@ public class BillFragment extends Fragment {
                 (tab, position) -> {
                     switch (position) {
                         case 0:
-                            tab.setText("Chờ xử lý");
+                            tab.setText("Tất cả");
                             break;
                         case 1:
-                            tab.setText("Chờ giao");
+                            tab.setText("Chờ xử lý");
                             break;
                         case 2:
-                            tab.setText("Đang giao");
+                            tab.setText("Chờ giao");
                             break;
                         case 3:
+                            tab.setText("Đang giao");
+                            break;
+                        case 4:
                             tab.setText("Hoàn thành");
                             break;
                     }

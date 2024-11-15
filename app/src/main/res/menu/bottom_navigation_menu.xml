@@ -4,17 +4,17 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/home"
-        android:title="Home" />
+        android:title="Trang chủ" />
     <item
         android:id="@+id/nav_bill"
         android:icon="@drawable/bill"
-        android:title="Bill" />
+        android:title="Đơn hàng" />
     <item
         android:id="@+id/nav_favorite"
         android:icon="@drawable/love"
-        android:title="Favorite" />
+        android:title="Yêu thích" />
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/profile"
-        android:title="Profile" />
+        android:title="Thông tin" />
 </menu>
