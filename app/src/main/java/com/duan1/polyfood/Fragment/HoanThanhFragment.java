@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.HoaDonAdapter;
+import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ public class HoanThanhFragment extends Fragment {
     private HoaDonAdapter hoaDonAdapter;
     private HoaDonDAO hoaDonDAO;
     private ArrayList<HoaDon> listHoaDon;
+    private AuthenticationFireBaseHelper baseHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,37 +32,37 @@ public class HoanThanhFragment extends Fragment {
 
         hoaDonDAO = new HoaDonDAO();
 
+        baseHelper=new AuthenticationFireBaseHelper();
+
         recyclerView = view.findViewById(R.id.recyclerViewHoaDon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         listHoaDon = new ArrayList<>();
 
-        // Lấy dữ liệu với trạng thái "Chờ xử lý"
         hoaDonDAO.getHoaDonByStatus("Hoàn thành", new HoaDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<HoaDon> hoaDonList) {
+
                 listHoaDon.clear();
                 for (HoaDon don : hoaDonList) {
-                    listHoaDon.add(don);
+                    String uid1 = don.getId_nd();
+                    String uid2 = baseHelper.getUID();
+                    if (uid1.equalsIgnoreCase(uid2)){
+                        listHoaDon.add(don);
+                    }
                 }
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(hoaDonAdapter);
-            }
-        });
-
-        refreshHoaDonList();
-
-        return view;
-    }
-
-    public void refreshHoaDonList() {
-        hoaDonDAO.getHoaDonByStatus("Hoàn thành", new HoaDonDAO.FirebaseCallback() {
-            @Override
-            public void onCallback(ArrayList<HoaDon> hoaDonList) {
-                listHoaDon.clear();
-                listHoaDon.addAll(hoaDonList);
                 hoaDonAdapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void onCallback(HoaDon hoaDon) {
+
+            }
         });
+
+
+        return view;
     }
 }

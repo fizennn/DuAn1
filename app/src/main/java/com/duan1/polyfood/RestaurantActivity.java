@@ -53,11 +53,11 @@ public class RestaurantActivity extends AppCompatActivity {
         OrderFragment fragment2 = new OrderFragment();
         StatisticFragment fragment3 = new StatisticFragment();
         ProfileResFragment fragment4 = new ProfileResFragment();
-        adapter.addFragment(fragment1, "Dish");
-        adapter.addFragment(fragment5, "Mon an goi y");
-        adapter.addFragment(fragment2, "Order");
-        adapter.addFragment(fragment3, "Statistic");
-        adapter.addFragment(fragment4, "Profile");
+        adapter.addFragment(fragment1, "Món ăn");
+        adapter.addFragment(fragment5, "Món ăn gợi ý");
+        adapter.addFragment(fragment2, "Đơn hàng");
+        adapter.addFragment(fragment3, "Thống kê");
+        adapter.addFragment(fragment4, "Thông tin");
 
         viewPager.setAdapter(adapter);
         tabLayout = findViewById(R.id.tabLayout);

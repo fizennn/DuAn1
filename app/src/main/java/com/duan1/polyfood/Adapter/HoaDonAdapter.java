@@ -3,12 +3,14 @@ package com.duan1.polyfood.Adapter;
 import static android.app.PendingIntent.getActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.bumptech.glide.Glide;
+import com.duan1.polyfood.ChiTietHoaDonActivity;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Fragment.ChoGiaoFragment;
 import com.duan1.polyfood.Fragment.ChoXuLyFragment;
@@ -72,11 +75,23 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
                 hoaDonList.remove(position);
                 notifyItemRemoved(position);
 
+                Toast.makeText(context, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+
                 notifyDataSetChanged();
+
             });
         } else {
             holder.btnDaNhanHang.setVisibility(View.GONE); // Ẩn nút nếu không ở trạng thái "Đang giao"
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChiTietHoaDonActivity.class);
+                intent.putExtra("id_hd", hoaDon.getId_hd());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

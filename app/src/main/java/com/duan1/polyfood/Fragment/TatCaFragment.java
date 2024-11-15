@@ -17,7 +17,7 @@ import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
 
-public class ChoGiaoFragment extends Fragment {
+public class TatCaFragment extends Fragment {
     private RecyclerView recyclerView;
     private HoaDonAdapter hoaDonAdapter;
     private HoaDonDAO hoaDonDAO;
@@ -26,7 +26,7 @@ public class ChoGiaoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cho_giao, container, false);
+        View view = inflater.inflate(R.layout.fragment_dang_giao, container, false);
 
         hoaDonDAO = new HoaDonDAO();
         baseHelper = new AuthenticationFireBaseHelper();
@@ -37,20 +37,19 @@ public class ChoGiaoFragment extends Fragment {
         listHoaDon = new ArrayList<>();
 
 
-        hoaDonDAO.getHoaDonByStatus("Chờ giao", new HoaDonDAO.FirebaseCallback() {
+        hoaDonDAO.getAllHoaDon(new HoaDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<HoaDon> hoaDonList) {
                 listHoaDon.clear();
                 for (HoaDon don : hoaDonList) {
                     String uid1 = don.getId_nd();
                     String uid2 = baseHelper.getUID();
-                    if (uid1.equalsIgnoreCase(uid2)){
+                    if (uid1.equalsIgnoreCase(uid2)) {
                         listHoaDon.add(don);
                     }
                 }
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(hoaDonAdapter);
-                hoaDonAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -58,7 +57,6 @@ public class ChoGiaoFragment extends Fragment {
 
             }
         });
-
 
 
         return view;

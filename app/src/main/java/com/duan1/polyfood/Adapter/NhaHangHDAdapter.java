@@ -52,6 +52,10 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
                 .error(R.drawable.load)
                 .into(holder.imgMonAn);
 
+        holder.txtGia.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
+        holder.txtSoLuong.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
+        holder.txtPhuongThucThanhToan.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
+
         if ("Chờ xử lý".equals(hoaDon.getTrangThai())) {
             holder.btnXacNhanXuLy.setVisibility(View.VISIBLE);
             holder.btnXacNhanXuLy.setOnClickListener(v -> {

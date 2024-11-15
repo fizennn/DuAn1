@@ -93,6 +93,11 @@ public class OrderFragment extends Fragment {
                 nhaHangHDAdapter = new NhaHangHDAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(nhaHangHDAdapter);
             }
+
+            @Override
+            public void onCallback(HoaDon hoaDon) {
+
+            }
         });
 
         return view;

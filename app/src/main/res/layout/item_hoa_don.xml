@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:layout_gravity="center"
             android:padding="8dp">
 
             <TextView
@@ -36,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tên món ăn"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#333333"
                 android:paddingBottom="4dp" />
@@ -48,6 +49,7 @@
                 android:text="Giá: 120.000 VND"
                 android:textSize="14sp"
                 android:textColor="#666666"
+                android:visibility="gone"
                 android:paddingBottom="4dp" />
 
             <TextView
@@ -55,6 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số lượng: 1"
+                android:visibility="gone"
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:paddingBottom="4dp" />
@@ -63,6 +66,7 @@
                 android:id="@+id/txtPhuongThucThanhToan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:text="Phương thức thanh toán: Tiền mặt"
                 android:textSize="14sp"
                 android:textColor="#666666"
@@ -98,6 +102,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Xác nhận xử lý"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnXacNhanGiaoHang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xác nhận giao hàng"
                 android:visibility="gone" />
 
         </LinearLayout>

@@ -9,6 +9,7 @@ import com.duan1.polyfood.Fragment.ChoGiaoFragment;
 import com.duan1.polyfood.Fragment.ChoXuLyFragment;
 import com.duan1.polyfood.Fragment.DangGiaoFragment;
 import com.duan1.polyfood.Fragment.HoanThanhFragment;
+import com.duan1.polyfood.Fragment.TatCaFragment;
 
 public class HoaDonPageAdapter extends FragmentStateAdapter {
     public HoaDonPageAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -20,20 +21,22 @@ public class HoaDonPageAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new ChoXuLyFragment(); // Chờ xử lý
+                return new TatCaFragment(); // Tất cả
             case 1:
-                return new ChoGiaoFragment(); // Chờ giao
+                return new ChoXuLyFragment(); // Chờ xử lý
             case 2:
-                return new DangGiaoFragment(); // Đang giao
+                return new ChoGiaoFragment(); // Chờ giao
             case 3:
+                return new DangGiaoFragment(); // Đang giao
+            case 4:
                 return new HoanThanhFragment(); // Hoàn thành
             default:
-                return new ChoXuLyFragment();
+                return new TatCaFragment();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 }
