@@ -51,12 +51,13 @@ public class MonAnActivity extends AppCompatActivity {
     private ThucDonDAO thucDonDAO;
     private ThucDon thucDon1;
     private TextView ten, gia, mota, sao, sl;
-    private ImageView img, sao1, sao2, sao3, sao4, sao5, btnremove, btnadd;
+    private ImageView img, btnremove, btnadd;
     private IntToVND vnd;
     private int soLuong;
     private List<ThucDon> listCart;
     private Gson gson;
     private LinearLayout linearLayout;
+    private ImageView[] sao1 = new ImageView[5];
 
 
 
@@ -74,6 +75,7 @@ public class MonAnActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<BinhLuan> binhLuanList;
     private BinhLuanAdapter adapter;
+    private TextView txvSoBinhLuan;
 
 
 
@@ -110,15 +112,16 @@ public class MonAnActivity extends AppCompatActivity {
         mota = findViewById(R.id.txvmotachitiet);
         sao = findViewById(R.id.txvSao);
         img = findViewById(R.id.imgChiTiet);
-        sao1 = findViewById(R.id.imgStar1);
-        sao2 = findViewById(R.id.imgStar2);
-        sao3 = findViewById(R.id.imgStar3);
-        sao4 = findViewById(R.id.imgStar4);
-        sao5 = findViewById(R.id.imgStar5);
+        sao1[0] = findViewById(R.id.imgStar1);
+        sao1[1] = findViewById(R.id.imgStar2);
+        sao1[2] = findViewById(R.id.imgStar3);
+        sao1[3] = findViewById(R.id.imgStar4);
+        sao1[4] = findViewById(R.id.imgStar5);
         btnremove = findViewById(R.id.btnDeleChiTiet);
         btnadd = findViewById(R.id.btnAddChiTiet);
         sl = findViewById(R.id.txvSoLuongChiTiet);
         linearLayout = findViewById(R.id.linerAddToCart);
+        txvSoBinhLuan = findViewById(R.id.txvSoBinhLuan);
 
 
 
@@ -168,7 +171,7 @@ public class MonAnActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(MonAnActivity.this, "Da Gui Binh Luan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MonAnActivity.this, "Đã Gửi Bình Luận", Toast.LENGTH_SHORT).show();
                 BinhLuan binhLuan = new BinhLuan();
                 binhLuan.setId(baseHelper.getUID());
                 binhLuan.setBl(editTextComment.getText().toString().trim());
@@ -186,6 +189,9 @@ public class MonAnActivity extends AppCompatActivity {
                 if (imm != null && getCurrentFocus() != null) {
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 }
+
+
+                thucDonDAO.updateStar(thucDon1.getId_td());
             }
         });
 
@@ -224,6 +230,7 @@ public class MonAnActivity extends AppCompatActivity {
                 gia.setText(vnd.convertToVND(thucDon.getGia()));
                 mota.setText(thucDon.getMoTa());
                 sao.setText(thucDon.getDanhGia());
+                txvSoBinhLuan.setText("("+thucDon.getPhanHoi()+" Bình Luận)");
 
                 if (!isFinishing()) {
                     Glide.with(MonAnActivity.this)
@@ -231,6 +238,13 @@ public class MonAnActivity extends AppCompatActivity {
                             .placeholder(R.drawable.load)
                             .error(R.drawable.load)
                             .into(img);
+                }
+                float sao = Float.parseFloat(thucDon.getDanhGia());
+                for (int i = 0; i < 5; i++) {
+                    sao1[i].setImageResource(i < sao ? R.drawable.star50 : R.drawable.star_empty);
+                    if (sao > i && sao < i+1){
+                        sao1[i].setImageResource(R.drawable.starhalf50);
+                    }
                 }
 
                 binhLuanDao.getBinhLuan(thucDon.getId_td(), new BinhLuanDao.FirebaseCallback() {
@@ -242,6 +256,11 @@ public class MonAnActivity extends AppCompatActivity {
                 });
 
                 // Xử lý đánh giá sao (giữ nguyên đoạn mã của bạn để cập nhật sao)
+            }
+
+            @Override
+            public void onCallback(Float star) {
+
             }
         }, UID);
 

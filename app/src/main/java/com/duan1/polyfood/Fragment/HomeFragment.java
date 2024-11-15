@@ -132,6 +132,11 @@ public class HomeFragment extends Fragment {
             public void onCallback(ThucDon thucDon) {
                 // Not used here
             }
+
+            @Override
+            public void onCallback(Float star) {
+
+            }
         });
     }
 
@@ -186,6 +191,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onCallback(ThucDon thucDon) {
                 // Không sử dụng callback này
+            }
+
+            @Override
+            public void onCallback(Float star) {
+
             }
         });
     }

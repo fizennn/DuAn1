@@ -57,6 +57,25 @@ public class NguoiDungDAO {
             });
     }
 
+    public void getAllNguoiDungByID(String UID,FirebaseCallback callback) {
+        Log.d(TAG, "getAllNguoiDung: "+auth.getUID());
+        if (auth.getUID()==null){
+            callback.onCallback(null);
+        }
+        database.child("NguoiDung").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
+                callback.onCallback(nguoidung);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void check(FirebaseCallback callback,String UID) {
 
 

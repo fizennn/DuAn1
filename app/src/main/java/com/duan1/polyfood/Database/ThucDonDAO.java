@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.duan1.polyfood.Fragment.DishSuggestFragment;
+import com.duan1.polyfood.Models.BinhLuan;
 import com.duan1.polyfood.Models.NhaHang;
 import com.duan1.polyfood.Models.ThucDon;
 import com.google.firebase.database.ChildEventListener;
@@ -41,6 +42,7 @@ public class ThucDonDAO {
     public interface FirebaseCallback {
         void onCallback(ArrayList<ThucDon> thucDonList);
         void onCallback(ThucDon thucDon);
+        void onCallback(Float star);
     }
 
     public void getAllThucDon(FirebaseCallback callback) {
@@ -230,6 +232,49 @@ public class ThucDonDAO {
                         Log.e("Firebase", "Database error: " + error.getMessage());
                     }
                 });
+    }
+
+    public void updateStar(String UID){
+        database.child("NhaHang").child("ThucDon").child(UID).child("BinhLuan").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d(TAG, "onDataChange: UID ThucDon"+UID);
+                
+                if (!snapshot.exists()){
+                    database.child("NhaHang").child("ThucDon").child(UID).child("danhGia").setValue(String.valueOf("5.0"));
+                    database.child("NhaHang").child("ThucDon").child(UID).child("phanHoi").setValue(String.valueOf("1"));
+                    Log.d(TAG, "onDataChange: Null");
+                    return;
+                }
+
+                int i = 0;
+                float tong = 0;
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    try {
+                        BinhLuan binhLuan = data.getValue(BinhLuan.class);
+                        tong += binhLuan.getSao();
+                        i++;
+                    } catch (DatabaseException e) {
+                        Log.e("Firebase", "Failed to convert data: " + e.getMessage());
+                    }
+                }
+                Log.d(TAG, "onDataChange: Tong"+tong);
+                tong = (tong/i)*10;
+                Log.d(TAG, "onDataChange: Tong"+tong);
+                tong = (Math.round(tong));
+                Log.d(TAG, "onDataChange: Tong"+tong);
+                tong = tong/10;
+                Log.d(TAG, "onDataChange: Tong"+tong);
+                database.child("NhaHang").child("ThucDon").child(UID).child("danhGia").setValue(String.valueOf(tong));
+                database.child("NhaHang").child("ThucDon").child(UID).child("phanHoi").setValue(String.valueOf(i));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Database error: " + error.getMessage());
+            }
+        });
+
     }
 
 }

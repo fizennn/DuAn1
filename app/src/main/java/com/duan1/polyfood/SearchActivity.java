@@ -61,6 +61,11 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onCallback(ThucDon thucDon) {}
+
+            @Override
+            public void onCallback(Float star) {
+
+            }
         });
 
         edtSearch.addTextChangedListener(new TextWatcher() {
@@ -83,6 +88,11 @@ public class SearchActivity extends AppCompatActivity {
 
                         @Override
                         public void onCallback(ThucDon thucDon) {}
+
+                        @Override
+                        public void onCallback(Float star) {
+
+                        }
                     });
                 }
             }
@@ -136,6 +146,11 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onCallback(ThucDon thucDon) {
+
+            }
+
+            @Override
+            public void onCallback(Float star) {
 
             }
         });

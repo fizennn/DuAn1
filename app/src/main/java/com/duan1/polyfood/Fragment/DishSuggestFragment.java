@@ -119,6 +119,11 @@ public class DishSuggestFragment extends Fragment {
             public void onCallback(ThucDon thucDon) {
                 // Không cần xử lý callback này ở đây
             }
+
+            @Override
+            public void onCallback(Float star) {
+
+            }
         });
 
         AlertDialog dialog = builder.create();
@@ -142,6 +147,11 @@ public class DishSuggestFragment extends Fragment {
             @Override
             public void onCallback(ThucDon thucDon) {
                 // Không sử dụng callback này
+            }
+
+            @Override
+            public void onCallback(Float star) {
+
             }
         });
     }

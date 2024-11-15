@@ -89,6 +89,11 @@ public class DishFragment extends Fragment {
             public void onCallback(ThucDon thucDon) {
 
             }
+
+            @Override
+            public void onCallback(Float star) {
+
+            }
         });
 
 

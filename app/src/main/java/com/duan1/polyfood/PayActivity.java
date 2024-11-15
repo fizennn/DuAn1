@@ -108,6 +108,11 @@ public class PayActivity extends AppCompatActivity {
 
                 // Xử lý đánh giá sao (giữ nguyên đoạn mã của bạn để cập nhật sao)
             }
+
+            @Override
+            public void onCallback(Float star) {
+
+            }
         }, UID);
 
         // Xử lý sự kiện thanh toán

@@ -75,7 +75,7 @@ public class BinhLuanAdapter extends RecyclerView.Adapter<BinhLuanAdapter.BinhLu
 
         holder.txvNameComment.setText(binhLuan.getTen());
 
-        nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
+        nguoiDungDAO.getAllNguoiDungByID(binhLuan.getId(),new NguoiDungDAO.FirebaseCallback() {
             @Override
             public void onCallback(NguoiDung nguoiDung) {
                 Glide.with(context)
