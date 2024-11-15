@@ -51,6 +51,11 @@ public class TatCaFragment extends Fragment {
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(hoaDonAdapter);
             }
+
+            @Override
+            public void onCallback(HoaDon hoaDon) {
+
+            }
         });
 
 

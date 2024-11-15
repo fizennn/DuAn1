@@ -50,6 +50,12 @@ public class DangGiaoFragment extends Fragment {
                 }
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(hoaDonAdapter);
+                hoaDonAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCallback(HoaDon hoaDon) {
+
             }
         });
 

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.ThucDon;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +28,7 @@ public class HoaDonDAO {
 
     public interface FirebaseCallback {
         void onCallback(ArrayList<HoaDon> hoaDonList);
+        void onCallback(HoaDon hoaDon);
     }
 
     public void getAllHoaDon(FirebaseCallback callback) {
@@ -70,6 +72,22 @@ public class HoaDonDAO {
                     }
                 });
     }
+
+    public void getHoaDonById(String id, FirebaseCallback callback) {
+        database.child("HoaDon").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                HoaDon hoaDon = snapshot.getValue(HoaDon.class);
+                callback.onCallback(hoaDon);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
 
     public void addHoaDon(HoaDon hoaDon) {
