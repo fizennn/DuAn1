@@ -42,19 +42,19 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-
-
-
-
-
+    // Firebase BOM và các thư viện Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-storage")
 
+    // Thư viện Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
+
+    // Gson dùng để xử lý JSON
     implementation("com.google.code.gson:gson:2.8.6")
 
+    // Glide dùng để tải hình ảnh
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
 }
