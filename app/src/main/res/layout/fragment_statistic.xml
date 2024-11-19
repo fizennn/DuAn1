@@ -5,12 +5,103 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.StatisticFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
-        android:textSize="30dp"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Statistic" />
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thống Kê Doanh Thu"
+                android:textSize="24sp"
+                android:textColor="#FF5722"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn ngày bắt đầu"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="#1A1919"
+                android:padding="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/tvEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn ngày kết thúc"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:textColor="#1A1919"
+                android:padding="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <Button
+                android:id="@+id/btnCalculate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tính Doanh Thu"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/button_background"
+                android:padding="16dp"/>
+
+            <TextView
+                android:id="@+id/tvDoanhThu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Doanh Thu: 0 đ"
+                android:textSize="20sp"
+                android:textColor="@color/red"
+                android:gravity="center"
+                android:padding="16dp" />
+
+            <ImageView
+                android:id="@+id/imgRevenue"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:src="@drawable/revenue_chart"
+                android:scaleType="fitCenter"
+                android:layout_margin="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top 3 Món Ăn Được Đánh Giá Cao"
+                android:textSize="22sp"
+                android:textColor="#FF5722"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:textStyle="bold"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewTopDishes"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
