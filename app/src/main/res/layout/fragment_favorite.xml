@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".Fragment.FavoriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
-        android:textSize="30dp"
+    <!-- RecyclerView hiển thị danh sách món ăn yêu thích -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rycFavouriteDish"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Favorite" />
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 </FrameLayout>
