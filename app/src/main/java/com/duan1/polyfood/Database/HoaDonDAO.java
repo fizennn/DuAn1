@@ -14,7 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 public class HoaDonDAO {
@@ -149,4 +151,79 @@ public class HoaDonDAO {
             }
         });
     }
+
+    public void getTongDoanhThu(FirebaseCallback callback) {
+        database.child("HoaDon")
+                .orderByChild("trangThai").equalTo("Hoàn thành")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int tongDoanhThu = 0;
+                        for (DataSnapshot hoaDonSnapshot : snapshot.getChildren()) {
+                            HoaDon hoaDon = hoaDonSnapshot.getValue(HoaDon.class);
+                            if (hoaDon != null) {
+                                tongDoanhThu += hoaDon.getTongTien(); // Assumes `tongTien` is a property in HoaDon
+                            }
+                        }
+                        // Gửi kết quả về thông qua callback
+                        HoaDon doanhThuResult = new HoaDon();
+                        doanhThuResult.setTongTien(tongDoanhThu); // Temporary object to send result
+                        callback.onCallback(doanhThuResult);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Failed to calculate total revenue", error.toException());
+                    }
+                });
+    }
+
+    public void getDoanhThuByDateRange(String status, String startDate, String endDate, FirebaseCallback callback) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        // Lọc hóa đơn theo trạng thái và khoảng ngày
+        database.child("HoaDon")
+                .orderByChild("trangThai").equalTo(status)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<HoaDon> hoaDonList = new ArrayList<>();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            HoaDon hoaDon = dataSnapshot.getValue(HoaDon.class);
+
+                            // Lọc hóa đơn theo ngày đặt hàng
+                            try {
+                                String ngayDatHang = hoaDon.getNgayDatHang();
+                                if (ngayDatHang != null && isWithinDateRange(ngayDatHang, startDate, endDate, sdf)) {
+                                    hoaDon.setId_hd(dataSnapshot.getKey());
+                                    hoaDonList.add(hoaDon);
+                                }
+                            } catch (Exception e) {
+                                Log.e("Firebase", "Lỗi khi xử lý ngày đặt hàng", e);
+                            }
+                        }
+                        callback.onCallback(hoaDonList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Failed to fetch orders", error.toException());
+                    }
+                });
+    }
+
+    // Kiểm tra xem ngày có nằm trong khoảng từ startDate đến endDate hay không
+    private boolean isWithinDateRange(String ngayDatHang, String startDate, String endDate, SimpleDateFormat sdf) {
+        try {
+            long dateInMillis = sdf.parse(ngayDatHang).getTime();
+            long startInMillis = sdf.parse(startDate).getTime();
+            long endInMillis = sdf.parse(endDate).getTime();
+
+            return dateInMillis >= startInMillis && dateInMillis <= endInMillis;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
 }

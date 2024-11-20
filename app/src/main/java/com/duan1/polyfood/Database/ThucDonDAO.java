@@ -27,6 +27,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ThucDonDAO {
     private DatabaseReference database;
@@ -276,5 +278,48 @@ public class ThucDonDAO {
         });
 
     }
+
+
+    public void getTop3ThucDon(FirebaseCallback callback) {
+        // Lấy tất cả các món ăn từ Firebase
+        database.child("NhaHang").child("ThucDon")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<ThucDon> allThucDonList = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            ThucDon thucDon = data.getValue(ThucDon.class);
+                            if (thucDon != null) {
+                                allThucDonList.add(thucDon);
+                            }
+                        }
+
+                        // Sắp xếp danh sách món ăn theo đánh giá sao giảm dần
+                        Collections.sort(allThucDonList, new Comparator<ThucDon>() {
+                            @Override
+                            public int compare(ThucDon t1, ThucDon t2) {
+                                float rating1 = Float.parseFloat(t1.getDanhGia());
+                                float rating2 = Float.parseFloat(t2.getDanhGia());
+                                return Float.compare(rating2, rating1); // Đánh giá cao hơn sẽ đứng trước
+                            }
+                        });
+
+                        // Lấy top 3 món ăn
+                        ArrayList<ThucDon> top3ThucDon = new ArrayList<>();
+                        for (int i = 0; i < Math.min(3, allThucDonList.size()); i++) {
+                            top3ThucDon.add(allThucDonList.get(i));
+                        }
+
+                        // Gửi top 3 món ăn đến callback
+                        callback.onCallback(top3ThucDon);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Database error: " + error.getMessage());
+                    }
+                });
+    }
+
 
 }
