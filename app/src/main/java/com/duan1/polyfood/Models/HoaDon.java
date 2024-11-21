@@ -11,6 +11,8 @@ public class HoaDon {
     private int tongTien;
     private String hinhAnh;
     private String phuongThucThanhToan;
+    private String sdt;
+    private String diaChi;
     private String trangThai;
     private String ngayDatHang;
     private String id_nd;
@@ -88,7 +90,22 @@ public class HoaDon {
         this.phuongThucThanhToan = phuongThucThanhToan;
     }
 
-    // Getter và Setter cho trạng thái
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
     public String getTrangThai() {
         return trangThai;
     }
@@ -118,6 +135,8 @@ public class HoaDon {
         result.put("soLuong", soLuong);
         result.put("tongTien", tongTien);
         result.put("hinhAnh", hinhAnh);
+        result.put("sdt", sdt);
+        result.put("diaChi", diaChi);
         result.put("phuongThucThanhToan", phuongThucThanhToan);
         result.put("trangThai", trangThai);
         result.put("ngayDatHang", ngayDatHang);

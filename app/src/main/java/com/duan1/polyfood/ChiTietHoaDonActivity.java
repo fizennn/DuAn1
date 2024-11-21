@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class ChiTietHoaDonActivity extends AppCompatActivity {
 
-    private TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai;
+    private TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai, txtSdt, txtDiaChi;
     private ImageView imgMonAn;
     private HoaDonDAO hoaDonDAO;
     private HoaDon hoaDon;
@@ -41,6 +41,8 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         txtPhuongThucThanhToan = findViewById(R.id.txtPhuongThucThanhToan);
         txtTrangThai = findViewById(R.id.txtTrangThai);
         imgMonAn = findViewById(R.id.img);
+        txtSdt = findViewById(R.id.txtSdt);
+        txtDiaChi = findViewById(R.id.txtDiaChi);
 
 
         hoaDonDAO = new HoaDonDAO();
@@ -66,6 +68,8 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
                     txtTongTien.setText(formatToVND(hoaDon.getTongTien()));
                     txtPhuongThucThanhToan.setText(hoaDon.getPhuongThucThanhToan());
                     txtTrangThai.setText(hoaDon.getTrangThai());
+                    txtSdt.setText(hoaDon.getSdt());
+                    txtDiaChi.setText(hoaDon.getDiaChi());
 
                     Glide.with(ChiTietHoaDonActivity.this)
                             .load(hoaDon.getHinhAnh())

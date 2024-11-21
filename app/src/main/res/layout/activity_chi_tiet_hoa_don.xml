@@ -144,38 +144,103 @@
                     android:background="@android:color/darker_gray"
                     android:layout_marginVertical="16dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Phương thức thanh toán"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"/>
-
-                <TextView
-                    android:id="@+id/txtPhuongThucThanhToan"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Phuong thuc thanh toan"
-                    android:textSize="16dp"
-                    android:textAlignment="textEnd"
-                    android:padding="10dp"/>
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phương thức thanh toán"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Trạng thái"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"/>
+                    <TextView
+                        android:id="@+id/txtPhuongThucThanhToan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Phuong thuc thanh toan"
+                        android:textSize="16dp"
+                        android:textAlignment="textEnd"
+                        android:padding="10dp"/>
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/txtTrangThai"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Trang thai"
-                    android:textSize="16dp"
-                    android:textAlignment="textEnd"
-                    android:textStyle="italic"
-                    android:padding="10dp"/>
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sdt"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtSdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Sdt"
+                        android:textSize="16dp"
+                        android:textAlignment="textEnd"
+                        android:textStyle="italic"
+                        android:padding="10dp"/>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Địa chỉ"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtDiaChi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dia chi"
+                        android:textSize="16dp"
+                        android:textAlignment="textEnd"
+                        android:textStyle="italic"
+                        android:padding="10dp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trạng thái"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/txtTrangThai"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Trang thai"
+                        android:textSize="16dp"
+                        android:textAlignment="textEnd"
+                        android:textStyle="italic"
+                        android:textColor="@color/baseColor"
+                        android:padding="10dp"/>
+                </LinearLayout>
+
+
+
 
 
             </LinearLayout>
