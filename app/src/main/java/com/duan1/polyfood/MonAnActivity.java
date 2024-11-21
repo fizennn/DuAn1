@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,12 +38,19 @@ import com.duan1.polyfood.Models.BinhLuan;
 import com.duan1.polyfood.Models.NguoiDung;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.Other.IntToVND;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MonAnActivity extends AppCompatActivity {
 
@@ -60,9 +68,8 @@ public class MonAnActivity extends AppCompatActivity {
     private ImageView[] sao1 = new ImageView[5];
 
 
-
-    private ImageView saorate1,saorate2,saorate3,saorate4,saorate5,imgProfileComment,imgadd,imgdelete;
-    private ImageButton btnImgAdd,btnSendComment;
+    private ImageView saorate1, saorate2, saorate3, saorate4, saorate5, imgProfileComment, imgadd, imgdelete;
+    private ImageButton btnImgAdd, btnSendComment;
     private EditText editTextComment;
     private int rateStar;
     private String comment;
@@ -76,7 +83,10 @@ public class MonAnActivity extends AppCompatActivity {
     private List<BinhLuan> binhLuanList;
     private BinhLuanAdapter adapter;
     private TextView txvSoBinhLuan;
-
+    private ImageView imgUnLoveDish;
+    private DatabaseReference databaseRef;
+    private String userId;
+    private String dishId;
 
 
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
@@ -98,6 +108,8 @@ public class MonAnActivity extends AppCompatActivity {
 
         Log.d(TAG, "MonAnActivity OnCreate");
 
+
+
         thucDonDAO = new ThucDonDAO();
         thucDon1 = new ThucDon();
         vnd = new IntToVND();
@@ -112,6 +124,7 @@ public class MonAnActivity extends AppCompatActivity {
         mota = findViewById(R.id.txvmotachitiet);
         sao = findViewById(R.id.txvSao);
         img = findViewById(R.id.imgChiTiet);
+        imgUnLoveDish = findViewById(R.id.imgUnLoveDish);
         sao1[0] = findViewById(R.id.imgStar1);
         sao1[1] = findViewById(R.id.imgStar2);
         sao1[2] = findViewById(R.id.imgStar3);
@@ -122,8 +135,6 @@ public class MonAnActivity extends AppCompatActivity {
         sl = findViewById(R.id.txvSoLuongChiTiet);
         linearLayout = findViewById(R.id.linerAddToCart);
         txvSoBinhLuan = findViewById(R.id.txvSoBinhLuan);
-
-
 
 
         saorate1 = findViewById(R.id.saorate1);
@@ -138,6 +149,9 @@ public class MonAnActivity extends AppCompatActivity {
         imgadd = findViewById(R.id.imgAddHienThi);
         imgdelete = findViewById(R.id.imgXoa);
         linearLayout1 = findViewById(R.id.layoutAnh);
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseRef = FirebaseDatabase.getInstance().getReference("NhaHang/FavouriteDish");
+//        dishId = thucDon1.getId_td();
 
 
         rateStar = 0;
@@ -153,8 +167,8 @@ public class MonAnActivity extends AppCompatActivity {
         nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
             @Override
             public void onCallback(NguoiDung nguoiDung) {
-                nguoiDung1=nguoiDung;
-                loadImageFromUrl(nguoiDung.getimgUrl(),imgProfileComment);
+                nguoiDung1 = nguoiDung;
+                loadImageFromUrl(nguoiDung.getimgUrl(), imgProfileComment);
             }
         });
 
@@ -177,7 +191,7 @@ public class MonAnActivity extends AppCompatActivity {
                 binhLuan.setBl(editTextComment.getText().toString().trim());
                 binhLuan.setSao(rateStar);
                 binhLuan.setTen(nguoiDung1.getHoTen());
-                binhLuanDao.addBinhLuan(binhLuan,thucDon1.getId_td(),imageUri);
+                binhLuanDao.addBinhLuan(binhLuan, thucDon1.getId_td(), imageUri);
 
                 rateStar = 0;
                 cancleAll();
@@ -195,6 +209,47 @@ public class MonAnActivity extends AppCompatActivity {
             }
         });
 
+        imgUnLoveDish.setOnClickListener(v -> {
+            dishId = thucDon1.getId_td();// Lấy ID món ăn
+            Log.e(TAG, "onCreate: "+dishId );
+            // Kiểm tra xem món ăn đã có trong danh sách yêu thích chưa
+            databaseRef.child(userId).child(dishId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        // Nếu món ăn đã trong danh sách yêu thích, thực hiện xóa
+                        databaseRef.child(userId).child(dishId).removeValue()
+                                .addOnSuccessListener(unused -> {
+                                    imgUnLoveDish.setImageResource(R.drawable.unlovedish); // Đổi icon về trạng thái chưa yêu thích
+                                    Toast.makeText(MonAnActivity.this, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(MonAnActivity.this, "Lỗi: Không thể xóa món ăn", Toast.LENGTH_SHORT).show();
+                                });
+                    } else {
+                        // Nếu món ăn chưa có, thực hiện thêm vào danh sách yêu thích
+                        databaseRef.child(userId).child(dishId).setValue(thucDon1)
+                                .addOnSuccessListener(unused -> {
+                                    imgUnLoveDish.setImageResource(R.drawable.lovedish); // Đổi icon sang trạng thái yêu thích
+                                    Toast.makeText(MonAnActivity.this, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(MonAnActivity.this, "Lỗi: Không thể thêm món ăn", Toast.LENGTH_SHORT).show();
+                                });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(MonAnActivity.this, "Lỗi: Không thể kiểm tra trạng thái yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+
+
+
+
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -202,26 +257,11 @@ public class MonAnActivity extends AppCompatActivity {
         binhLuanList = new ArrayList<>();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // Lấy dữ liệu từ Firebase và cập nhật UI
         thucDonDAO.getAThucDon(new ThucDonDAO.FirebaseCallback() {
             @Override
-            public void onCallback(ArrayList<ThucDon> thucDonList) { }
+            public void onCallback(ArrayList<ThucDon> thucDonList) {
+            }
 
             @Override
             public void onCallback(ThucDon thucDon) {
@@ -230,7 +270,7 @@ public class MonAnActivity extends AppCompatActivity {
                 gia.setText(vnd.convertToVND(thucDon.getGia()));
                 mota.setText(thucDon.getMoTa());
                 sao.setText(thucDon.getDanhGia());
-                txvSoBinhLuan.setText("("+thucDon.getPhanHoi()+" Bình Luận)");
+                txvSoBinhLuan.setText("(" + thucDon.getPhanHoi() + " Bình Luận)");
 
                 if (!isFinishing()) {
                     Glide.with(MonAnActivity.this)
@@ -242,7 +282,7 @@ public class MonAnActivity extends AppCompatActivity {
                 float sao = Float.parseFloat(thucDon.getDanhGia());
                 for (int i = 0; i < 5; i++) {
                     sao1[i].setImageResource(i < sao ? R.drawable.star50 : R.drawable.star_empty);
-                    if (sao > i && sao < i+1){
+                    if (sao > i && sao < i + 1) {
                         sao1[i].setImageResource(R.drawable.starhalf50);
                     }
                 }
@@ -263,8 +303,6 @@ public class MonAnActivity extends AppCompatActivity {
 
             }
         }, UID);
-
-
 
 
         Handler handler = new Handler();
@@ -372,7 +410,6 @@ public class MonAnActivity extends AppCompatActivity {
         });
 
 
-
         saorate1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -419,11 +456,6 @@ public class MonAnActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
         btnImgAdd.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setType("image/*");
@@ -431,9 +463,7 @@ public class MonAnActivity extends AppCompatActivity {
             pickImageLauncher.launch(intent);
         });
 
-
-
-
+//        checkFavouriteStatus();
 
 
 
@@ -459,7 +489,8 @@ public class MonAnActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
         String json = sharedPreferences.getString("listCart", null);
 
-        Type type = new TypeToken<ArrayList<ThucDon>>() {}.getType();
+        Type type = new TypeToken<ArrayList<ThucDon>>() {
+        }.getType();
         if (json != null) {
             try {
                 listCart = gson.fromJson(json, type);
@@ -471,7 +502,7 @@ public class MonAnActivity extends AppCompatActivity {
         }
     }
 
-    public void cancleAll(){
+    public void cancleAll() {
         saorate1.setImageResource(R.drawable.star_empty);
         saorate2.setImageResource(R.drawable.star_empty);
         saorate3.setImageResource(R.drawable.star_empty);
@@ -479,26 +510,26 @@ public class MonAnActivity extends AppCompatActivity {
         saorate5.setImageResource(R.drawable.star_empty);
     }
 
-    public void choiceStar(){
+    public void choiceStar() {
 
-        if (rateStar>=1){
+        if (rateStar >= 1) {
             saorate1.setImageResource(R.drawable.star50);
         }
-        if (rateStar>=2){
+        if (rateStar >= 2) {
             saorate2.setImageResource(R.drawable.star50);
         }
-        if (rateStar>=3){
+        if (rateStar >= 3) {
             saorate3.setImageResource(R.drawable.star50);
         }
-        if (rateStar>=4){
+        if (rateStar >= 4) {
             saorate4.setImageResource(R.drawable.star50);
         }
-        if (rateStar>=5){
+        if (rateStar >= 5) {
             saorate5.setImageResource(R.drawable.star50);
         }
     }
 
-    private void loadImageFromUrl(String imageUrl,ImageView img) {
+    private void loadImageFromUrl(String imageUrl, ImageView img) {
         if (MonAnActivity.this != null) {
             Glide.with(MonAnActivity.this)
                     .load(imageUrl)
@@ -513,4 +544,36 @@ public class MonAnActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "MonAnActivity onDestroy ");
     }
+
+    private void checkFavouriteStatus() {
+        if (thucDon1 != null && thucDon1.getId_td() != null) {
+            String dishId = thucDon1.getId_td(); // Lấy ID món ăn
+            if (dishId == null || dishId.isEmpty()) {
+                Log.e("MonAnActivity", "ID món ăn không hợp lệ");
+                return;
+            }
+
+            // Kiểm tra trạng thái yêu thích và cập nhật icon
+            databaseRef.child(userId).child(dishId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        imgUnLoveDish.setImageResource(R.drawable.lovedish); // Món ăn đã yêu thích
+                    } else {
+                        imgUnLoveDish.setImageResource(R.drawable.unlovedish); // Món ăn chưa yêu thích
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(MonAnActivity.this, "Lỗi: Không thể kiểm tra trạng thái yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Log.e("MonAnActivity", "thucDon1 hoặc dishId là null");
+        }
+    }
+
+
 }
+
