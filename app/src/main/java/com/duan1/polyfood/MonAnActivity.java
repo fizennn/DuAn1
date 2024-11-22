@@ -295,6 +295,19 @@ public class MonAnActivity extends AppCompatActivity {
                     }
                 });
 
+
+                nguoiDungDAO.checkMonAnYeuThich(thucDon.getId_td(), new NguoiDungDAO.FirebaseCallback() {
+                    @Override
+                    public void onCallback(NguoiDung nguoiDung) {
+                        if (!isFinishing()){
+                            if (nguoiDung.getHoTen()!=null){
+                                imgUnLoveDish.setImageResource(R.drawable.lovedish); // Món ăn đã yêu thích
+                            }
+                        }
+
+                    }
+                });
+
                 // Xử lý đánh giá sao (giữ nguyên đoạn mã của bạn để cập nhật sao)
             }
 
@@ -464,6 +477,8 @@ public class MonAnActivity extends AppCompatActivity {
         });
 
 //        checkFavouriteStatus();
+
+
 
 
 

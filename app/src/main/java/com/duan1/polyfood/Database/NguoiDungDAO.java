@@ -138,5 +138,28 @@ public class NguoiDungDAO {
         database.child("NguoiDung").child(auth.getUID()).child(id).removeValue();
     }
 
+    public void checkMonAnYeuThich(String UIDMonAn,FirebaseCallback callback) {
+        Log.d(TAG, "getAllNguoiDung: "+auth.getUID());
+        if (auth.getUID()==null){
+            callback.onCallback(null);
+        }
+        database.child("NhaHang").child("FavouriteDish").child(auth.getUID()).child(UIDMonAn).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                NguoiDung nguoiDung = new NguoiDung();
+                if (snapshot.exists()){
+                    nguoiDung.setHoTen("huy");
+                    Log.d(TAG, "onDataChange: Da Lay Dc Mon An");
+                }
+                callback.onCallback(nguoiDung);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
 }
