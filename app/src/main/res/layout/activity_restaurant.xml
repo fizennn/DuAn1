@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="Restaurant"
+            app:title="Nhà Hàng"
             app:titleTextColor="@color/cardview_dark_background"
             app:navigationIcon="@drawable/back30" />
 

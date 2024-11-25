@@ -17,6 +17,7 @@ import com.duan1.polyfood.Fragment.OrderFragment;
 import com.duan1.polyfood.Fragment.ProfileFragment;
 import com.duan1.polyfood.Fragment.ProfileResFragment;
 import com.duan1.polyfood.Fragment.StatisticFragment;
+import com.duan1.polyfood.Fragment.TagFragment;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,9 @@ public class RestaurantActivity extends AppCompatActivity {
         OrderFragment fragment2 = new OrderFragment();
         StatisticFragment fragment3 = new StatisticFragment();
         ProfileResFragment fragment4 = new ProfileResFragment();
+        TagFragment fragment6 = new TagFragment();
         adapter.addFragment(fragment1, "Món ăn");
+        adapter.addFragment(fragment6, "Nhãn Dán");
         adapter.addFragment(fragment5, "Món ăn gợi ý");
         adapter.addFragment(fragment2, "Đơn hàng");
         adapter.addFragment(fragment3, "Thống kê");

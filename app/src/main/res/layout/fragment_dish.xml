@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.DishFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,13 +14,23 @@
         android:padding="8dp"
          />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/floatAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="13dp"
-        android:src="@drawable/addd"
+        app:cardCornerRadius="10dp"
         android:backgroundTint="@color/baseColor"
-        />
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="40dp"
+        android:layout_gravity="bottom|end"
+        android:layout_width="50dp"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:padding="10dp"
+            android:src="@drawable/addd"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.cardview.widget.CardView>
 </FrameLayout>

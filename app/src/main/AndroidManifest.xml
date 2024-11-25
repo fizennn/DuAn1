@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PolyFood"
         tools:targetApi="31">
         <activity
+            android:name=".Adapter.StickerAdapter"
+            android:exported="false" />
+        <activity
             android:name=".ChiTietHoaDonActivity"
             android:exported="false" />
         <activity

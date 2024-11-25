@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:background="@android:color/white"
+    android:id="@+id/Liner"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginBottom="5dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Nội dung nhãn dán"
+        android:textSize="16sp" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/btnEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sửa"
+        android:padding="8dp"
+        android:textColor="@android:color/holo_blue_dark" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xóa"
+        android:padding="8dp"
+        android:textColor="@android:color/holo_red_dark" />
+</LinearLayout>

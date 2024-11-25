@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+
+    <EditText
+        android:textSize="15dp"
+        android:padding="13dp"
+        android:background="@drawable/rounded_background"
+        android:id="@+id/etDialogContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nội dung nhãn dán"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginLeft="3dp"
+            android:id="@+id/mau1"
+            android:layout_marginRight="10dp"
+            android:background="#FFC0CB"
+            android:padding="100px"
+            android:src="@drawable/tick"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+
+        <ImageView
+            android:id="@+id/mau2"
+            android:layout_marginRight="10dp"
+            android:background="#ADD8E6"
+            android:padding="50dp"
+            android:src="@drawable/tick"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+
+        <ImageView
+            android:id="@+id/mau3"
+            android:layout_marginRight="10dp"
+            android:background="#98FB98"
+            android:padding="50dp"
+            android:src="@drawable/tick"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+
+        <ImageView
+            android:id="@+id/mau4"
+            android:layout_marginRight="10dp"
+            android:background="#FFFF0A"
+            android:padding="50dp"
+            android:src="@drawable/tick"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+
+        <ImageView
+            android:id="@+id/mau5"
+            android:layout_marginRight="10dp"
+            android:background="#FD9A42"
+            android:padding="50dp"
+            android:src="@drawable/tick"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+
+        <ImageView
+            android:id="@+id/mau6"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:background="#673AB7"
+            android:padding="50dp"
+            android:src="@drawable/tick" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:textSize="20dp"
+        android:textAllCaps="false"
+        android:textColor="#ffff"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn1"
+        android:id="@+id/btnDialogSave"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Lưu" />
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,7 +68,7 @@ public class DishFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dish, container, false);
 
         thucDonDAO = new ThucDonDAO();
-        FloatingActionButton btnAdd = view.findViewById(R.id.floatAdd);
+        CardView btnAdd = view.findViewById(R.id.floatAdd);
 
         recyclerViewNgang = view.findViewById(R.id.recyclerViewDishes);
         recyclerViewNgang.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

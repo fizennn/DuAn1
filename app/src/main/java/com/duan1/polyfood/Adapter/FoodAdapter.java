@@ -38,7 +38,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         ThucDon food = foodList.get(position);
         holder.tvName.setText(food.getTen());
         holder.tvPrice.setText(food.getDanhGia()+"");
-        holder.tvLabel.setText(food.getMoTa());
         Glide.with(context)
                 .load(food.getHinhAnh()) // Đảm bảo đây là URL hoặc đường dẫn hợp lệ
                 .into(holder.imgFood);
