@@ -41,11 +41,14 @@ public class TatCaFragment extends Fragment {
             @Override
             public void onCallback(ArrayList<HoaDon> hoaDonList) {
                 listHoaDon.clear();
+                if( hoaDonList != null) {
                 for (HoaDon don : hoaDonList) {
                     String uid1 = don.getId_nd();
                     String uid2 = baseHelper.getUID();
-                    if (uid1.equalsIgnoreCase(uid2)) {
-                        listHoaDon.add(don);
+
+                        if (uid1.equalsIgnoreCase(uid2)) {
+                            listHoaDon.add(don);
+                        }
                     }
                 }
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);

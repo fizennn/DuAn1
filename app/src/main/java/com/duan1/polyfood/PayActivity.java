@@ -121,6 +121,27 @@ public class PayActivity extends AppCompatActivity {
 
         // Xử lý sự kiện thanh toán
         btnPay.setOnClickListener(v -> {
+
+            String sdt = txtSDT.getText().toString().trim();
+            String diaChi = txtDiaChi.getText().toString().trim();
+
+            if (sdt.isEmpty()) {
+                txtSDT.setError("Số điện thoại không được để trống");
+                txtSDT.requestFocus();
+                return;
+            } else if (!sdt.matches("\\d{10,11}")) {
+                txtSDT.setError("Số điện thoại không hợp lệ (10-11 số)");
+                txtSDT.requestFocus();
+                return;
+            }
+
+            // Kiểm tra địa chỉ
+            if (diaChi.isEmpty()) {
+                txtDiaChi.setError("Địa chỉ không được để trống");
+                txtDiaChi.requestFocus();
+                return;
+            }
+
             HoaDon hoaDon = new HoaDon();
             hoaDon.setId_hd(FirebaseDatabase.getInstance().getReference().push().getKey());
             hoaDon.setTenMonAn(thucDon1.getTen());

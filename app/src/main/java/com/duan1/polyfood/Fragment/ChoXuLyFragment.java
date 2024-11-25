@@ -46,7 +46,8 @@ public class ChoXuLyFragment extends Fragment {
                 for (HoaDon don : hoaDonList) {
                     String uid1 = don.getId_nd();
                     String uid2 = baseHelper.getUID();
-                    if (uid1.equalsIgnoreCase(uid2)){
+                    Log.d("111111", "onCallback: " + "uid1: " + uid1 + "uid2: " + uid2);
+                    if (uid1.equals(uid2)){
                         listHoaDon.add(don);
                     }
                 }

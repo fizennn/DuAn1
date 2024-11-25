@@ -43,7 +43,12 @@ public class HoaDonDAO {
                     hoaDon.setId_hd(data.getKey());
                     hoaDonList.add(hoaDon);
                 }
-                callback.onCallback(hoaDonList);
+                if(hoaDonList != null) {
+                    callback.onCallback(hoaDonList);
+                }else {
+                    Log.d("TAG", "onDataChange: " + null);
+                }
+
             }
 
             @Override
