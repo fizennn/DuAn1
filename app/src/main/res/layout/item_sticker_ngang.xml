@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    app:cardCornerRadius="10dp"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Liner"
+    android:gravity="center"
+    android:layout_marginRight="18dp"
+    android:background="@null">
+    
+
+
+        <LinearLayout
+            android:background="@null"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@null"
+                android:backgroundTint="@null"
+                android:id="@+id/imgSticker"
+                android:scaleType="fitCenter"
+                android:src="@drawable/grocerybag"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rau Củ"
+                android:textSize="8sp"
+                android:textColor="#434343"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sửa"
+                android:padding="8dp"
+                android:textColor="@android:color/holo_blue_dark" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xóa"
+                android:padding="8dp"
+                android:textColor="@android:color/holo_red_dark" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/tag"
+                android:src="@drawable/tag"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                app:tint="#FF0000" />
+
+        </LinearLayout>
+
+
+
+</LinearLayout>
