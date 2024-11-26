@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.NguoiDungDAO;
+import com.duan1.polyfood.LoginActivity;
 import com.duan1.polyfood.Models.NguoiDung;
 import com.duan1.polyfood.R;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,6 +33,7 @@ public class ProfileFragment extends Fragment {
     private StorageReference storageReference;
     private NguoiDung nguoiDungGet;
     private AuthenticationFireBaseHelper auth;
+    private Button btnOut;
 
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -57,6 +59,7 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.textViewEmail);
         phone = view.findViewById(R.id.textViewPhoneNumber);
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
+        btnOut = view.findViewById(R.id.btnOut);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         nguoiDungDAO = new NguoiDungDAO();
@@ -71,6 +74,17 @@ public class ProfileFragment extends Fragment {
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_PICK);
             pickImageLauncher.launch(intent);
+        });
+
+        btnOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            }
         });
 
         return view;

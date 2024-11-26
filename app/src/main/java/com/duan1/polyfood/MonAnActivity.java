@@ -68,7 +68,7 @@ public class MonAnActivity extends AppCompatActivity {
     private ImageView[] sao1 = new ImageView[5];
 
 
-    private ImageView saorate1, saorate2, saorate3, saorate4, saorate5, imgProfileComment, imgadd, imgdelete;
+    private ImageView saorate1, saorate2, saorate3, saorate4, saorate5, imgProfileComment, imgadd, imgdelete, imgBack;
     private ImageButton btnImgAdd, btnSendComment;
     private EditText editTextComment;
     private int rateStar;
@@ -147,6 +147,7 @@ public class MonAnActivity extends AppCompatActivity {
         btnSendComment = findViewById(R.id.btnSendComment);
         editTextComment = findViewById(R.id.edtComment);
         imgadd = findViewById(R.id.imgAddHienThi);
+        imgBack = findViewById(R.id.imgBack);
         imgdelete = findViewById(R.id.imgXoa);
         linearLayout1 = findViewById(R.id.layoutAnh);
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -172,6 +173,14 @@ public class MonAnActivity extends AppCompatActivity {
             }
         });
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MonAnActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         imgdelete.setOnClickListener(new View.OnClickListener() {
             @Override

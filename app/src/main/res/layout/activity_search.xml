@@ -22,7 +22,7 @@
             >
 
             <ImageButton
-                android:id="@+id/back"
+                android:id="@+id/imgBack"
                 android:scaleType="fitCenter"
                 android:padding="10dp"
                 android:background="@drawable/btn2"

@@ -34,7 +34,7 @@
             android:layout_width="200dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/baseColor"
+            android:background="@drawable/button_background"
             />
 
         <LinearLayout
@@ -187,6 +187,25 @@
                     android:text="+123456789"
                     android:textColor="#555555"
                     android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="70dp"
+                >
+
+                <Button
+                    android:id="@+id/btnOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng Xuất"
+                    android:background="@drawable/button_background"
+                    />
+
             </LinearLayout>
 
             <!-- Add other fields like Email, Phone Number in the same style -->

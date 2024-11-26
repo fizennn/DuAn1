@@ -1,5 +1,6 @@
 package com.duan1.polyfood;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,7 +32,7 @@ public class SearchActivity extends AppCompatActivity {
     private ThucDonNgangAdapter thucDonNgangAdapter;
     private ThucDonDAO thucDonDAO;
     private EditText edtSearch;
-    private ImageView imgSortPrice;
+    private ImageView imgSortPrice, imgBack;
     private boolean isAscending = true; // true: Sắp xếp tăng dần, false: Giảm dần
 
     @Override
@@ -41,7 +42,16 @@ public class SearchActivity extends AppCompatActivity {
 
         edtSearch = findViewById(R.id.edtSearch);
         imgSortPrice = findViewById(R.id.imgSortPrice);
+        imgBack = findViewById(R.id.imgBack);
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         thucDonDAO = new ThucDonDAO();
 

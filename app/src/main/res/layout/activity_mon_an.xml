@@ -21,6 +21,7 @@
             >
 
             <ImageButton
+                android:id="@+id/imgBack"
                 android:scaleType="fitCenter"
                 android:padding="10dp"
                 android:background="@drawable/btn2"
