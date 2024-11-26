@@ -21,15 +21,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duan1.polyfood.Adapter.ThucDonAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
+import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
+import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,7 +52,9 @@ public class DishFragment extends Fragment {
     private RecyclerView recyclerViewNgang;
     private ThucDonNgangAdapter thucDonNgangAdapter;
     private List<ThucDon> foodListNgang;
-
+    private StickerDao stickerDao;
+    private Spinner spinner1,spinner2,spinner3;
+    List<Sticker> ds = new ArrayList<>();
 
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -69,6 +75,8 @@ public class DishFragment extends Fragment {
 
         thucDonDAO = new ThucDonDAO();
         CardView btnAdd = view.findViewById(R.id.floatAdd);
+
+        stickerDao = new StickerDao();
 
         recyclerViewNgang = view.findViewById(R.id.recyclerViewDishes);
         recyclerViewNgang.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -100,6 +108,8 @@ public class DishFragment extends Fragment {
 
         btnAdd.setOnClickListener(v -> showAddThucDonDialog());
 
+
+
         return view;
     }
 
@@ -119,6 +129,49 @@ public class DishFragment extends Fragment {
         ImageButton btnChooseImage = dialog.findViewById(R.id.btnChooseImage);
         Button btnSaveThucDon = dialog.findViewById(R.id.btnAddThucDon);
 
+        spinner1 = dialog.findViewById(R.id.spiner1);
+        spinner2 = dialog.findViewById(R.id.spiner2);
+        spinner3 = dialog.findViewById(R.id.spiner3);
+
+        stickerDao.getAll(new StickerDao.StickerCallback() {
+            @Override
+            public void onSuccess(Sticker sticker) {
+
+            }
+
+            @Override
+            public void onSuccess(List<Sticker> stickerList) {
+
+
+                ds.add(new Sticker("","None",""));
+                ds.addAll(stickerList);
+
+                ArrayAdapter<Sticker> adapter = new ArrayAdapter<>(
+                        getContext(),
+                        android.R.layout.simple_spinner_item, // Giao diện cho mỗi mục
+                        ds
+                );
+
+                // Cài đặt layout khi hiển thị danh sách
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // Gán adapter cho Spinner
+                spinner1.setAdapter(adapter);
+                spinner2.setAdapter(adapter);
+                spinner3.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
+
+
+
+
+
+
         btnChooseImage.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
@@ -134,6 +187,26 @@ public class DishFragment extends Fragment {
             ThucDon thucDon = new ThucDon();
             thucDon.setId_nh(edtIdNh.getText().toString());
             thucDon.setTen(edtTen.getText().toString());
+
+
+            if (spinner1.getSelectedItemPosition()!=0){
+                Sticker sticker = (Sticker) spinner1.getSelectedItem();
+                thucDon.setSticker1(sticker.getId());
+            }
+
+            if (spinner2.getSelectedItemPosition()!=0){
+                Sticker sticker = (Sticker) spinner2.getSelectedItem();
+                thucDon.setSticker2(sticker.getId());
+            }
+
+            if (spinner3.getSelectedItemPosition()!=0){
+                Sticker sticker = (Sticker) spinner3.getSelectedItem();
+                thucDon.setSticker3(sticker.getId());
+            }
+
+
+
+
             try {
                 thucDon.setGia(Integer.parseInt(edtGia.getText().toString()));
             } catch (NumberFormatException e) {

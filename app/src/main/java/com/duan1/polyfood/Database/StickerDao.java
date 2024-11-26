@@ -78,9 +78,33 @@ public class StickerDao {
         });
     }
 
-    // Interface callback để lấy kết quả từ getAll
+    public void getStickerById(String stickerId, final StickerCallback callback) {
+        mDatabase.child(stickerId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Chuyển đổi DataSnapshot thành Sticker object
+                    Sticker sticker = dataSnapshot.getValue(Sticker.class);
+                    callback.onSuccess(sticker);
+                } else {
+                    // Không tìm thấy đối tượng
+                    callback.onFailure("Sticker not found with ID: " + stickerId);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Xử lý khi có lỗi
+                Log.e("StickerDao", "Error fetching sticker: " + databaseError.getMessage());
+                callback.onFailure(databaseError.getMessage());
+            }
+        });
+    }
+
+    // Callback interface sửa lại để hỗ trợ cả Sticker và danh sách Sticker
     public interface StickerCallback {
-        void onSuccess(List<Sticker> stickerList);
+        void onSuccess(Sticker sticker); // Cho trường hợp lấy 1 đối tượng
+        void onSuccess(List<Sticker> stickerList); // Cho trường hợp lấy nhiều đối tượng
         void onFailure(String error);
     }
 }

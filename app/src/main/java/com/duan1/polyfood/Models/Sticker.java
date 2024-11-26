@@ -38,5 +38,11 @@ public class Sticker {
     public void setColor(String color) {
         this.color = color;
     }
+
+
+    @Override
+    public String toString() {
+        return content; // Giá trị hiển thị trên Spinner
+    }
 }
 

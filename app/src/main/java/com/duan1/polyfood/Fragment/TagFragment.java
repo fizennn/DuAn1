@@ -56,6 +56,11 @@ public class TagFragment extends Fragment {
 
         stickerDao.getAll(new StickerDao.StickerCallback() {
             @Override
+            public void onSuccess(Sticker sticker) {
+
+            }
+
+            @Override
             public void onSuccess(List<Sticker> List) {
                 recyclerView = view.findViewById(R.id.recyclerView);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

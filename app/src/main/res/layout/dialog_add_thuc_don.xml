@@ -37,8 +37,10 @@
         android:inputType="text"
         android:textSize="15dp"
         android:background="@drawable/rounded_background"
-        android:padding="10dp"
-        android:layout_marginTop="4dp"/>
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingHorizontal="16dp"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/edtTen"
@@ -48,8 +50,10 @@
         android:inputType="text"
         android:textSize="15dp"
         android:background="@drawable/rounded_background"
-        android:padding="10dp"
-        android:layout_marginTop="4dp"/>
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingHorizontal="16dp"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/edtGia"
@@ -59,8 +63,10 @@
         android:inputType="numberDecimal"
         android:textSize="15dp"
         android:background="@drawable/rounded_background"
-        android:padding="10dp"
-        android:layout_marginTop="4dp"/>
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingHorizontal="16dp"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/edtMoTa"
@@ -70,8 +76,10 @@
         android:textSize="15dp"
         android:inputType="text"
         android:background="@drawable/rounded_background"
-        android:padding="10dp"
-        android:layout_marginTop="4dp"/>
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:paddingHorizontal="16dp"
+        android:layout_marginTop="10dp"/>
 
 <!--    <EditText-->
 <!--        android:id="@+id/edtDanhgia"-->
@@ -95,14 +103,42 @@
 <!--        android:padding="10dp"-->
 <!--        android:layout_marginTop="4dp"/>-->
 
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/rounded_background"
+        android:id="@+id/spiner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/rounded_background"
+        android:id="@+id/spiner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/rounded_background"
+        android:id="@+id/spiner3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown" />
+
     <Button
+        android:textSize="13dp"
         android:id="@+id/btnAddThucDon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@color/colorPrimary"
         android:padding="15dp"
-        android:background="@drawable/button_background"
+        android:background="@drawable/btn1"
         android:text="Thêm món ăn"
         android:layout_marginTop="15dp"/>
 </LinearLayout>

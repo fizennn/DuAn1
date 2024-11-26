@@ -10,6 +10,8 @@ public class ThucDon {
     private String phanHoi;
     private String hinhAnh;
     private int soLuong;
+    private String sticker1,sticker2,sticker3;
+
 
     public ThucDon() {}
 
@@ -61,5 +63,29 @@ public class ThucDon {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public String getSticker1() {
+        return sticker1;
+    }
+
+    public void setSticker1(String sticker1) {
+        this.sticker1 = sticker1;
+    }
+
+    public String getSticker2() {
+        return sticker2;
+    }
+
+    public void setSticker2(String sticker2) {
+        this.sticker2 = sticker2;
+    }
+
+    public String getSticker3() {
+        return sticker3;
+    }
+
+    public void setSticker3(String sticker3) {
+        this.sticker3 = sticker3;
     }
 }
