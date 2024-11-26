@@ -7,11 +7,13 @@
     android:padding="8dp"
     android:background="@android:color/white"
     android:id="@+id/Liner"
-    android:layout_marginHorizontal="4dp"
+
     android:layout_marginBottom="5dp"
     android:gravity="center">
 
     <TextView
+        android:textStyle="bold"
+        android:textColor="#ffff"
         android:id="@+id/tvContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

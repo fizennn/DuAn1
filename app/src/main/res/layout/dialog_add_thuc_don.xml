@@ -131,7 +131,7 @@
         android:spinnerMode="dropdown" />
 
     <Button
-        android:textSize="13dp"
+        android:textSize="11dp"
         android:id="@+id/btnAddThucDon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

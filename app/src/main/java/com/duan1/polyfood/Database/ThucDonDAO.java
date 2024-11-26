@@ -322,4 +322,28 @@ public class ThucDonDAO {
     }
 
 
+
+    public void updateGoiY(String id,String text) {
+        database.child("NhaHang").child("ThucDon").child(id).child("goiY").setValue(text);
+    }
+
+    public void getGoiY(String id,FirebaseCallback callback) {
+        database.child("NhaHang").child("ThucDon").child(id).child("goiY").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ThucDon don = new ThucDon();
+                if (snapshot!=null){
+                    don.setGoiY("1");
+                }
+                callback.onCallback(don);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 }

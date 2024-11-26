@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,11 +30,13 @@ public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAd
     private List<ThucDon> danhSachThucDon;
     private IntToVND vnd;
     private Context context;
+    private ThucDonDAO thucDonDAO;
 
     public ThucDonSuggestAdapter(List<ThucDon> danhSachThucDon,Context context) {
         this.danhSachThucDon = danhSachThucDon;
         this.context = context;
         vnd = new IntToVND();
+        thucDonDAO = new ThucDonDAO();
     }
 
     @NonNull
@@ -46,16 +50,24 @@ public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ThucDon ThucDon = danhSachThucDon.get(position);
         holder.tenTextView.setText(ThucDon.getTen());
-        holder.soSaoTextView.setText(String.valueOf(ThucDon.getDanhGia()+""));
         holder.txvGia.setText(vnd.convertToVND(ThucDon.getGia()));
 
-        if (context != null) {
-            Glide.with(context)
-                    .load(ThucDon.getHinhAnh())
-                    .placeholder(R.drawable.load)
-                    .error(R.drawable.load)
-                    .into(holder.imageView);
+
+        if (ThucDon.getGoiY()!=null){
+            holder.checkBox.setChecked(true);
         }
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    thucDonDAO.updateGoiY(ThucDon.getId_td(),"1");
+                }else{
+                    thucDonDAO.updateGoiY(ThucDon.getId_td(),null);
+                }
+            }
+        });
+
 
 
     }
@@ -66,18 +78,16 @@ public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAd
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tenTextView, soSaoTextView,txvGia;
-        ImageView imageView;
-        LinearLayout layout;
+        TextView tenTextView,txvGia;
+        CheckBox checkBox;
+
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tenTextView = itemView.findViewById(R.id.tvName);
-            soSaoTextView = itemView.findViewById(R.id.tvPrice);
             txvGia = itemView.findViewById(R.id.txvgia);
-            imageView = itemView.findViewById(R.id.imgFood);
-            layout = itemView.findViewById(R.id.linearLayoutChitiet);
+            checkBox = itemView.findViewById(R.id.checkbox);
 
         }
     }

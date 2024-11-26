@@ -75,19 +75,32 @@
 
         <LinearLayout
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+
+                android:id="@+id/tag1"
                 android:padding="2dp"
                 android:background="@drawable/tag"
                 android:textColor="@color/tag"
                 android:textSize="10dp"
-                android:text="Giảm Giá 50%"
+                android:text="Sức Khỏe"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
             <TextView
+                android:id="@+id/tag2"
+                android:layout_marginLeft="10dp"
+                android:padding="2dp"
+                android:background="@drawable/tag"
+                android:textColor="@color/tag"
+                android:textSize="10dp"
+                android:text="Giảm Giá 10%"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tag3"
                 android:layout_marginLeft="10dp"
                 android:padding="2dp"
                 android:background="@drawable/tag"
@@ -96,6 +109,11 @@
                 android:text="Freeship"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#757575" />
         </LinearLayout>
 
 

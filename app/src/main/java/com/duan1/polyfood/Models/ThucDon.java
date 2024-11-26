@@ -11,6 +11,7 @@ public class ThucDon {
     private String hinhAnh;
     private int soLuong;
     private String sticker1,sticker2,sticker3;
+    private String goiY;
 
 
     public ThucDon() {}
@@ -87,5 +88,13 @@ public class ThucDon {
 
     public void setSticker3(String sticker3) {
         this.sticker3 = sticker3;
+    }
+
+    public String getGoiY() {
+        return goiY;
+    }
+
+    public void setGoiY(String goiY) {
+        this.goiY = goiY;
     }
 }

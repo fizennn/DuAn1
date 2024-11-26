@@ -81,7 +81,7 @@
     </LinearLayout>
 
     <Button
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:textAllCaps="false"
         android:textColor="#ffff"
         android:layout_marginTop="30dp"

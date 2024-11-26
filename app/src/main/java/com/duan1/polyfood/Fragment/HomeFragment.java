@@ -198,6 +198,34 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThucDon> thucDonList) {
+                if (thucDonList == null || thucDonList.isEmpty()) {
+
+                } else {
+                    foodList.clear();
+
+                    for (ThucDon don : thucDonList){
+                        if (don.getGoiY()!=null){
+                            foodList.add(don);
+                        }
+                    }
+                    foodAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+                }
+            }
+
+            @Override
+            public void onCallback(ThucDon thucDon) {
+
+            }
+
+            @Override
+            public void onCallback(Float star) {
+
+            }
+        });
     }
 
     public String getGreeting() {

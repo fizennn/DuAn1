@@ -4,17 +4,13 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,15 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.duan1.polyfood.Adapter.DishSuggestAdapter;
-import com.duan1.polyfood.Adapter.FoodAdapter;
-import com.duan1.polyfood.Adapter.ThucDonAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Adapter.ThucDonSuggestAdapter;
 import com.duan1.polyfood.Database.ThucDonDAO;
@@ -40,6 +29,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -57,6 +48,8 @@ public class DishSuggestFragment extends Fragment {
     private List<ThucDon> foodListNgang;
     private ThucDonNgangAdapter thucDonNgangAdapter;
 
+    private ArrayList<ThucDon> list = new ArrayList<>();
+
 
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -72,47 +65,26 @@ public class DishSuggestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_dishsuggest, container, false);
 
         thucDonDAO = new ThucDonDAO();
-        btnAddDishSuggest = view.findViewById(R.id.floatAddDishSuggest);
         recyclerView = view.findViewById(R.id.recyclerViewDishesSuggest);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        // Tải dữ liệu vào foodList và cập nhật adapter cho recyclerview1
-        foodList = new ArrayList<>();
-        thucDonSuggestAdapter = new ThucDonSuggestAdapter(foodList,getContext());
-        recyclerView.setAdapter(thucDonSuggestAdapter);
-
-        // Gọi hàm loadSuggestedDishes để lấy dữ liệu từ Firebase
-        loadSuggestedDishes();
-
-
-        btnAddDishSuggest.setOnClickListener(v -> showAddThucDonDialog());
-
-        return view;
-    }
 
 
 
-    private void showAddThucDonDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_dishsuggest, null);
-        builder.setView(dialogView);
 
-        recyclerViewNgang = dialogView.findViewById(R.id.recyclerViewDishes);
-        recyclerViewNgang.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
-        foodListNgang = new ArrayList<>();
 
         thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<ThucDon> thucDonList) {
-                foodListNgang.clear();
-                foodListNgang.addAll(thucDonList); // Thêm món ăn vào danh sách
-                DishSuggestAdapter dishSuggestAdapter = new DishSuggestAdapter(foodListNgang, getContext());
-                recyclerViewNgang.setAdapter(dishSuggestAdapter);
+
+                list = thucDonList;
+
+                thucDonSuggestAdapter = new ThucDonSuggestAdapter(list,requireContext());
+                recyclerView.setAdapter(thucDonSuggestAdapter);
             }
 
             @Override
@@ -125,6 +97,18 @@ public class DishSuggestFragment extends Fragment {
 
             }
         });
+
+        return view;
+    }
+
+
+
+    private void showAddThucDonDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_dishsuggest, null);
+        builder.setView(dialogView);
+
+
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -152,6 +136,29 @@ public class DishSuggestFragment extends Fragment {
             @Override
             public void onCallback(Float star) {
 
+            }
+        });
+
+    }
+
+    public void sapXep(){
+        Collections.sort(list, new Comparator<ThucDon>() {
+            @Override
+            public int compare(ThucDon dish1, ThucDon dish2) {
+                // Trường hợp cả hai đều null
+                if (dish1 == null && dish2 == null) return 0;
+                // Trường hợp chỉ một trong hai null
+                if (dish1 == null) return 1;
+                if (dish2 == null) return -1;
+
+                // So sánh thuộc tính name (xử lý trường hợp name null)
+                String name1 = dish1.getGoiY();
+                String name2 = dish2.getGoiY();
+                if (name1 == null && name2 == null) return 0;
+                if (name1 == null) return 1;
+                if (name2 == null) return -1;
+
+                return name1.compareTo(name2);
             }
         });
     }

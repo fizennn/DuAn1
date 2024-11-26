@@ -90,7 +90,7 @@ public class DishFragment extends Fragment {
                 for (ThucDon don : thucDonList){
                     foodListNgang.add(don);
                 }
-                thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang,getContext());
+                thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang,requireContext());
                 recyclerViewNgang.setAdapter(thucDonNgangAdapter);
             }
 
