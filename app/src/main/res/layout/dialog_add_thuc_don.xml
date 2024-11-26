@@ -139,7 +139,7 @@
         android:textColor="@color/colorPrimary"
         android:padding="15dp"
         android:background="@drawable/btn1"
-        android:text="Thêm món ăn"
+        android:text="Lưu Dữ Liệu"
         android:layout_marginTop="15dp"/>
 </LinearLayout>
 

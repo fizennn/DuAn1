@@ -17,9 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.duan1.polyfood.Adapter.FoodAdapter;
+import com.duan1.polyfood.Adapter.StickerNgangAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.CartActivity;
+import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
+import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
 import com.duan1.polyfood.SearchActivity;
@@ -34,7 +37,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private String TAG = "FixLoi1";
-    private RecyclerView recyclerView, recyclerViewNgang;
+    private RecyclerView recyclerView, recyclerViewNgang,recyclerViewSticker;
     private FoodAdapter foodAdapter;
     private List<ThucDon> foodList, foodListNgang;
     private ThucDonNgangAdapter thucDonNgangAdapter;
@@ -47,6 +50,9 @@ public class HomeFragment extends Fragment {
     private CardView imgSearch;
     private TextView txvChao;
     private LinearLayout linearLayout;
+    private List<Sticker> stickerList;
+    private StickerNgangAdapter stickerNgangAdapter;
+    private StickerDao stickerDao;
 
 
 
@@ -64,8 +70,16 @@ public class HomeFragment extends Fragment {
         txvNoti = view.findViewById(R.id.txvNoti);
         txvChao = view.findViewById(R.id.txvChao);
         linearLayout = view.findViewById(R.id.linearLayout);
+        stickerList = new ArrayList<>();
+        stickerDao = new StickerDao();
+
+        recyclerViewSticker = view.findViewById(R.id.recyclerViewSticker);
+
 
         txvChao.setText(getGreeting());
+
+
+        getSticker();
 
         // Set up RecyclerViews
         setupRecyclerViews(view);
@@ -91,6 +105,47 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
+
+
+
+        stickerDao.getAll(new StickerDao.StickerCallback() {
+            @Override
+            public void onSuccess(Sticker sticker) {
+
+            }
+
+            @Override
+            public void onSuccess(List<Sticker> stickerList1) {
+
+                recyclerViewSticker.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
+                stickerNgangAdapter = new StickerNgangAdapter(stickerList1, requireContext(), new StickerNgangAdapter.OnItemClickListener() {
+                    @Override
+                    public void onEdit(Sticker sticker) {
+
+                    }
+
+                    @Override
+                    public void onDelete(Sticker sticker) {
+
+                    }
+                });
+                recyclerViewSticker.setAdapter(stickerNgangAdapter);
+
+
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
+
+
         return view;
     }
 
@@ -110,6 +165,11 @@ public class HomeFragment extends Fragment {
         foodList = new ArrayList<>();
         foodAdapter = new FoodAdapter(getContext(), foodList);
         recyclerView.setAdapter(foodAdapter);
+
+
+
+
+
 
         // Gọi hàm loadSuggestedDishes để lấy dữ liệu từ Firebase
         loadSuggestedDishes();
@@ -247,5 +307,10 @@ public class HomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "HomeFragment onDestroy: ");
+    }
+
+
+    private void getSticker(){
+
     }
 }

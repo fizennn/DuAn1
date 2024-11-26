@@ -101,6 +101,28 @@ public class ThucDonDAO {
         }
     }
 
+    public void update(ThucDon thucDon, Uri imageUri) {
+
+        if (imageUri==null){
+            database.child("NhaHang").child("ThucDon").child(thucDon.getId_td()).setValue(thucDon);
+            return;
+        }
+
+        String key = database.child("NhaHang").child("ThucDon").push().getKey();
+        if (true) {
+            thucDon.setId_td(key);
+            StorageReference imgRef = storageReference.child(thucDon.getTen() + ".jpg");
+
+            imgRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
+                            .addOnSuccessListener(uri -> {
+                                thucDon.setHinhAnh(uri.toString());
+
+                            })
+                            .addOnFailureListener(e -> Log.e("Firebase", "Failed to get download URL: " + e.getMessage())))
+                    .addOnFailureListener(e -> Log.e("Firebase", "Failed to upload image: " + e.getMessage()));
+        }
+    }
+
     public void addDanhGia(ThucDon thucDon){
         database.child("NhaHang").child("ThucDon").child(thucDon.getId_td()).setValue(thucDon);
     }

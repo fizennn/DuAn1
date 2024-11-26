@@ -5,6 +5,16 @@ public class Sticker {
     private String content;
     private String color; // Lưu màu dạng ARGB
 
+    private String imageUri;
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
+
     public Sticker() {
     }
 

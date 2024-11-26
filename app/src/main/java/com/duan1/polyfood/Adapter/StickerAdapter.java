@@ -1,5 +1,7 @@
 package com.duan1.polyfood.Adapter;
 
+import android.content.Context;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -8,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.R;
 
@@ -15,6 +18,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -25,6 +29,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.StickerV
 
     private List<Sticker> stickerList;
     private OnItemClickListener listener;
+    private Context context;
 
     public interface OnItemClickListener {
         void onEdit(Sticker sticker);
@@ -32,9 +37,10 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.StickerV
 
     }
 
-    public StickerAdapter(List<Sticker> stickerList, OnItemClickListener listener) {
+    public StickerAdapter(List<Sticker> stickerList,Context context, OnItemClickListener listener) {
         this.stickerList = stickerList;
         this.listener = listener;
+        this.context=context;
     }
 
     @NonNull
@@ -49,8 +55,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.StickerV
         Sticker sticker = stickerList.get(position);
         holder.tvContent.setText(sticker.getContent());
 
-        holder.btnEditLiner.setBackgroundColor(Color.parseColor(sticker.getColor())); // Đổi màu nền thành màu cam
-
+        holder.tag.setColorFilter(Color.parseColor(sticker.getColor()), PorterDuff.Mode.SRC_IN);
 
         holder.btnEditLiner.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -60,6 +65,15 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.StickerV
                 return true;
             }
         });
+
+
+        if (context!=null && sticker.getImageUri()!=null) {
+            Glide.with(context)
+                    .load(sticker.getImageUri())
+                    .placeholder(R.drawable.load)
+                    .error(R.drawable.load)
+                    .into(holder.sticker);
+        }
 
     }
 
@@ -72,6 +86,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.StickerV
         TextView tvContent;
         TextView btnEdit, btnDelete;
         LinearLayout btnEditLiner;
+        ImageView tag,sticker;
 
         public StickerViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +94,8 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.StickerV
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnEditLiner = itemView.findViewById(R.id.Liner);
+            tag = itemView.findViewById(R.id.tag);
+            sticker = itemView.findViewById(R.id.imgSticker);
         }
     }
 }

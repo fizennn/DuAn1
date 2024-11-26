@@ -1,13 +1,17 @@
 package com.duan1.polyfood.Database;
 
+import android.net.Uri;
 import android.util.Log;
 
+import com.duan1.polyfood.Models.NguoiDung;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.duan1.polyfood.Models.Sticker;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +19,12 @@ import java.util.List;
 public class StickerDao {
 
     private DatabaseReference mDatabase;
+    private StorageReference storageReference;
 
     public StickerDao() {
         // Khởi tạo tham chiếu đến Firebase Realtime Database
         mDatabase = FirebaseDatabase.getInstance().getReference("NhaHang").child("Nhan");
+        storageReference = FirebaseStorage.getInstance().getReference("StickerImages");
     }
 
     // Thêm Sticker mới
@@ -41,19 +47,55 @@ public class StickerDao {
         }
     }
 
+    public void  addStickerImg(Sticker sticker, Uri img){
+        String id = mDatabase.push().getKey();
+        StorageReference imgRef = storageReference.child(id + ".jpg");
+
+
+        imgRef.putFile(img).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            sticker.setId(id);
+                            sticker.setImageUri(uri.toString());
+                            mDatabase.child(id).setValue(sticker);
+                        })
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to get download URL: " + e.getMessage())))
+                .addOnFailureListener(e -> Log.e("Firebase", "Failed to upload image: " + e.getMessage()));
+    }
+
     // Cập nhật Sticker
-    public void updateSticker(Sticker sticker) {
+    public void updateSticker(Sticker sticker,Uri img) {
         String stickerId = String.valueOf(sticker.getId());
         // Cập nhật sticker với ID tương ứng
-        mDatabase.child(stickerId).setValue(sticker)
-                .addOnSuccessListener(aVoid -> {
-                    // Xử lý nếu cập nhật thành công
-                    Log.d("StickerDao", "Sticker updated successfully");
-                })
-                .addOnFailureListener(e -> {
-                    // Xử lý nếu thất bại
-                    Log.e("StickerDao", "Error updating sticker: " + e.getMessage());
-                });
+//        mDatabase.child(stickerId).setValue(sticker)
+//                .addOnSuccessListener(aVoid -> {
+//                    // Xử lý nếu cập nhật thành công
+//                    Log.d("StickerDao", "Sticker updated successfully");
+//                })
+//                .addOnFailureListener(e -> {
+//                    // Xử lý nếu thất bại
+//                    Log.e("StickerDao", "Error updating sticker: " + e.getMessage());
+
+
+//                });
+
+        if (img == null){
+            Log.d("zzzzzzzzzz", "updateSticker: "+stickerId);
+            mDatabase.child(stickerId).setValue(sticker);
+            return;
+        }
+
+        StorageReference imgRef = storageReference.child(stickerId + ".jpg");
+
+
+
+
+        imgRef.putFile(img).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            sticker.setImageUri(uri.toString());
+                            mDatabase.child(stickerId).setValue(sticker);
+                        })
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to get download URL: " + e.getMessage())))
+                .addOnFailureListener(e -> Log.e("Firebase", "Failed to upload image: " + e.getMessage()));
     }
 
     public void getAll(final StickerCallback callback) {
@@ -100,6 +142,8 @@ public class StickerDao {
             }
         });
     }
+
+
 
     // Callback interface sửa lại để hỗ trợ cả Sticker và danh sách Sticker
     public interface StickerCallback {

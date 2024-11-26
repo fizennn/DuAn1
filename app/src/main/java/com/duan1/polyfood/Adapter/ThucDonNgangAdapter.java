@@ -39,6 +39,7 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
     private GradientDrawable drawable2 = new GradientDrawable();
 
 
+
     public ThucDonNgangAdapter(List<ThucDon> danhSachThucDon,Context context) {
         this.danhSachThucDon = danhSachThucDon;
         this.context = context;
@@ -51,6 +52,10 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
         drawable1 = drawable;
         drawable2 = drawable;
     }
+
+
+
+
 
     @NonNull
     @Override
@@ -103,6 +108,10 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
 
 
         // Áp dụng drawable làm background
+
+
+
+
 
 
 

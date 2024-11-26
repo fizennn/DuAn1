@@ -29,8 +29,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.ThucDonAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
+import com.duan1.polyfood.Adapter.ThucDonNgangDishAdapter;
 import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.Sticker;
@@ -50,7 +52,7 @@ public class DishFragment extends Fragment {
     private ThucDonDAO thucDonDAO;
     private StorageReference storageReference;
     private RecyclerView recyclerViewNgang;
-    private ThucDonNgangAdapter thucDonNgangAdapter;
+    private ThucDonNgangDishAdapter thucDonNgangAdapter;
     private List<ThucDon> foodListNgang;
     private StickerDao stickerDao;
     private Spinner spinner1,spinner2,spinner3;
@@ -90,7 +92,13 @@ public class DishFragment extends Fragment {
                 for (ThucDon don : thucDonList){
                     foodListNgang.add(don);
                 }
-                thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang,requireContext());
+                thucDonNgangAdapter = new ThucDonNgangDishAdapter(foodListNgang,requireContext());
+                thucDonNgangAdapter.setOnItemClickListener(new ThucDonNgangDishAdapter.OnItemClickListener() {
+                    @Override
+                    public void onEdit(ThucDon thucDon) {
+                        showAddThucDonDialog(thucDon);
+                    }
+                });
                 recyclerViewNgang.setAdapter(thucDonNgangAdapter);
             }
 
@@ -106,7 +114,7 @@ public class DishFragment extends Fragment {
         });
 
 
-        btnAdd.setOnClickListener(v -> showAddThucDonDialog());
+        btnAdd.setOnClickListener(v -> showAddThucDonDialog(null));
 
 
 
@@ -115,7 +123,7 @@ public class DishFragment extends Fragment {
 
 
 
-    private void showAddThucDonDialog() {
+    private void showAddThucDonDialog(ThucDon don) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_add_thuc_don);
 
@@ -147,7 +155,7 @@ public class DishFragment extends Fragment {
                 ds.addAll(stickerList);
 
                 ArrayAdapter<Sticker> adapter = new ArrayAdapter<>(
-                        getContext(),
+                        requireContext(),
                         android.R.layout.simple_spinner_item, // Giao diện cho mỗi mục
                         ds
                 );
@@ -159,6 +167,21 @@ public class DishFragment extends Fragment {
                 spinner1.setAdapter(adapter);
                 spinner2.setAdapter(adapter);
                 spinner3.setAdapter(adapter);
+
+                if (don!=null){
+                    for (int i = 0 ; i < ds.size() ; i++){
+                        if (ds.get(i).getId().equalsIgnoreCase(don.getSticker1())){
+                            spinner1.setSelection(i);
+                        }
+                        if (ds.get(i).getId().equalsIgnoreCase(don.getSticker2())){
+                            spinner2.setSelection(i);
+                        }
+                        if (ds.get(i).getId().equalsIgnoreCase(don.getSticker3())){
+                            spinner3.setSelection(i);
+                        }
+                    }
+                }
+
             }
 
             @Override
@@ -178,11 +201,27 @@ public class DishFragment extends Fragment {
             imagePickerLauncher.launch(intent);
         });
 
-        btnSaveThucDon.setOnClickListener(v -> {
-            if (imageUri == null) {
-                Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
-                return;
+        if (don!=null){
+            edtIdNh.setText(don.getId_nh());
+            edtTen.setText(don.getTen());
+            edtGia.setText(String.valueOf(don.getGia()));
+            edtMoTa.setText(don.getMoTa());
+
+            if (getContext() != null) {
+                Glide.with(getContext())
+                        .load(don.getHinhAnh())
+                        .placeholder(R.drawable.load)
+                        .error(R.drawable.load)
+                        .into(imgSelectedImage);
             }
+
+
+
+        }
+
+        btnSaveThucDon.setOnClickListener(v -> {
+
+
 
             ThucDon thucDon = new ThucDon();
             thucDon.setId_nh(edtIdNh.getText().toString());
@@ -217,9 +256,30 @@ public class DishFragment extends Fragment {
 //            thucDon.setDanhGia(edtDanhGia.getText().toString());
 //            thucDon.setPhanHoi(edtPhanHoi.getText().toString());
 
-            thucDonDAO.addThucDon(thucDon, imageUri);
-            dialog.dismiss();
-            Toast.makeText(getContext(), "Adding menu item...", Toast.LENGTH_SHORT).show();
+            if (don==null){
+
+                if (imageUri == null) {
+                    Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                thucDonDAO.addThucDon(thucDon, imageUri);
+                imageUri=null;
+                dialog.dismiss();
+                Toast.makeText(getContext(), "Adding menu item...", Toast.LENGTH_SHORT).show();
+            }else {
+                thucDon.setGoiY(don.getGoiY());
+                thucDon.setDanhGia(don.getDanhGia());
+                thucDon.setPhanHoi(don.getPhanHoi());
+                thucDon.setId_td(don.getId_td());
+                thucDon.setHinhAnh(don.getHinhAnh());
+                thucDonDAO.update(thucDon, imageUri);
+                dialog.dismiss();
+                Toast.makeText(getContext(), "Updating menu item...", Toast.LENGTH_SHORT).show();
+
+            }
+
+
         });
 
         dialog.show();

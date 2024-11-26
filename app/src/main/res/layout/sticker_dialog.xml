@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp">
-
 
 
     <EditText
@@ -30,7 +30,7 @@
             android:padding="100px"
             android:src="@drawable/tick"
             android:layout_width="35dp"
-            android:layout_height="35dp"/>
+            android:layout_height="35dp" />
 
         <ImageView
             android:id="@+id/mau2"
@@ -39,7 +39,7 @@
             android:padding="50dp"
             android:src="@drawable/tick"
             android:layout_width="35dp"
-            android:layout_height="35dp"/>
+            android:layout_height="35dp" />
 
         <ImageView
             android:id="@+id/mau3"
@@ -48,7 +48,7 @@
             android:padding="50dp"
             android:src="@drawable/tick"
             android:layout_width="35dp"
-            android:layout_height="35dp"/>
+            android:layout_height="35dp" />
 
         <ImageView
             android:id="@+id/mau4"
@@ -57,7 +57,7 @@
             android:padding="50dp"
             android:src="@drawable/tick"
             android:layout_width="35dp"
-            android:layout_height="35dp"/>
+            android:layout_height="35dp" />
 
         <ImageView
             android:id="@+id/mau5"
@@ -66,7 +66,7 @@
             android:padding="50dp"
             android:src="@drawable/tick"
             android:layout_width="35dp"
-            android:layout_height="35dp"/>
+            android:layout_height="35dp" />
 
         <ImageView
             android:id="@+id/mau6"
@@ -80,15 +80,52 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:padding="130px"
+            android:src="@drawable/baseline_add_24"
+            android:visibility="visible"
+            android:id="@+id/ivDialogStickerImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:contentDescription="Sticker Image"
+            android:background="@drawable/rounded_background"
+            android:scaleType="fitCenter" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btnDialogChooseImage"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_background"
+            android:text="Chọn ảnh"
+            android:textSize="16dp"
+            android:textColor="#565656"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+
+
+
     <Button
         android:textSize="16dp"
         android:textAllCaps="false"
         android:textColor="#ffff"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/btn1"
         android:id="@+id/btnDialogSave"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="Lưu" />
+
+
+
 
 </LinearLayout>

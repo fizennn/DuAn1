@@ -1,13 +1,20 @@
 package com.duan1.polyfood.Fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.StickerAdapter;
 import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Models.Sticker;
@@ -38,6 +46,14 @@ public class TagFragment extends Fragment {
     private int color = 0;
 
     private StickerDao stickerDao;
+
+    ImageView ivStickerImage;
+    Button btnChooseImage;
+    Uri selectedImageUri = null;
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +83,7 @@ public class TagFragment extends Fragment {
 
 
 
-                adapter = new StickerAdapter(List, new StickerAdapter.OnItemClickListener() {
+                adapter = new StickerAdapter(List,getContext(), new StickerAdapter.OnItemClickListener() {
                     @Override
                     public void onEdit(Sticker sticker) {
 
@@ -100,6 +116,14 @@ public class TagFragment extends Fragment {
         // Tạo dialog
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.sticker_dialog);
+
+
+
+
+
+
+
+
         color = 0;
 
 
@@ -152,6 +176,39 @@ public class TagFragment extends Fragment {
             mau[5].setPadding(10,10,10,10);
         });
 
+        ivStickerImage = dialog.findViewById(R.id.ivDialogStickerImage);
+        btnChooseImage = dialog.findViewById(R.id.btnDialogChooseImage);
+
+
+        if (requireContext() != null && sticker!=null) {
+
+
+
+            if (sticker.getImageUri()!=null){
+
+
+                Glide.with(getContext())
+                        .load(sticker.getImageUri())
+                        .placeholder(R.drawable.load)
+                        .error(R.drawable.load)
+                        .into(ivStickerImage);
+
+                ivStickerImage.setPadding(10,10,10,10);
+            }
+
+        }
+
+// Chọn ảnh từ thư viện
+
+        ivStickerImage.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_PICK);
+            pickImageLauncher.launch(intent);
+        });
+
+
+
 
         if (dialog.getWindow() != null) {
             dialog.getWindow().setLayout(
@@ -178,20 +235,33 @@ public class TagFragment extends Fragment {
 
         // Nếu sửa, điền thông tin cũ vào
 
+        btnDialogSave.setOnClickListener(v -> {
+            String content = etDialogContent.getText().toString();
+            String color1 = mauString[color - 1];
+
+            if (!content.isEmpty()) {
+
+
+
+            }
+        });
+
 
         btnDialogSave.setOnClickListener(v -> {
             String content = etDialogContent.getText().toString();
             String color1 = mauString[color-1];
+            String imageUriString = selectedImageUri != null ? selectedImageUri.toString() : null;
 
             if (!content.isEmpty()) {
 
 
                 if (sticker == null) { // Thêm mới
-                    stickerDao.addSticker(new Sticker(null, content, color1));
+                    stickerDao.addStickerImg(new Sticker(null, content, color1),selectedImageUri);
                 } else { // Cập nhật
+
                     sticker.setContent(content);
                     sticker.setColor(color1);
-                    stickerDao.updateSticker(sticker);
+                    stickerDao.updateSticker(sticker,selectedImageUri);
                 }
 
                 adapter.notifyDataSetChanged();
@@ -207,5 +277,19 @@ public class TagFragment extends Fragment {
             imageView.setPadding(100, 100, 100, 100); // Đặt padding là 16px cho tất cả các ImageView
         }
     }
+
+
+    private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    selectedImageUri = result.getData().getData();
+                    ivStickerImage.clearColorFilter();
+                    ivStickerImage.setImageURI(selectedImageUri);
+                    ivStickerImage.setPadding(10,10,10,10);
+
+
+                }
+            });
 
 }
