@@ -132,6 +132,11 @@ public class HomeFragment extends Fragment {
                     public void onDelete(Sticker sticker) {
 
                     }
+
+                    @Override
+                    public void onClick(Sticker sticker) {
+
+                    }
                 });
                 recyclerViewSticker.setAdapter(stickerNgangAdapter);
 

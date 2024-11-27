@@ -76,6 +76,13 @@
 
         <!-- Search Bar -->
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/recyclerViewSticker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewSearch"

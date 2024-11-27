@@ -3,6 +3,7 @@ package com.duan1.polyfood.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.R;
 
@@ -25,10 +27,12 @@ public class StickerNgangAdapter extends RecyclerView.Adapter<StickerNgangAdapte
     private List<Sticker> stickerList;
     private OnItemClickListener listener;
     private Context context;
+    private StickerDao stickerDao;
 
     public interface OnItemClickListener {
         void onEdit(Sticker sticker);
         void onDelete(Sticker sticker);
+        void onClick(Sticker sticker);
 
     }
 
@@ -58,6 +62,13 @@ public class StickerNgangAdapter extends RecyclerView.Adapter<StickerNgangAdapte
 
                 listener.onEdit(sticker);
                 return true;
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(sticker);
             }
         });
 

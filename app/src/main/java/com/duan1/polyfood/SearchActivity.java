@@ -1,9 +1,12 @@
 package com.duan1.polyfood;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,8 +19,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.duan1.polyfood.Adapter.StickerNgangAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
+import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
+import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.Models.ThucDon;
 
 import java.util.ArrayList;
@@ -34,6 +40,10 @@ public class SearchActivity extends AppCompatActivity {
     private EditText edtSearch;
     private ImageView imgSortPrice, imgBack;
     private boolean isAscending = true; // true: Sắp xếp tăng dần, false: Giảm dần
+    private RecyclerView recyclerViewSticker;
+    private StickerDao stickerDao;
+    private StickerNgangAdapter stickerNgangAdapter;
+    private List<ThucDon> listThucDon2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +53,15 @@ public class SearchActivity extends AppCompatActivity {
         edtSearch = findViewById(R.id.edtSearch);
         imgSortPrice = findViewById(R.id.imgSortPrice);
         imgBack = findViewById(R.id.imgBack);
-
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        recyclerViewSticker = findViewById(R.id.recyclerViewSticker);
+        stickerDao = new StickerDao();
 
         thucDonDAO = new ThucDonDAO();
 
         recyclerViewSearch = findViewById(R.id.recyclerviewSearch);
         recyclerViewSearch.setLayoutManager(new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.VERTICAL, false));
 
+        listThucDon2 = new ArrayList<>();
         listThucDon = new ArrayList<>();
 
         thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
@@ -109,6 +113,75 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {}
+        });
+
+        stickerDao.getAll(new StickerDao.StickerCallback() {
+            @Override
+            public void onSuccess(Sticker sticker) {
+
+            }
+
+            @Override
+            public void onSuccess(List<Sticker> stickerList1) {
+
+                recyclerViewSticker.setLayoutManager(new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.HORIZONTAL, false));
+
+                stickerNgangAdapter = new StickerNgangAdapter(stickerList1, SearchActivity.this, new StickerNgangAdapter.OnItemClickListener() {
+                    @Override
+                    public void onEdit(Sticker sticker) {
+
+                    }
+                    @Override
+                    public void onDelete(Sticker sticker) {
+
+                    }
+
+                    @Override
+                    public void onClick(Sticker sticker) {
+                        thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
+                            @Override
+                            public void onCallback(ArrayList<ThucDon> thucDonList) {
+                                listThucDon2.clear();
+                                listThucDon.clear();
+                                listThucDon.addAll(thucDonList);
+                                for (ThucDon thucDon : listThucDon) {
+                                    if (sticker.getId().equals(thucDon.getSticker1()) || sticker.getId().equals(thucDon.getSticker2()) || sticker.getId().equals(thucDon.getSticker3()) ) {
+                                        listThucDon2.add(thucDon);
+                                    } else {
+                                        thucDonNgangAdapter.notifyDataSetChanged();
+                                    }
+                                }
+
+                                if(listThucDon2 != null){
+                                    listThucDon.clear();
+                                    listThucDon.addAll(listThucDon2);
+                                    thucDonNgangAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onCallback(ThucDon thucDon) {
+
+                            }
+
+                            @Override
+                            public void onCallback(Float star) {
+
+                            }
+                        });
+                    }
+
+
+                });
+                recyclerViewSticker.setAdapter(stickerNgangAdapter);
+
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
         });
 
         // Sự kiện sắp xếp khi nhấn vào imgSortPrice
