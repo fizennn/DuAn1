@@ -45,12 +45,6 @@ public class ThucDonNgangAdapter extends RecyclerView.Adapter<ThucDonNgangAdapte
         this.context = context;
         vnd = new IntToVND();
         stickerDao = new StickerDao();
-        drawable.setShape(GradientDrawable.RECTANGLE); // Hình chữ nhật
-        drawable.setCornerRadius(5);
-        drawable.setColor(context.getResources().getColor(android.R.color.white)); // Màu nền (tuỳ chỉnh)
-
-        drawable1 = drawable;
-        drawable2 = drawable;
     }
 
 

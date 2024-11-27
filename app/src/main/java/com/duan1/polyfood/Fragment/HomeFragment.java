@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.FoodAdapter;
 import com.duan1.polyfood.Adapter.StickerNgangAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
@@ -54,6 +55,8 @@ public class HomeFragment extends Fragment {
     private StickerNgangAdapter stickerNgangAdapter;
     private StickerDao stickerDao;
 
+    private LottieAnimationView loading;
+    private View viewLoad;
 
 
     @Override
@@ -70,23 +73,21 @@ public class HomeFragment extends Fragment {
         txvNoti = view.findViewById(R.id.txvNoti);
         txvChao = view.findViewById(R.id.txvChao);
         linearLayout = view.findViewById(R.id.linearLayout);
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
         stickerList = new ArrayList<>();
         stickerDao = new StickerDao();
+
 
         recyclerViewSticker = view.findViewById(R.id.recyclerViewSticker);
 
 
         txvChao.setText(getGreeting());
 
-
-        getSticker();
+        loading();
 
         // Set up RecyclerViews
-        setupRecyclerViews(view);
 
-        // Load cart data and update UI
-        getCart();
-        updateCartUI();
 
         //Mo cart
         btnOpenCart.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +107,8 @@ public class HomeFragment extends Fragment {
         });
 
 
-
+        getCart();
+        updateCartUI();
 
 
 
@@ -118,6 +120,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onSuccess(List<Sticker> stickerList1) {
+
+                if (!isAdded()) {
+                    Log.e("HomeFragment", "Fragment not attached to context");
+                    return; // Ngừng thực hiện nếu Fragment không được gắn
+                }
 
                 recyclerViewSticker.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -140,6 +147,9 @@ public class HomeFragment extends Fragment {
                 });
                 recyclerViewSticker.setAdapter(stickerNgangAdapter);
 
+                setupRecyclerViews(view);
+
+                // Load cart data and update UI
 
 
             }
@@ -153,6 +163,8 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+
 
     @Override
     public void onResume() {
@@ -177,7 +189,7 @@ public class HomeFragment extends Fragment {
 
 
         // Gọi hàm loadSuggestedDishes để lấy dữ liệu từ Firebase
-        loadSuggestedDishes();
+
 
         // Setup and fetch data for second RecyclerView
         recyclerViewNgang = view.findViewById(R.id.recyclerview2);
@@ -191,6 +203,7 @@ public class HomeFragment extends Fragment {
                 foodListNgang.addAll(thucDonList);
                 thucDonNgangAdapter = new ThucDonNgangAdapter(foodListNgang, getContext());
                 recyclerViewNgang.setAdapter(thucDonNgangAdapter);
+                loadSuggestedDishes();
             }
 
             @Override
@@ -250,6 +263,7 @@ public class HomeFragment extends Fragment {
                     foodList.clear();
                     foodList.addAll(suggestedDishes);
                     foodAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+                    list1();
                 }
             }
 
@@ -263,7 +277,10 @@ public class HomeFragment extends Fragment {
 
             }
         });
+    }
 
+
+    public void list1(){
         thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<ThucDon> thucDonList) {
@@ -278,6 +295,9 @@ public class HomeFragment extends Fragment {
                         }
                     }
                     foodAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+
+                    loaded();
+
                 }
             }
 
@@ -314,8 +334,16 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "HomeFragment onDestroy: ");
     }
 
-
-    private void getSticker(){
-
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
     }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
+    }
+
+
+
 }

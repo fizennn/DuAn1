@@ -3,6 +3,7 @@ package com.duan1.polyfood.Fragment;
 import static android.app.Activity.RESULT_OK;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class DishFragment extends Fragment {
     private StickerDao stickerDao;
     private Spinner spinner1,spinner2,spinner3;
     List<Sticker> ds = new ArrayList<>();
+    private Context context;
 
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -75,6 +77,8 @@ public class DishFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dish, container, false);
 
+        context = getContext();
+
         thucDonDAO = new ThucDonDAO();
         CardView btnAdd = view.findViewById(R.id.floatAdd);
 
@@ -92,7 +96,7 @@ public class DishFragment extends Fragment {
                 for (ThucDon don : thucDonList){
                     foodListNgang.add(don);
                 }
-                thucDonNgangAdapter = new ThucDonNgangDishAdapter(foodListNgang,requireContext());
+                thucDonNgangAdapter = new ThucDonNgangDishAdapter(foodListNgang,context);
                 thucDonNgangAdapter.setOnItemClickListener(new ThucDonNgangDishAdapter.OnItemClickListener() {
                     @Override
                     public void onEdit(ThucDon thucDon) {

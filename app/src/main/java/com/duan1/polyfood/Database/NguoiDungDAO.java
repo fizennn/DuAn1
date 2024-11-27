@@ -2,12 +2,14 @@ package com.duan1.polyfood.Database;
 
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.duan1.polyfood.Models.NguoiDung;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +32,9 @@ public class NguoiDungDAO {
 
     public interface FirebaseCallback {
         void onCallback(NguoiDung nguoiDung);
+    }
+    public interface onSuccess{
+        void success(boolean success);
     }
 
     public NguoiDungDAO() {
@@ -62,7 +67,7 @@ public class NguoiDungDAO {
         if (auth.getUID()==null){
             callback.onCallback(null);
         }
-        database.child("NguoiDung").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.child("NguoiDung").child(UID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 NguoiDung nguoidung = snapshot.getValue(NguoiDung.class);
@@ -113,16 +118,56 @@ public class NguoiDungDAO {
 
 
     public void  addNguoiDungImg(NguoiDung nguoiDung, Uri img){
+
+        if (img==null){
+            database.child("NguoiDung").child(auth.getUID()).setValue(nguoiDung);
+            return;
+        }
+
+
         StorageReference imgRef = storageReference.child(nguoiDung.getHoTen() + ".jpg");
 
         imgRef.putFile(img).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
                         .addOnSuccessListener(uri -> {
                             nguoiDung.setimgUrl(uri.toString());
-                            database.child("NguoiDung").child(auth.getUID()).setValue(nguoiDung);
+
                         })
                         .addOnFailureListener(e -> Log.e("Firebase", "Failed to get download URL: " + e.getMessage())))
                 .addOnFailureListener(e -> Log.e("Firebase", "Failed to upload image: " + e.getMessage()));
     }
+
+    public void  update(NguoiDung nguoiDung, Uri img,onSuccess success){
+
+
+        if (img==null){
+            database.child("NguoiDung").child(auth.getUID()).setValue(nguoiDung).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    success.success(true);
+                }
+            });
+
+            return;
+        }
+
+
+        StorageReference imgRef = storageReference.child(nguoiDung.getHoTen() + ".jpg");
+
+        imgRef.putFile(img).addOnSuccessListener(taskSnapshot -> imgRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            nguoiDung.setimgUrl(uri.toString());
+                            database.child("NguoiDung").child(auth.getUID()).setValue(nguoiDung).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    success.success(true);
+                                }
+                            });
+                        })
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to get download URL: " + e.getMessage())))
+                .addOnFailureListener(e -> Log.e("Firebase", "Failed to upload image: " + e.getMessage()));
+    }
+
+
 
     public void addNguoiDung(NguoiDung nguoiDung) {
         String key = database.child("NguoiDung").push().getKey();

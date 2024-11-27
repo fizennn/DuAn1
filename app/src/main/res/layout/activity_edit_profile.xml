@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
+
+                    <ImageButton
+                        android:id="@+id/imgBack"
+                        android:scaleType="fitCenter"
+                        android:padding="10dp"
+                        android:background="@null"
+                        android:src="@drawable/back"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="150dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp">
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:id="@+id/imageViewProfile"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:src="@drawable/load"
+                        />
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cAddAnh"
+                    android:backgroundTint="#FFFFFF"
+                    android:layout_marginTop="107dp"
+                    android:layout_marginLeft="107dp"
+                    app:cardCornerRadius="100dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp">
+
+                    <ImageView
+                        android:padding="7dp"
+                        android:src="@drawable/addimg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:tint="#B6B3B3" />
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:padding="16dp"
+                android:background="@drawable/bg_card_profile">
+
+                <!-- Full Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Họ và tên"
+                        android:textStyle="bold"
+                        android:textColor="#F44336"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/textViewFullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="John Doe"
+                        android:textColor="#555555"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Address -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Địa chỉ"
+                        android:textStyle="bold"
+                        android:textColor="#F44336"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/textViewAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="123 Main Street"
+                        android:textColor="#555555"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Gender -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Giới tính"
+                        android:textStyle="bold"
+                        android:textColor="#F44336"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/textViewGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:textColor="#555555"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Age -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tuổi"
+                        android:textStyle="bold"
+                        android:textColor="#F44336"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/textViewAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="25"
+                        android:textColor="#555555"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Email -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textStyle="bold"
+                        android:textColor="#F44336"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/textViewEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="john.doe@example.com"
+                        android:textColor="#555555"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Phone Number -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số điện thoại"
+                        android:textStyle="bold"
+                        android:textColor="#F44336"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/textViewPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="+123456789"
+                        android:textColor="#555555"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_marginBottom="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:textAllCaps="false"
+                android:textColor="#ffff"
+                android:text="Lưu Dữ Liệu"
+                android:background="@drawable/btn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/viewLoad"
+        android:background="#ffff"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:layout_marginBottom="100dp"
+        android:id="@+id/lottieLoading"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loadingbasic" />
+</androidx.constraintlayout.widget.ConstraintLayout>

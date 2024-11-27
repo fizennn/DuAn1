@@ -4,6 +4,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class DishSuggestFragment extends Fragment {
     private RecyclerView recyclerViewNgang;
     private List<ThucDon> foodListNgang;
     private ThucDonNgangAdapter thucDonNgangAdapter;
+    private Context context;
 
     private ArrayList<ThucDon> list = new ArrayList<>();
 
@@ -68,6 +70,8 @@ public class DishSuggestFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_dishsuggest, container, false);
 
+        context = getContext();
+
         thucDonDAO = new ThucDonDAO();
         recyclerView = view.findViewById(R.id.recyclerViewDishesSuggest);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -83,7 +87,7 @@ public class DishSuggestFragment extends Fragment {
 
                 list = thucDonList;
 
-                thucDonSuggestAdapter = new ThucDonSuggestAdapter(list,requireContext());
+                thucDonSuggestAdapter = new ThucDonSuggestAdapter(list,context);
                 recyclerView.setAdapter(thucDonSuggestAdapter);
             }
 

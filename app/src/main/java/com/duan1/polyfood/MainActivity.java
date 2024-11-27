@@ -27,6 +27,7 @@ import com.duan1.polyfood.Fragment.BillFragment;
 import com.duan1.polyfood.Fragment.FavoriteFragment;
 import com.duan1.polyfood.Fragment.HomeFragment;
 import com.duan1.polyfood.Fragment.ProfileFragment;
+import com.duan1.polyfood.Fragment.ProfileUserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         selectedFragment = new FavoriteFragment();
                     }
                     if(id==R.id.nav_profile) {
-                        selectedFragment = new ProfileFragment();
+                        selectedFragment = new ProfileUserFragment();
                     }
 
 
