@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Adapter.ThucDonSuggestAdapter;
 import com.duan1.polyfood.Database.ThucDonDAO;
@@ -52,6 +53,21 @@ public class DishSuggestFragment extends Fragment {
 
     private ArrayList<ThucDon> list = new ArrayList<>();
 
+    private LottieAnimationView loading;
+    private View viewLoad;
+
+
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
+    }
+
 
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -68,7 +84,15 @@ public class DishSuggestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         View view = inflater.inflate(R.layout.fragment_dishsuggest, container, false);
+
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
+        loading();
 
         context = getContext();
 
@@ -89,6 +113,7 @@ public class DishSuggestFragment extends Fragment {
 
                 thucDonSuggestAdapter = new ThucDonSuggestAdapter(list,context);
                 recyclerView.setAdapter(thucDonSuggestAdapter);
+                loaded();
             }
 
             @Override

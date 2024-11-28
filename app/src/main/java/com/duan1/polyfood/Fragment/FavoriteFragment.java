@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.FavouriteDishAdapter;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
@@ -32,6 +33,10 @@ public class FavoriteFragment extends Fragment {
     private List<ThucDon> favouriteDishList;
     private DatabaseReference databaseReference;
     private String userId;
+    private LottieAnimationView loading;
+    private View viewLoad,empty;
+
+
 
 
     @Override
@@ -45,6 +50,13 @@ public class FavoriteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
+        empty = view.findViewById(R.id.empty);
+
+
 
 
         // Initialize RecyclerView
@@ -61,6 +73,9 @@ public class FavoriteFragment extends Fragment {
         // Set up Firebase Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("NhaHang").child("FavouriteDish").child(userId);
 
+
+        loading();
+
         // Retrieve the data from Firebase
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,6 +88,11 @@ public class FavoriteFragment extends Fragment {
                     }
                 }
                 adapter.notifyDataSetChanged(); // Notify the adapter that data has changed
+                loaded();
+
+                if (favouriteDishList.size()==0){
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -80,5 +100,15 @@ public class FavoriteFragment extends Fragment {
                 // Handle any errors here
             }
         });
+    }
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
     }
 }

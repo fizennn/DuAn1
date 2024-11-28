@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.ThucDonAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
@@ -59,6 +60,10 @@ public class DishFragment extends Fragment {
     private Spinner spinner1,spinner2,spinner3;
     List<Sticker> ds = new ArrayList<>();
     private Context context;
+    private LottieAnimationView loading;
+    private View viewLoad;
+
+
 
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -76,6 +81,13 @@ public class DishFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dish, container, false);
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
+        loading();
+
+
 
         context = getContext();
 
@@ -104,6 +116,7 @@ public class DishFragment extends Fragment {
                     }
                 });
                 recyclerViewNgang.setAdapter(thucDonNgangAdapter);
+                loaded();
             }
 
             @Override
@@ -130,6 +143,7 @@ public class DishFragment extends Fragment {
     private void showAddThucDonDialog(ThucDon don) {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_add_thuc_don);
+
 
         imgSelectedImage = dialog.findViewById(R.id.imgSelectedImage);
         EditText edtIdNh = dialog.findViewById(R.id.edtIhnh);
@@ -271,6 +285,7 @@ public class DishFragment extends Fragment {
                 imageUri=null;
                 dialog.dismiss();
                 Toast.makeText(getContext(), "Adding menu item...", Toast.LENGTH_SHORT).show();
+
             }else {
                 thucDon.setGoiY(don.getGoiY());
                 thucDon.setDanhGia(don.getDanhGia());
@@ -280,6 +295,7 @@ public class DishFragment extends Fragment {
                 thucDonDAO.update(thucDon, imageUri);
                 dialog.dismiss();
                 Toast.makeText(getContext(), "Updating menu item...", Toast.LENGTH_SHORT).show();
+                imageUri=null;
 
             }
 
@@ -287,6 +303,16 @@ public class DishFragment extends Fragment {
         });
 
         dialog.show();
+    }
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
     }
 
 }

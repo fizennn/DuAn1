@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.HoaDonAdapter;
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.HoaDonDAO;
@@ -23,6 +24,12 @@ public class TatCaFragment extends Fragment {
     private HoaDonDAO hoaDonDAO;
     private ArrayList<HoaDon> listHoaDon;
     private AuthenticationFireBaseHelper baseHelper;
+    private LottieAnimationView loading,empty;
+    private View viewLoad;
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,8 +38,16 @@ public class TatCaFragment extends Fragment {
         hoaDonDAO = new HoaDonDAO();
         baseHelper = new AuthenticationFireBaseHelper();
 
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
+        empty = view.findViewById(R.id.empty);
+
+
         recyclerView = view.findViewById(R.id.recyclerViewHoaDon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        loading();
 
         listHoaDon = new ArrayList<>();
 
@@ -53,6 +68,11 @@ public class TatCaFragment extends Fragment {
                 }
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(hoaDonAdapter);
+                loaded();
+
+                if (hoaDonList.size()==0){
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -63,5 +83,15 @@ public class TatCaFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
     }
 }

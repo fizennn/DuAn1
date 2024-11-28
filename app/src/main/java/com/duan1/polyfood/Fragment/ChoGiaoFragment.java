@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.HoaDonAdapter;
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.HoaDonDAO;
@@ -23,10 +24,20 @@ public class ChoGiaoFragment extends Fragment {
     private HoaDonDAO hoaDonDAO;
     private ArrayList<HoaDon> listHoaDon;
     private AuthenticationFireBaseHelper baseHelper;
+    private LottieAnimationView loading;
+    private View viewLoad,empty;
+
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cho_giao, container, false);
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+        empty = view.findViewById(R.id.empty);
 
         hoaDonDAO = new HoaDonDAO();
         baseHelper = new AuthenticationFireBaseHelper();
@@ -35,6 +46,8 @@ public class ChoGiaoFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         listHoaDon = new ArrayList<>();
+
+        loading();
 
 
         hoaDonDAO.getHoaDonByStatus("Chờ giao", new HoaDonDAO.FirebaseCallback() {
@@ -51,6 +64,13 @@ public class ChoGiaoFragment extends Fragment {
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(hoaDonAdapter);
                 hoaDonAdapter.notifyDataSetChanged();
+
+
+                loaded();
+
+                if (hoaDonList.size()==0){
+                    empty.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -62,5 +82,15 @@ public class ChoGiaoFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
     }
 }

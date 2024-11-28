@@ -16,9 +16,8 @@
         <!-- Hình ảnh món ăn bên trái -->
         <ImageView
             android:id="@+id/imgMonAn"
-            android:layout_width="120dp"
-            android:layout_height="130dp"
-            android:layout_margin="8dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/phobo"
             android:contentDescription="Hình ảnh món ăn" />
@@ -32,15 +31,30 @@
             android:layout_gravity="center"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/txtTenMonAn"
-                android:layout_width="wrap_content"
+            <LinearLayout
+
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tên món ăn"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#333333"
-                android:paddingBottom="4dp" />
+                android:orientation="horizontal">
+                <ImageView
+                    android:src="@drawable/shieldfood"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+                <TextView
+                    android:layout_marginLeft="2dp"
+                    android:fontFamily="@font/spline_sans"
+                    android:gravity="center"
+                    android:text="Phở Bò Việt Nam - Không Ngon Không Lấy Tien"
+                    android:id="@+id/txtTenMonAn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="13sp"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/txtGia"
@@ -72,23 +86,52 @@
                 android:textColor="#666666"
                 android:paddingBottom="4dp" />
 
-            <TextView
-                android:id="@+id/txtTongTien"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tổng tiền: 120.000 VND"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#C50446" />
+                android:orientation="horizontal">
+                <ImageView
+                    android:src="@drawable/money"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+                <TextView
+                    android:layout_marginLeft="3dp"
+                    android:fontFamily="@font/spline_sans"
+                    android:gravity="center"
+                    android:text="100.000VND"
+                    android:id="@+id/txtTongTien"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="13sp"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:ellipsize="end"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtTrangThai"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Trạng thái: Đã thanh toán"
-                android:textSize="14sp"
-                android:textColor="#FBA019"
-                />
+                android:orientation="horizontal">
+                <ImageView
+                    android:src="@drawable/deliviry"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+                <TextView
+                    android:layout_marginLeft="3dp"
+                    android:fontFamily="@font/spline_sans"
+                    android:gravity="center"
+                    android:text="Đang Giao"
+                    android:id="@+id/txtTrangThai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="12sp"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btnDaNhanHang"

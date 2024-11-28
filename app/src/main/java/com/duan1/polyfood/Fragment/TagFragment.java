@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.StickerAdapter;
 import com.duan1.polyfood.Database.StickerDao;
@@ -52,6 +53,12 @@ public class TagFragment extends Fragment {
     Uri selectedImageUri = null;
 
 
+    private LottieAnimationView loading;
+    private View viewLoad;
+
+
+
+
 
 
 
@@ -60,9 +67,17 @@ public class TagFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+
         View view = inflater.inflate(R.layout.fragment_tag, container, false);
 
         stickerDao = new StickerDao();
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
+        loading();
+
+
 
 
 
@@ -98,6 +113,8 @@ public class TagFragment extends Fragment {
                 });
 
                 recyclerView.setAdapter(adapter);
+
+                loaded();
             }
 
             @Override
@@ -291,5 +308,16 @@ public class TagFragment extends Fragment {
 
                 }
             });
+
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
+    }
 
 }

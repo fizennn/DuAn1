@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.NguoiGiaoAdapter;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Models.HoaDon;
@@ -23,6 +24,21 @@ public class XacNhanDonHangFragment extends Fragment {
     private ArrayList<HoaDon> listHoaDon;
     private HoaDonDAO hoaDonDAO;
 
+    private LottieAnimationView loading;
+    private View viewLoad;
+
+
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
+    }
+
     public XacNhanDonHangFragment() {
     }
 
@@ -32,6 +48,11 @@ public class XacNhanDonHangFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xac_nhan_don_hang, container, false);
         hoaDonDAO = new HoaDonDAO();
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
+        loading();
 
         recyclerView = view.findViewById(R.id.recyclerViewHoaDon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -47,6 +68,7 @@ public class XacNhanDonHangFragment extends Fragment {
                 }
                 nguoiGiaoAdapter = new NguoiGiaoAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(nguoiGiaoAdapter);
+                loaded();
             }
 
             @Override

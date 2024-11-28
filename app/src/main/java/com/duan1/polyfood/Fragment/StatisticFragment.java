@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.Top3Adapter;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Database.ThucDonDAO;
@@ -26,11 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StatisticFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class StatisticFragment extends Fragment {
 
     private TextView tvDoanhThu, tvStartDate, tvEndDate;
@@ -40,45 +37,21 @@ public class StatisticFragment extends Fragment {
     private Top3Adapter top3Adapter;
     private ArrayList<ThucDon> top3DishesList;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private LottieAnimationView loading;
+    private View viewLoad;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public StatisticFragment() {
-        // Required empty public constructor
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StatisticFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StatisticFragment newInstance(String param1, String param2) {
-        StatisticFragment fragment = new StatisticFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,6 +64,11 @@ public class StatisticFragment extends Fragment {
         tvStartDate = view.findViewById(R.id.tvStartDate);
         tvEndDate = view.findViewById(R.id.tvEndDate);
         btnCalculate = view.findViewById(R.id.btnCalculate);
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
+        loading();
 
         recyclerViewTopDishes = view.findViewById(R.id.recyclerViewTopDishes);
         recyclerViewTopDishes.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -111,6 +89,7 @@ public class StatisticFragment extends Fragment {
 
                 // Cập nhật adapter để hiển thị dữ liệu
                 top3Adapter.notifyDataSetChanged();
+                loaded();
             }
 
             @Override

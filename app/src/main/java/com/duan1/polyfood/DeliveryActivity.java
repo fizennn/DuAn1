@@ -58,11 +58,11 @@ public class DeliveryActivity extends AppCompatActivity {
 
         // Tái sử dụng một instance của HomeFragment cho tất cả các tab, nếu không cần các fragment khác nhau
         XacNhanDonHangFragment fragment1 = new XacNhanDonHangFragment();
-        ProfileFragment fragment2 = new ProfileFragment();
+//        ProfileFragment fragment2 = new ProfileFragment();
         DonHangDangGiaoFragment fragment3 = new DonHangDangGiaoFragment();
         adapter.addFragment(fragment1, "Đơn hàng");
         adapter.addFragment(fragment3, "Đơn hàng đang giao");
-        adapter.addFragment(fragment2, "Thông tin");
+//        adapter.addFragment(fragment2, "Thông tin");
 
         viewPager.setAdapter(adapter);
         tabLayout = findViewById(R.id.tabLayout);

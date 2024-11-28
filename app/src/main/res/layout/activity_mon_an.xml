@@ -58,11 +58,26 @@
 
                     <ImageView
                         android:id="@+id/imgUnLoveDish"
-                        android:src="@drawable/unlovedish"
                         android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_height="37dp"
                         android:layout_gravity="top|end"
-                        android:layout_margin="8dp" />
+                        android:layout_margin="1dp"
+                        android:src="@drawable/love"
+                        android:visibility="visible"
+                        app:tint="#ffff" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"
+                        android:id="@+id/loveAni"
+                        android:layout_width="41dp"
+                        android:layout_height="41dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="false"
+                        app:lottie_rawRes="@raw/love"
+                        android:scaleX="3"
+                        android:scaleY="3"/>
 
 
                 </androidx.cardview.widget.CardView>

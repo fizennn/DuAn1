@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.HoaDonAdapter;
 import com.duan1.polyfood.Adapter.HoaDonPageAdapter;
 import com.duan1.polyfood.Database.DonHangDAO;
@@ -30,6 +31,9 @@ public class BillFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private HoaDonPageAdapter hoaDonPageAdapter;
+    private LottieAnimationView loading;
+    private View viewLoad;
+
 
 
     @Override
@@ -37,6 +41,10 @@ public class BillFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bill, container, false);
+
+        loading = view.findViewById(R.id.lottieLoading);
+        viewLoad = view.findViewById(R.id.viewLoad);
+
 
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
@@ -68,5 +76,15 @@ public class BillFragment extends Fragment {
                 }).attach();
 
         return view;
+    }
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
     }
 }
