@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
+
     tools:context=".Fragment.FavoriteFragment">
 
     <!-- RecyclerView hiển thị danh sách món ăn yêu thích -->
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
         android:id="@+id/rycFavouriteDish"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

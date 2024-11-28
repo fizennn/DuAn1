@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private LottieAnimationView loading;
     private View viewLoad;
 
+
+    private ImageButton button;
+
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -63,6 +67,15 @@ public class EditProfileActivity extends AppCompatActivity {
         //loading
         loading = findViewById(R.id.lottieLoading);
         viewLoad = findViewById(R.id.viewLoad);
+
+        button = findViewById(R.id.imgBack);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         loading();
 

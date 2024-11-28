@@ -107,10 +107,10 @@ public class FavouriteDishAdapter extends RecyclerView.Adapter<FavouriteDishAdap
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Thông báo xóa thành công từ Firebase
-                        Toast.makeText(context, "Món ăn đã được xóa", Toast.LENGTH_SHORT).show();
+
                     } else {
                         // Thông báo lỗi
-                        Toast.makeText(context, "Không thể xóa món ăn", Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }

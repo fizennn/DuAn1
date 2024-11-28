@@ -161,6 +161,13 @@ public class MonAnActivity extends AppCompatActivity {
 //        dishId = thucDon1.getId_td();
 
 
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         rateStar = 0;
 
 

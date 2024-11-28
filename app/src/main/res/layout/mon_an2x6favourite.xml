@@ -4,7 +4,7 @@
     android:id="@+id/linearLayoutChitiet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:padding="12dp"
     android:orientation="horizontal">
 
     <!-- CardView chứa thông tin món ăn -->
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+           >
 
             <!-- Hình ảnh món ăn -->
             <ImageView
@@ -29,6 +29,7 @@
 
             <!-- Phần chứa thông tin món ăn -->
             <LinearLayout
+                android:layout_gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -40,14 +41,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
+                 >
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/shieldfood" />
 
+
                     <TextView
+                        android:gravity="center|left"
+                        android:layout_marginLeft="3dp"
                         android:id="@+id/tvName"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -70,8 +74,8 @@
                     android:layout_marginTop="6dp">
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/price50" />
 
                     <TextView
@@ -93,8 +97,8 @@
                     android:layout_marginTop="6dp">
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/star50" />
 
                     <TextView
@@ -109,49 +113,10 @@
                 </LinearLayout>
 
                 <!-- Thẻ món ăn -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:padding="2dp"
-                        android:background="@drawable/tag"
-                        android:text="Sức Khỏe"
-                        android:textColor="@color/tag"
-                        android:textSize="10dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:padding="2dp"
-                        android:background="@drawable/tag"
-                        android:text="Giảm Giá 10%"
-                        android:textColor="@color/tag"
-                        android:textSize="10dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:padding="2dp"
-                        android:background="@drawable/tag"
-                        android:text="Freeship"
-                        android:textColor="@color/tag"
-                        android:textSize="10dp" />
-
-                    <TextView
-                        android:id="@+id/tvLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#757575" />
-                </LinearLayout>
             </LinearLayout>
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/iconDelete"
                 android:layout_width="30dp"
                 android:layout_height="30dp"

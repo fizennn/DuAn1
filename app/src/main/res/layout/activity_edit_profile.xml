@@ -37,6 +37,17 @@
                 </androidx.cardview.widget.CardView>
 
 
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Trang cá nhân"
+                    android:gravity="center|left"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    />
+
+
             </LinearLayout>
 
             <RelativeLayout

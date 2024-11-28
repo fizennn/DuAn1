@@ -1,159 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
+
     android:gravity="center">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100px"
-        android:text="Register"
-        android:textColor="#FF5722"
-        android:textSize="45dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_marginBottom="170px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Enter your information"
-        android:textColor="#757575"
-        android:textSize="16sp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:startIconDrawable="@drawable/user30"
-        app:startIconTint="@null"
-        >
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:textSize="12dp"
-            android:id="@+id/edtUserNameRegis"
-            android:fontFamily="@font/spline_sans"
-            android:background="@drawable/boder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="User Name"
-            android:inputType="textEmailAddress"
-            android:padding="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:startIconDrawable="@drawable/mail30"
-        app:startIconTint="@null"
-        >
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:textSize="12dp"
-            android:id="@+id/edtEmailRegis"
-            android:fontFamily="@font/spline_sans"
-            android:background="@drawable/boder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:endIconMode="password_toggle"
-        app:startIconDrawable="@drawable/lock30"
-        app:startIconTint="@null">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:textSize="12dp"
-            android:id="@+id/edtPasswordRegis"
-            android:fontFamily="@font/spline_sans"
-            android:background="@drawable/boder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:endIconMode="password_toggle"
-        app:startIconDrawable="@drawable/lock30"
-        app:startIconTint="@null">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:textSize="12dp"
-            android:id="@+id/edtConfirmRegis"
-            android:fontFamily="@font/spline_sans"
-            android:background="@drawable/boder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password Again"
-            android:inputType="textPassword"
-            android:padding="16dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-    <Button
-
-        android:id="@+id/btnRegister"
-        android:textColor="#ffff"
-        android:background="@drawable/btn1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100px"
-        android:backgroundTint="#FF5722"
-        android:padding="16dp"
-        android:text="Register"
-        android:textAllCaps="false"
-        android:textSize="15sp" />
-
     <LinearLayout
-        android:paddingBottom="200px"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <TextView
-            android:textSize="12dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Already have an account? "
-            android:textColor="#757575" />
+            android:layout_marginTop="100px"
+            android:text="Register"
+            android:textColor="#FF5722"
+            android:textSize="45dp"
+            android:textStyle="bold" />
 
         <TextView
-            android:textSize="12dp"
-            android:id="@+id/txtLoginNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="170px"
+            android:text="Enter your information"
+            android:textColor="#757575"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:startIconDrawable="@drawable/user30"
+            app:startIconTint="@null">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtUserNameRegis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boder"
+                android:fontFamily="@font/spline_sans"
+                android:hint="User Name"
+                android:inputType="textEmailAddress"
+                android:padding="16dp"
+                android:textSize="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:startIconDrawable="@drawable/mail30"
+            app:startIconTint="@null">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtEmailRegis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boder"
+                android:fontFamily="@font/spline_sans"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:padding="16dp"
+                android:textSize="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/lock30"
+            app:startIconTint="@null">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtPasswordRegis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boder"
+                android:fontFamily="@font/spline_sans"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textSize="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/lock30"
+            app:startIconTint="@null">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtConfirmRegis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boder"
+                android:fontFamily="@font/spline_sans"
+                android:hint="Password Again"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:textSize="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100px"
+            android:background="@drawable/btn1"
+            android:backgroundTint="#FF5722"
+            android:padding="16dp"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="#ffff"
+            android:textSize="15sp" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login Now"
-            android:textColor="#FF5722" />
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:paddingBottom="200px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account? "
+                android:textColor="#757575"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/txtLoginNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login Now"
+                android:textColor="#FF5722"
+                android:textSize="12dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/viewLoad"
+        android:background="#ffff"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/lottieLoading"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loadingbasic" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

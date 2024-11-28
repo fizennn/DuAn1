@@ -3,6 +3,8 @@ package com.duan1.polyfood;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
     private ImageView imgMonAn;
     private HoaDonDAO hoaDonDAO;
     private HoaDon hoaDon;
+    private ImageButton button;
 
 
     @Override
@@ -32,6 +35,8 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet_hoa_don);
 
+
+        button.findViewById(R.id.imgBack);
 
         // Ánh xạ các View
         txtTenMonAn = findViewById(R.id.txtTenMonAn);
@@ -43,6 +48,13 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         imgMonAn = findViewById(R.id.img);
         txtSdt = findViewById(R.id.txtSdt);
         txtDiaChi = findViewById(R.id.txtDiaChi);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         hoaDonDAO = new HoaDonDAO();

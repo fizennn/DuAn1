@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -29,12 +30,28 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtUserNameRegis, edtEmailRegis, edtPasswordRegis, edtConfirmRegis;
     private Button btnRegister;
     private FirebaseAuth auth;
+    private LottieAnimationView loading;
+    private View viewLoad;
+
+
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
+        loading = findViewById(R.id.lottieLoading);
+        viewLoad = findViewById(R.id.viewLoad);
         auth = FirebaseAuth.getInstance();
         edtUserNameRegis = findViewById(R.id.edtUserNameRegis);
         edtEmailRegis = findViewById(R.id.edtEmailRegis);
@@ -48,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         btnRegister.setOnClickListener(view -> {
+            loading();
             String password = edtPasswordRegis.getText().toString().trim();
             String confirmPassword = edtConfirmRegis.getText().toString().trim();
             String email = edtEmailRegis.getText().toString().trim();
@@ -63,18 +81,18 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-//                            FirebaseUser currentUser = auth.getCurrentUser();
-                            Toast.makeText(RegisterActivity.this, "Dang ky Thanh cong", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterActivity.this,InputInfoActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }else{
-                            Log.e("FirebaseAuthError", "Đăng ký thất bại", task.getException());
-                            Toast.makeText(RegisterActivity.this, "Dang ky that bai", Toast.LENGTH_SHORT).show();
+                            loaded();
+                            Log.e("FirebaseAuthError", "Đăng Ký Thất Bại", task.getException());
                         }
                     }
                 });
             }else {
-//                Toast.makeText(this, "Mật khẩu không hợp lệ", Toast.LENGTH_SHORT).show();
+                loaded();
+//              Toast.makeText(this, "Mật khẩu không hợp lệ", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -26,12 +26,14 @@ import com.bumptech.glide.request.target.Target;
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.EditProfileActivity;
+import com.duan1.polyfood.FlashScreenActivity;
 import com.duan1.polyfood.Models.NguoiDung;
 import com.duan1.polyfood.R;
+import com.duan1.polyfood.WellcomeActivity;
 
 public class ProfileUserFragment extends Fragment {
 
-    private ImageView imgProfile,ivEditProfile;
+    private ImageView imgProfile,ivEditProfile,ivDangXuat;
     private TextView tvName,tvSDT;
     private Context context;
 
@@ -74,6 +76,16 @@ public class ProfileUserFragment extends Fragment {
             }
         });
 
+        ivDangXuat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                Intent intent = new Intent(context, FlashScreenActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -87,6 +99,7 @@ public class ProfileUserFragment extends Fragment {
         //img
         imgProfile = view.findViewById(R.id.imgProFile);
         ivEditProfile = view.findViewById(R.id.ivEditProfile);
+        ivDangXuat = view.findViewById(R.id.ivDangXuat);
 
         //textview
         tvName = view.findViewById(R.id.tvName);
