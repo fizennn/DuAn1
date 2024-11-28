@@ -1,5 +1,6 @@
 package com.duan1.polyfood.Database;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,7 +28,6 @@ public class NguoiDungDAO {
     private AuthenticationFireBaseHelper auth;
     private ArrayList<NguoiDung> nguoiDungList;
     private StorageReference storageReference;
-
 
 
     public interface FirebaseCallback {

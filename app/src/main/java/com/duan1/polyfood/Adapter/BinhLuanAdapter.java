@@ -1,5 +1,6 @@
 package com.duan1.polyfood.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,16 +76,26 @@ public class BinhLuanAdapter extends RecyclerView.Adapter<BinhLuanAdapter.BinhLu
 
         holder.txvNameComment.setText(binhLuan.getTen());
 
-        nguoiDungDAO.getAllNguoiDungByID(binhLuan.getId(),new NguoiDungDAO.FirebaseCallback() {
-            @Override
-            public void onCallback(NguoiDung nguoiDung) {
-                Glide.with(context)
-                        .load(nguoiDung.getimgUrl())
-                        .placeholder(R.drawable.load)
-                        .error(R.drawable.load)
-                        .into(holder.imgProfileComment);
-            }
-        });
+        if (context!=null){
+            nguoiDungDAO.getAllNguoiDungByID(binhLuan.getId(),new NguoiDungDAO.FirebaseCallback() {
+                @Override
+                public void onCallback(NguoiDung nguoiDung) {
+
+                    if (context!=null && !((Activity) context).isDestroyed()){
+                        if (holder.imgProfileComment!=null){
+                            Glide.with(context)
+                                    .load(nguoiDung.getimgUrl())
+                                    .placeholder(R.drawable.load)
+                                    .error(R.drawable.load)
+                                    .into(holder.imgProfileComment);
+                        }
+                    }
+
+                }
+            });
+        }
+
+
 
 
 
