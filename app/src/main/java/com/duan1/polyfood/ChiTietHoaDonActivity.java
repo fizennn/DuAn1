@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,7 +28,7 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
     private ImageView imgMonAn;
     private HoaDonDAO hoaDonDAO;
     private HoaDon hoaDon;
-    private ImageButton button;
+
 
 
     @Override
@@ -36,7 +37,7 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chi_tiet_hoa_don);
 
 
-        button.findViewById(R.id.imgBack);
+
 
         // Ánh xạ các View
         txtTenMonAn = findViewById(R.id.txtTenMonAn);
@@ -49,7 +50,10 @@ public class ChiTietHoaDonActivity extends AppCompatActivity {
         txtSdt = findViewById(R.id.txtSdt);
         txtDiaChi = findViewById(R.id.txtDiaChi);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        CardView view = findViewById(R.id.imgBack111);
+
+
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

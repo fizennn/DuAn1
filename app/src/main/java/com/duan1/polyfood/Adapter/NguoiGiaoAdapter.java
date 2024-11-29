@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.ChiTietHoaDonActivity;
 import com.duan1.polyfood.Database.HoaDonDAO;
+import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.DeliveryActivity;
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.ThongBao;
 import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
@@ -26,11 +28,13 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
     private Context context;
     private ArrayList<HoaDon> hoaDonList;
     private HoaDonDAO hoaDonDAO;
+    private ThongBaoDao thongBaoDao;
 
     public NguoiGiaoAdapter(Context context, ArrayList<HoaDon> hoaDonList) {
         this.context = context;
         this.hoaDonList = hoaDonList;
         this.hoaDonDAO = new HoaDonDAO();
+        thongBaoDao = new ThongBaoDao();
     }
 
     @NonNull
@@ -75,6 +79,16 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
 
                 hoaDonList.remove(position);
                 notifyItemRemoved(position);
+
+                ThongBao thongBao = new ThongBao();
+
+                thongBao.setId_hd(hoaDon.getId_hd());
+                thongBao.setId_nn(hoaDon.getId_nd());
+                thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được xác nhận giao hàng !");
+                thongBao.setRole("Tài Xế");
+                thongBao.setTrangThai(hoaDon.getTrangThai());
+
+                thongBaoDao.guiThongBao(thongBao);
 
                 notifyDataSetChanged();
             });

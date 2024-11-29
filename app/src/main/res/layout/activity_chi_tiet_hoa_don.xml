@@ -23,12 +23,12 @@
                 >
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/imgBack111"
                     app:cardCornerRadius="10dp"
                     android:layout_width="50dp"
                     android:layout_height="50dp">
 
-                    <ImageButton
-                        android:id="@+id/imgBack"
+                    <ImageView
                         android:scaleType="fitCenter"
                         android:padding="10dp"
                         android:background="@drawable/btn2"

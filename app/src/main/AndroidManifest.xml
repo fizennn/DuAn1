@@ -4,6 +4,7 @@
     package="com.duan1.polyfood">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -15,10 +16,13 @@
         android:theme="@style/Theme.PolyFood"
         tools:targetApi="31">
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".ThongBaoActivity"
             android:exported="false" />
         <activity
-            android:name=".Adapter.StickerAdapter"
+            android:name=".Other.ThongBaoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".ChiTietHoaDonActivity"
@@ -38,6 +42,15 @@
         <activity
             android:name=".InputInfoActivity"
             android:exported="false" />
+
+        <service
+            android:name=".Database.MyFirebaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".FlashScreenActivity"
             android:exported="true">

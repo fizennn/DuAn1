@@ -71,6 +71,8 @@ public class DangGiaoFragment extends Fragment {
                 if (hoaDonList.size()==0){
                     empty.setVisibility(View.VISIBLE);
                 }
+
+
             }
 
             @Override

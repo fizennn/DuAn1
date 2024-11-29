@@ -37,6 +37,10 @@ public class NguoiDungDAO {
         void success(boolean success);
     }
 
+    public interface NotiCallBack{
+        void onCallBack(int noti);
+    }
+
     public NguoiDungDAO() {
         database = FirebaseDatabase.getInstance().getReference();
         auth = new AuthenticationFireBaseHelper();
@@ -60,6 +64,13 @@ public class NguoiDungDAO {
 
                 }
             });
+    }
+
+    public void getNoti(NotiCallBack callBack){
+    }
+    public void getNoti1(NotiCallBack callBack){
+    }
+    public void addNoti(String uidNN){
     }
 
     public void getAllNguoiDungByID(String UID,FirebaseCallback callback) {

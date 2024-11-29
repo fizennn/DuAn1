@@ -21,10 +21,12 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Database.DonHangDAO;
 import com.duan1.polyfood.Database.HoaDonDAO;
+import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Fragment.BillFragment;
 import com.duan1.polyfood.Models.DonHang;
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.ThongBao;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.Other.IntToVND;
 import com.google.firebase.database.DatabaseReference;
@@ -165,6 +167,19 @@ public class PayActivity extends AppCompatActivity {
 
             // Gọi phương thức addDonHang để thêm đơn hàng vào Firebase
             hoaDonDAO.addHoaDon(hoaDon);
+
+            ThongBaoDao thongBaoDao = new ThongBaoDao();
+
+            ThongBao thongBao = new ThongBao();
+
+            thongBao.setId_hd(hoaDon.getId_hd());
+            thongBao.setId_nn(hoaDon.getId_nd());
+            thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được đặt!");
+            thongBao.setRole("Bạn");
+            thongBao.setTrangThai(hoaDon.getTrangThai());
+
+
+            thongBaoDao.guiThongBao(thongBao);
 
             // Xóa món ăn khỏi giỏ hàng (SharedPreferences)
             removeFromCart();

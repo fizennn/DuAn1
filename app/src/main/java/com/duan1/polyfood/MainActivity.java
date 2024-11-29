@@ -3,11 +3,16 @@ package com.duan1.polyfood;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.Manifest;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -23,13 +28,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
+import com.duan1.polyfood.Database.MyFirebaseMessagingService;
+import com.duan1.polyfood.Database.NguoiDungDAO;
+import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.Fragment.BillFragment;
 import com.duan1.polyfood.Fragment.FavoriteFragment;
 import com.duan1.polyfood.Fragment.HomeFragment;
 import com.duan1.polyfood.Fragment.ProfileFragment;
 import com.duan1.polyfood.Fragment.ProfileUserFragment;
+import com.duan1.polyfood.Models.ThongBao;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,13 +51,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public ActivityResultLauncher<Intent> launcherTool;
     public NavigationView navigationView;
     public AuthenticationFireBaseHelper authHelper;
-
+    private MyFirebaseMessagingService myFirebaseMessagingService;
     private DrawerLayout drawer;
+    private NguoiDungDAO nguoiDungDAO = new NguoiDungDAO();
+
+
+    private ImageButton imageButton;
+    private ImageView ivNoti;
+    private TextView tvNotiCount;
+
+    private ThongBaoDao thongBaoDao;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
+
+        myFirebaseMessagingService = new MyFirebaseMessagingService();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                // Nếu chưa có quyền, yêu cầu quyền
+                requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1001);
+            }
+        }
+
+        thongBaoDao = new ThongBaoDao();
+
+
+
+
+
+
         //Khai Bao
 
         Log.d(TAG, "MainActivity OnCreate");
@@ -53,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         authHelper = new AuthenticationFireBaseHelper();
 
         //Hien Thi Thong Tin Nav
+
+
+
 
 
 
@@ -71,6 +115,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        imageButton = toolbar.findViewById(R.id.toolbar_right_button);
+        ivNoti = toolbar.findViewById(R.id.ivNoti);
+        tvNotiCount = toolbar.findViewById(R.id.tvNotiCount);
+
+        ivNoti.setVisibility(View.GONE);
+        tvNotiCount.setVisibility(View.GONE);
+
+
+        thongBaoDao.getNoti(new ThongBaoDao.FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<ThongBao> thongBaoList) {
+                if (thongBaoList.size()>=1){
+                    ivNoti.setVisibility(View.VISIBLE);
+                    tvNotiCount.setVisibility(View.VISIBLE);
+
+                    tvNotiCount.setText(String.valueOf(thongBaoList.size()));
+                }else{
+                    ivNoti.setVisibility(View.GONE);
+                    tvNotiCount.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,ThongBaoActivity.class);
+                startActivity(intent);
+            }
+        });
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);

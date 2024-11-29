@@ -81,6 +81,9 @@ public class HoaDonDAO {
     }
 
     public void getHoaDonById(String id, FirebaseCallback callback) {
+        if (id==null){
+            return;
+        }
         database.child("HoaDon").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Database.HoaDonDAO;
+import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.ThongBao;
 import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
@@ -23,11 +25,13 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
     private Context context;
     private ArrayList<HoaDon> hoaDonList;
     private HoaDonDAO hoaDonDAO;
+    private ThongBaoDao thongBaoDao;
 
     public NhaHangHDAdapter(Context context, ArrayList<HoaDon> hoaDonList) {
         this.context = context;
         this.hoaDonList = hoaDonList;
         this.hoaDonDAO = new HoaDonDAO();
+        thongBaoDao = new ThongBaoDao();
     }
     @NonNull
     @Override
@@ -56,6 +60,8 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
         holder.txtSoLuong.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
         holder.txtPhuongThucThanhToan.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
 
+
+
         if ("Chờ xử lý".equals(hoaDon.getTrangThai())) {
             holder.btnXacNhanXuLy.setVisibility(View.VISIBLE);
             holder.btnXacNhanXuLy.setOnClickListener(v -> {
@@ -65,13 +71,23 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
 
                 hoaDonList.remove(position);
                 notifyItemRemoved(position);
-
                 notifyDataSetChanged();
+
+                ThongBao thongBao = new ThongBao();
+
+                thongBao.setId_hd(hoaDon.getId_hd());
+                thongBao.setId_nn(hoaDon.getId_nd());
+                thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được xác nhận xử lý !");
+                thongBao.setRole("Nhà Hàng");
+                thongBao.setTrangThai(hoaDon.getTrangThai());
+
+                thongBaoDao.guiThongBao(thongBao);
             });
         } else {
             holder.btnXacNhanXuLy.setVisibility(View.GONE);
         }
     }
+
 
     private String formatToVND(int amount) {
         return String.format("%,d VND", amount);

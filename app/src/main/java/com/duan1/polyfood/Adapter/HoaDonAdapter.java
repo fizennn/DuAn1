@@ -21,11 +21,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.ChiTietHoaDonActivity;
 import com.duan1.polyfood.Database.HoaDonDAO;
+import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.Fragment.ChoGiaoFragment;
 import com.duan1.polyfood.Fragment.ChoXuLyFragment;
 import com.duan1.polyfood.Fragment.DangGiaoFragment;
 import com.duan1.polyfood.Fragment.HoanThanhFragment;
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.ThongBao;
 import com.duan1.polyfood.R;
 
 import java.util.ArrayList;
@@ -34,11 +36,13 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
     private Context context;
     private ArrayList<HoaDon> hoaDonList;
     private HoaDonDAO hoaDonDAO;
+    private ThongBaoDao thongBaoDao;
 
     public HoaDonAdapter(Context context, ArrayList<HoaDon> hoaDonList) {
         this.context = context;
         this.hoaDonList = hoaDonList;
         this.hoaDonDAO = new HoaDonDAO();
+        thongBaoDao = new ThongBaoDao();
     }
 
     @Override
@@ -76,6 +80,16 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
                 notifyItemRemoved(position);
 
                 Toast.makeText(context, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+
+                ThongBao thongBao = new ThongBao();
+
+                thongBao.setId_hd(hoaDon.getId_hd());
+                thongBao.setId_nn(hoaDon.getId_nd());
+                thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã hoàn thành ! !");
+                thongBao.setRole("Tài Xế");
+                thongBao.setTrangThai(hoaDon.getTrangThai());
+
+                thongBaoDao.guiThongBao(thongBao);
 
                 notifyDataSetChanged();
 

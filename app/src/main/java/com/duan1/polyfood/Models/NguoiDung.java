@@ -11,8 +11,11 @@ public class NguoiDung {
     private String sex;
     private String age;
     private String profileImageUrl;
+    private int noti;
 
-    // ... other methods ...
+
+
+// ... other methods ...
 
     public String getProfileImageUrl() {
         return profileImageUrl;
@@ -68,5 +71,13 @@ public class NguoiDung {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public int getNoti() {
+        return noti;
+    }
+
+    public void setNoti(int noti) {
+        this.noti = noti;
     }
 }

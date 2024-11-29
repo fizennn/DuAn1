@@ -92,6 +92,20 @@ public class MonAnActivity extends AppCompatActivity {
     private String userId;
     private String dishId;
     private LottieAnimationView loveAni;
+    private LottieAnimationView loading;
+    private View viewLoad;
+
+
+
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
+    }
 
 
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
@@ -115,6 +129,11 @@ public class MonAnActivity extends AppCompatActivity {
         loveAni = findViewById(R.id.loveAni);
 
 
+        loading = findViewById(R.id.lottieLoading);
+        viewLoad = findViewById(R.id.viewLoad);
+
+
+        loading();
 
         thucDonDAO = new ThucDonDAO();
         thucDon1 = new ThucDon();
@@ -159,6 +178,8 @@ public class MonAnActivity extends AppCompatActivity {
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseRef = FirebaseDatabase.getInstance().getReference("NhaHang/FavouriteDish");
 //        dishId = thucDon1.getId_td();
+
+
 
 
         imgBack.setOnClickListener(new View.OnClickListener() {
@@ -320,6 +341,7 @@ public class MonAnActivity extends AppCompatActivity {
                     public void onCallback(ArrayList<BinhLuan> binhLuanList) {
                         adapter = new BinhLuanAdapter(MonAnActivity.this, binhLuanList);
                         recyclerView.setAdapter(adapter);
+                        loaded();
                     }
                 });
 

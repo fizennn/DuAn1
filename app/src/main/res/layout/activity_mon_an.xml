@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".MonAnActivity"
     android:orientation="vertical">
+
+
+    <ScrollView
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
 
@@ -392,24 +399,22 @@
                     <ImageButton
                         android:id="@+id/btnImgAdd"
                         android:layout_marginLeft="3dp"
-                        android:tint="#AFAFAF"
                         android:background="@null"
                         android:scaleType="fitCenter"
                         android:src="@drawable/add_image"
                         android:layout_width="40dp"
-                        android:layout_height="40dp"/>
+                        android:layout_height="40dp"
+                        app:tint="#AFAFAF" />
                     <ImageButton
                         android:id="@+id/btnSendComment"
                         android:layout_marginLeft="3dp"
                         android:padding="5dp"
-                        android:tint="@color/baseColor"
                         android:background="@null"
                         android:scaleType="fitCenter"
                         android:src="@drawable/send"
                         android:layout_width="40dp"
-                        android:layout_height="40dp"/>
-
-
+                        android:layout_height="40dp"
+                        app:tint="@color/baseColor" />
 
 
                 </LinearLayout>
@@ -510,10 +515,37 @@
     </LinearLayout>
 
 
+    </ScrollView>
+
+
+
+    <View
+        android:visibility="gone"
+        android:id="@+id/viewLoad"
+        android:background="#ffff"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:visibility="gone"
+        android:id="@+id/lottieLoading"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loadingbasic" />
 
 
 
 
 
 
-</androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

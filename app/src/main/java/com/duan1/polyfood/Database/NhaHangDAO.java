@@ -26,6 +26,10 @@ public class NhaHangDAO {
         void onCallback(NhaHang nhaHang);
     }
 
+    public interface NotiCallBack{
+        void onCallBack(int noti);
+    }
+
     public void getAllNhaHang(FirebaseCallback callback) {
         database.child("NhaHang").addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,6 +76,10 @@ public class NhaHangDAO {
 
             }
         });
+    }
+
+    public void getNoti(NotiCallBack callBack){
+
     }
 
 }
