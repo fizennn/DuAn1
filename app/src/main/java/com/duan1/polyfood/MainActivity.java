@@ -160,6 +160,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         navigationView.setCheckedItem(R.id.nav_client);
+        navigationView.getMenu().findItem(R.id.nav_client).setVisible(false);
+        navigationView.getMenu().findItem(R.id.nav_delivery).setVisible(false);
+        navigationView.getMenu().findItem(R.id.nav_restaurant).setVisible(false);
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -210,29 +214,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-        int id = item.getItemId();
-
-
-        if (id==R.id.nav_client){
-
-        }
-        if (id==R.id.nav_delivery){
-            Intent i  = new Intent(MainActivity.this,DeliveryActivity.class);
-            launcherTool.launch(i);
-        }
-        if (id==R.id.nav_restaurant){
-            Intent i  = new Intent(MainActivity.this,RestaurantActivity.class);
-            launcherTool.launch(i);
-
-        }
-
-
-
-
-
-
-
+//
+//        int id = item.getItemId();
+//
+//
 
 
         drawer.closeDrawer(GravityCompat.START);

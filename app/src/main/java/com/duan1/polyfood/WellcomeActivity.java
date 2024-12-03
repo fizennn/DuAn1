@@ -100,11 +100,36 @@ public class WellcomeActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Log.d("FirebaseAuth", "Đăng ký Google thành công: " + user.getUid());
                             Toast.makeText(this, "Đăng ký Google thành công", Toast.LENGTH_SHORT).show();
+                            String UID = mAuth.getUid();
+                            nguoiDungDAO.check(new NguoiDungDAO.FirebaseCallback() {
+                                @Override
+                                public void onCallback(NguoiDung nguoiDung) {
 
-                            // Chuyển đến InputInfoActivity
-                            Intent intent = new Intent(WellcomeActivity.this, InputInfoActivity.class);
-                            startActivity(intent);
-                            finish(); // Kết thúc màn hình hiện tại
+                                    if (nguoiDung == null) {
+                                        Intent intent = new Intent(WellcomeActivity.this, InputInfoActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    } else {
+                                        int role = nguoiDung.getRole(); // Lấy role từ object NguoiDung
+                                        Log.e("Role", "Role hien tai la" + role);
+                                        Intent intent;
+                                        switch (role) {
+                                            case 1: // Driver
+                                                intent = new Intent(WellcomeActivity.this, DeliveryActivity.class);
+                                                break;
+                                            case 2: // Restaurant
+                                                intent = new Intent(WellcomeActivity.this, RestaurantActivity.class);
+                                                break;
+                                            default: // Default là User
+                                                intent = new Intent(WellcomeActivity.this, MainActivity.class);
+                                                break;
+                                        }
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                }
+                            }, UID);
+
                         } else {
                             // Xử lý nếu đăng nhập thất bại
                             Log.e("FirebaseAuth", "Đăng ký Google thất bại", task.getException());

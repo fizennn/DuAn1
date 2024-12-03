@@ -18,7 +18,7 @@
             android:background="?attr/colorPrimary"
             app:title="Nhà Hàng"
             app:titleTextColor="@color/cardview_dark_background"
-            app:navigationIcon="@drawable/back30" />
+            />
 
         <!-- Đặt TabLayout ngay dưới Toolbar nếu muốn nó luôn ở trên -->
         <com.google.android.material.tabs.TabLayout

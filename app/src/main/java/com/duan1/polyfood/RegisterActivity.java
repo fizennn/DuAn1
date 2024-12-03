@@ -2,31 +2,33 @@ package com.duan1.polyfood;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
+
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.duan1.polyfood.Models.NguoiDung;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextView txtLoginNow;
-    private boolean isPasswordVisible = false;
+     TextView txtLoginNow;
     private EditText edtUserNameRegis, edtEmailRegis, edtPasswordRegis, edtConfirmRegis;
     private Button btnRegister;
     private FirebaseAuth auth;
@@ -72,29 +74,58 @@ public class RegisterActivity extends AppCompatActivity {
             String user = edtUserNameRegis.getText().toString().trim();
             boolean isPasswordValid = check(password, confirmPassword, email, user);
 
-            if (isPasswordValid){
-
+            if (isPasswordValid) {
                 Log.e("aa", "onCreate: "+email );
                 Log.e("aa", "onCreate: "+password );
-                auth.createUserWithEmailAndPassword(email,
-                        password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            Intent intent = new Intent(RegisterActivity.this,InputInfoActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }else{
-                            loaded();
-                            Log.e("FirebaseAuthError", "Đăng Ký Thất Bại", task.getException());
-                        }
-                    }
-                });
-            }else {
+
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sau khi đăng ký thành công, lưu thông tin người dùng vào Realtime Database
+                                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                    if (currentUser != null) {
+                                        String uid = currentUser.getUid();
+                                        // Tạo đối tượng người dùng
+                                        NguoiDung nguoiDung = new NguoiDung();
+                                        nguoiDung.setHoTen(user);
+                                        nguoiDung.setEmail(email);
+                                        nguoiDung.setRole(0); // Vai trò mặc định là User (0)
+                                        nguoiDung.setSdt(""); // Cập nhật thông tin còn lại
+                                        nguoiDung.setDiaChi("");
+                                        nguoiDung.setSex("");
+                                        nguoiDung.setAge("");
+
+                                        // Lưu thông tin vào Firebase Realtime Database
+                                        DatabaseReference database = FirebaseDatabase.getInstance().getReference("NguoiDung");
+                                        database.child(uid).setValue(nguoiDung)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Intent intent = new Intent(RegisterActivity.this, InputInfoActivity.class);
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                            startActivity(intent);
+                                                        } else {
+                                                            loaded();
+                                                            Log.e("FirebaseError", "Không thể lưu thông tin người dùng", task.getException());
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                } else {
+                                    loaded();
+                                    Log.e("FirebaseAuthError", "Đăng Ký Thất Bại", task.getException());
+                                }
+                            }
+                        });
+            } else {
                 loaded();
-//              Toast.makeText(this, "Mật khẩu không hợp lệ", Toast.LENGTH_SHORT).show();
+                // Xử lý nếu thông tin không hợp lệ
             }
         });
+
     }
 
     private Boolean check(String password, String confirmPassword, String email, String user) {

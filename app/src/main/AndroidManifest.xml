@@ -19,7 +19,7 @@
             android:name=".ThongBaoActivity"
             android:exported="false" />
         <activity
-            android:name=".Other.ThongBaoActivity"
+            android:name=".OtherThongBaoActivity"
             android:exported="false" />
         <activity
             android:name=".EditProfileActivity"

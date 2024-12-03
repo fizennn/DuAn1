@@ -12,13 +12,11 @@ import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Models.NguoiDung;
 
-import java.util.ArrayList;
-
 public class FlashScreenActivity extends AppCompatActivity {
 
     private AuthenticationFireBaseHelper fireBaseHelper;
     private NguoiDungDAO nguoiDungDAO;
-    String TAG = "zzzzzzzz";
+    private static final String TAG = "FlashScreenActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,34 +27,54 @@ public class FlashScreenActivity extends AppCompatActivity {
         fireBaseHelper = new AuthenticationFireBaseHelper();
         nguoiDungDAO = new NguoiDungDAO();
 
-        Intent i = new Intent(FlashScreenActivity.this, WellcomeActivity.class);
-        Intent i1 = new Intent(FlashScreenActivity.this, MainActivity.class);
-        Intent input = new Intent(FlashScreenActivity.this, InputInfoActivity.class);
+        Intent wellcomeIntent = new Intent(FlashScreenActivity.this, WellcomeActivity.class);
+        Intent inputInfoIntent = new Intent(FlashScreenActivity.this, InputInfoActivity.class);
+        Intent userMainIntent = new Intent(FlashScreenActivity.this, MainActivity.class);
+        Intent driverMainIntent = new Intent(FlashScreenActivity.this, DeliveryActivity.class);
+        Intent restaurantMainIntent = new Intent(FlashScreenActivity.this, RestaurantActivity.class);
 
         Handler handler = new Handler();
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (fireBaseHelper.getUID()==null){
-                    startActivity(i);
+                // Kiểm tra xem người dùng đã đăng nhập chưa
+                if (fireBaseHelper.getUID() == null) {
+                    startActivity(wellcomeIntent);
                     finish();
-                }else {
-                    nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
+                } else {
+                    // Lấy thông tin người dùng từ database
+                    nguoiDungDAO.getAllNguoiDungByID(fireBaseHelper.getUID(), new NguoiDungDAO.FirebaseCallback() {
                         @Override
                         public void onCallback(NguoiDung nguoiDung) {
-                            if (nguoiDung==null){
-                                startActivity(input);
+                            if (nguoiDung == null) {
+                                // Nếu không tìm thấy thông tin người dùng, chuyển đến InputInfoActivity
+                                startActivity(inputInfoIntent);
                                 finish();
-                            }else{
-                                startActivity(i1);
+                            } else {
+                                // Kiểm tra role và điều hướng
+                                int role = nguoiDung.getRole();
+                                switch (role) {
+                                    case 0: // User
+                                        startActivity(userMainIntent);
+                                        break;
+                                    case 1: // Driver
+                                        startActivity(driverMainIntent);
+                                        break;
+                                    case 2: // Restaurant
+                                        startActivity(restaurantMainIntent);
+                                        break;
+                                    default:
+                                        Log.e(TAG, "Role không hợp lệ: " + role);
+                                        startActivity(wellcomeIntent);
+                                        break;
+                                }
                                 finish();
                             }
                         }
                     });
                 }
-
             }
-        },3000);
+        }, 3000); // Delay 3 giây
     }
 }

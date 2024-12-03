@@ -1,13 +1,10 @@
 package com.duan1.polyfood;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,7 +28,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.BinhLuanAdapter;
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
@@ -91,21 +87,6 @@ public class MonAnActivity extends AppCompatActivity {
     private DatabaseReference databaseRef;
     private String userId;
     private String dishId;
-    private LottieAnimationView loveAni;
-    private LottieAnimationView loading;
-    private View viewLoad;
-
-
-
-    public void loading(){
-        loading.setVisibility(View.VISIBLE);
-        viewLoad.setVisibility(View.VISIBLE);
-    }
-
-    public void loaded(){
-        loading.setVisibility(View.GONE);
-        viewLoad.setVisibility(View.GONE);
-    }
 
 
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
@@ -125,15 +106,9 @@ public class MonAnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mon_an);
 
-
-        loveAni = findViewById(R.id.loveAni);
-
-
-        loading = findViewById(R.id.lottieLoading);
-        viewLoad = findViewById(R.id.viewLoad);
+        Log.d(TAG, "MonAnActivity OnCreate");
 
 
-        loading();
 
         thucDonDAO = new ThucDonDAO();
         thucDon1 = new ThucDon();
@@ -179,15 +154,6 @@ public class MonAnActivity extends AppCompatActivity {
         databaseRef = FirebaseDatabase.getInstance().getReference("NhaHang/FavouriteDish");
 //        dishId = thucDon1.getId_td();
 
-
-
-
-        imgBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         rateStar = 0;
 
@@ -245,52 +211,37 @@ public class MonAnActivity extends AppCompatActivity {
 
         imgUnLoveDish.setOnClickListener(v -> {
             dishId = thucDon1.getId_td();// Lấy ID món ăn
+            Log.e(TAG, "onCreate: "+dishId );
+            // Kiểm tra xem món ăn đã có trong danh sách yêu thích chưa
             databaseRef.child(userId).child(dishId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
+                        // Nếu món ăn đã trong danh sách yêu thích, thực hiện xóa
                         databaseRef.child(userId).child(dishId).removeValue()
                                 .addOnSuccessListener(unused -> {
-                                    imgUnLoveDish.setColorFilter(Color.parseColor("#FFFFFF"));
-
+                                    imgUnLoveDish.setImageResource(R.drawable.unlovedish); // Đổi icon về trạng thái chưa yêu thích
+                                    Toast.makeText(MonAnActivity.this, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
                                 })
                                 .addOnFailureListener(e -> {
-
+                                    Toast.makeText(MonAnActivity.this, "Lỗi: Không thể xóa món ăn", Toast.LENGTH_SHORT).show();
                                 });
                     } else {
-
+                        // Nếu món ăn chưa có, thực hiện thêm vào danh sách yêu thích
                         databaseRef.child(userId).child(dishId).setValue(thucDon1)
                                 .addOnSuccessListener(unused -> {
-
-                                    loveAni.setVisibility(View.VISIBLE);
-                                    imgUnLoveDish.setVisibility(View.GONE);
-
-                                    loveAni.addAnimatorListener(new AnimatorListenerAdapter() {
-                                        @Override
-                                        public void onAnimationEnd(Animator animation) {
-                                            loveAni.setVisibility(View.GONE);
-                                            imgUnLoveDish.setColorFilter(Color.parseColor("#FF4055"));
-                                            imgUnLoveDish.setVisibility(View.VISIBLE);
-                                            super.onAnimationEnd(animation);
-                                        }
-                                    });
-
-
-
-
-
-
-
+                                    imgUnLoveDish.setImageResource(R.drawable.lovedish); // Đổi icon sang trạng thái yêu thích
+                                    Toast.makeText(MonAnActivity.this, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
                                 })
                                 .addOnFailureListener(e -> {
-
+                                    Toast.makeText(MonAnActivity.this, "Lỗi: Không thể thêm món ăn", Toast.LENGTH_SHORT).show();
                                 });
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    Toast.makeText(MonAnActivity.this, "Lỗi: Không thể kiểm tra trạng thái yêu thích", Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -341,7 +292,6 @@ public class MonAnActivity extends AppCompatActivity {
                     public void onCallback(ArrayList<BinhLuan> binhLuanList) {
                         adapter = new BinhLuanAdapter(MonAnActivity.this, binhLuanList);
                         recyclerView.setAdapter(adapter);
-                        loaded();
                     }
                 });
 
@@ -351,7 +301,7 @@ public class MonAnActivity extends AppCompatActivity {
                     public void onCallback(NguoiDung nguoiDung) {
                         if (!isFinishing()){
                             if (nguoiDung.getHoTen()!=null){
-                                imgUnLoveDish.setColorFilter(Color.parseColor("#FF4055")); // Món ăn đã yêu thích
+                                imgUnLoveDish.setImageResource(R.drawable.lovedish); // Món ăn đã yêu thích
                             }
                         }
 
@@ -623,9 +573,9 @@ public class MonAnActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        imgUnLoveDish.setColorFilter(Color.parseColor("#FF4055")); // Món ăn đã yêu thích
+                        imgUnLoveDish.setImageResource(R.drawable.lovedish); // Món ăn đã yêu thích
                     } else {
-                        imgUnLoveDish.setColorFilter(Color.parseColor("#FFFFFF")); // Món ăn chưa yêu thích
+                        imgUnLoveDish.setImageResource(R.drawable.unlovedish); // Món ăn chưa yêu thích
                     }
                 }
 
