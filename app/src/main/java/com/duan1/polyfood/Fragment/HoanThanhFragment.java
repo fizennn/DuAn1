@@ -66,7 +66,7 @@ public class HoanThanhFragment extends Fragment {
                 hoaDonAdapter.notifyDataSetChanged();
                 loaded();
 
-                if (hoaDonList.size()==0){
+                if (listHoaDon.size()==0){
                     empty.setVisibility(View.VISIBLE);
                 }
             }

@@ -1,6 +1,7 @@
 package com.duan1.polyfood;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -25,7 +26,7 @@ public class ThongBaoActivity extends AppCompatActivity {
 
     private ImageButton imageButton;
 
-    private LottieAnimationView loading;
+    private LottieAnimationView loading,empty;
     private View viewLoad;
 
 
@@ -57,6 +58,7 @@ public class ThongBaoActivity extends AppCompatActivity {
         imageButton = findViewById(R.id.imgBack);
         loading = findViewById(R.id.lottieLoading);
         viewLoad = findViewById(R.id.viewLoad);
+        empty = findViewById(R.id.empty);
 
         thongBaoDao = new ThongBaoDao();
 
@@ -68,8 +70,9 @@ public class ThongBaoActivity extends AppCompatActivity {
         thongBaoDao.getAllThongBao(new ThongBaoDao.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<ThongBao> thongBaoList) {
-                if (thongBaoList.get(0).getId_ng()==null){
+                if (thongBaoList==null){
                     loaded();
+                    empty.setVisibility(View.VISIBLE);
                     return;
                 }
                 thongBaoAdapter = new ThongBaoAdapter(thongBaoList, ThongBaoActivity.this, new ThongBaoAdapter.onLoad() {

@@ -74,6 +74,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
             return;
         }
 
+
         holder.linearChuyenNgay.setVisibility(View.GONE);
         if (thongBao.getChuyenNgay()==null){
 
@@ -96,6 +97,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
                 public void onCallback(NguoiDung nguoiDung) {
                     if (thongBao.getRole()==null){
                         holder.tvTenNG.setText(nguoiDung.getHoTen());
+                        onLoad.onLoad(-1);
                         return;
                     }
                     holder.tvTenNG.setText(nguoiDung.getHoTen()+"("+thongBao.getRole()+")");
@@ -107,6 +109,7 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
                                 .listener(new RequestListener<Drawable>() {
                                     @Override
                                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                        onLoad.onLoad(-1);
                                         return false;
                                     }
 
@@ -129,6 +132,8 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
                 @Override
                 public void onClick(View v) {
                     thongBaoDao.setReaded(thongBao);
+                    thongBao.setRead("READ");
+                    notifyItemChanged(i);
 
                     Intent intent = new Intent(context, ChiTietHoaDonActivity.class);
                     intent.putExtra("id_hd", thongBao.getId_hd());

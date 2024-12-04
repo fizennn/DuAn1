@@ -14,6 +14,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.apache.commons.logging.LogFactory;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,6 +24,7 @@ import java.util.Locale;
 
 public class ThongBaoDao {
 
+    private static final org.apache.commons.logging.Log log = LogFactory.getLog(ThongBaoDao.class);
     private DatabaseReference database;
     private AuthenticationFireBaseHelper authen;
     private NguoiDungDAO nguoiDungDAO;
@@ -69,10 +72,15 @@ public class ThongBaoDao {
                         }
 
                     }
-
-                    list = addDateChangeText(list);
-                    Collections.reverse(list);
-                    callback.onCallback(list);
+                    if (list.size()!=0){
+                        Log.d("Thong Bao ZZZ", "onDataChange: "+list.size());
+                        list = addDateChangeText(list);
+                        Collections.reverse(list);
+                        callback.onCallback(list);
+                    }else {
+                        Log.d("Thong Bao ZZZ", "onDataChange: NULL");
+                        callback.onCallback(null);
+                    }
                 }
 
                 @Override

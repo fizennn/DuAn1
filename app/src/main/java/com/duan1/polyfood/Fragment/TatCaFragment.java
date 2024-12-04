@@ -1,6 +1,7 @@
 package com.duan1.polyfood.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class TatCaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dang_giao, container, false);
 
+        Log.d("PhanLoai", "onCreateView: Don Hang : Tat Ca");
+
         HoaDonDAO hoaDonDAO = new HoaDonDAO();
         baseHelper = new AuthenticationFireBaseHelper();
 
@@ -54,6 +57,7 @@ public class TatCaFragment extends Fragment {
         hoaDonDAO.getAllHoaDon(new HoaDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<HoaDon> hoaDonList) {
+
                 listHoaDon.clear();
                 if( hoaDonList != null) {
                 for (HoaDon don : hoaDonList) {
@@ -65,13 +69,16 @@ public class TatCaFragment extends Fragment {
                         }
                     }
                 }
+                if (listHoaDon.size()==0){
+                    empty.setVisibility(View.VISIBLE);
+                    Log.d("PhanLoai", "onCreateView: Don Hang : Tat Ca : Empty");
+                }
+
                 hoaDonAdapter = new HoaDonAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(hoaDonAdapter);
                 loaded();
 
-                if (hoaDonList.size()==0){
-                    empty.setVisibility(View.VISIBLE);
-                }
+
             }
 
             @Override
