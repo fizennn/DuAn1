@@ -90,4 +90,14 @@ public class DishSuggestAdapter extends RecyclerView.Adapter<DishSuggestAdapter.
             layout = itemView.findViewById(R.id.linearLayoutChitiet);
         }
     }
+    public void updateDishImage(String dishId, String newImageUrl) {
+        for (int i = 0; i < danhSachThucDon.size(); i++) {
+            ThucDon dish = danhSachThucDon.get(i);
+            if (dish.getId_td().equals(dishId)) {
+                dish.setHinhAnh(newImageUrl);
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
 }

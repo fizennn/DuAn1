@@ -47,9 +47,8 @@ public class DeliveryActivity extends AppCompatActivity {
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void setupViewPager() {
@@ -67,6 +66,7 @@ public class DeliveryActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
     private static class ViewPagerAdapter extends FragmentPagerAdapter {

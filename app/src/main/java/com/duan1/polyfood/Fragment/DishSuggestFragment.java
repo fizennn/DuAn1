@@ -104,6 +104,7 @@ public class DishSuggestFragment extends Fragment {
 
 
 
+
         thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<ThucDon> thucDonList) {
@@ -119,9 +120,8 @@ public class DishSuggestFragment extends Fragment {
             public void onCallback(ThucDon thucDon) {
                 // Không cần xử lý callback này ở đây
             }
-
             @Override
-            public void onCallback(Float star) {
+            public  void onCallback(Float star){
 
             }
         });
@@ -160,9 +160,8 @@ public class DishSuggestFragment extends Fragment {
             public void onCallback(ThucDon thucDon) {
                 // Không sử dụng callback này
             }
-
             @Override
-            public void onCallback(Float star) {
+            public  void onCallback(Float star){
 
             }
         });

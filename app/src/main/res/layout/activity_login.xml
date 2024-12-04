@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/boder"
                 android:fontFamily="@font/spline_sans"
-                android:hint="User Name or Email"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:padding="16dp"
                 android:textSize="12dp" />

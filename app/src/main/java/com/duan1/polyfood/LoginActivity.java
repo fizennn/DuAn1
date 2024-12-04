@@ -73,43 +73,53 @@ public class LoginActivity extends AppCompatActivity {
             String password = edtPassword.getText().toString().trim();
 
             boolean isValid = validate(email, password);
-            if (isValid){
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            if (isValid) {
+                auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-
+                                if (task.isSuccessful()) {
                                     String UID = auth.getUid();
-
 
                                     nguoiDungDAO.check(new NguoiDungDAO.FirebaseCallback() {
                                         @Override
                                         public void onCallback(NguoiDung nguoiDung) {
-                                            if (nguoiDung == null){
-                                                Intent intent = new Intent(LoginActivity.this,InputInfoActivity.class);
+                                            loaded();
+                                            if (nguoiDung == null) {
+                                                Intent intent = new Intent(LoginActivity.this, InputInfoActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
-                                            }else{
-                                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                            } else {
+                                                int role = nguoiDung.getRole(); // Lấy role từ object NguoiDung
+                                                Log.e("Role", "Role hien tai la" + role);
+                                                Intent intent;
+                                                switch (role) {
+                                                    case 1: // Driver
+                                                        intent = new Intent(LoginActivity.this, DeliveryActivity.class);
+                                                        break;
+                                                    case 2: // Restaurant
+                                                        intent = new Intent(LoginActivity.this, RestaurantActivity.class);
+                                                        break;
+                                                    default: // Default là User
+                                                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                        break;
+                                                }
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
                                             }
                                         }
-                                    },UID);
-
-
-
-                                }else{
+                                    }, UID);
+                                } else {
                                     Toast.makeText(LoginActivity.this, "Sai Tài Khoản Mật Khẩu", Toast.LENGTH_SHORT).show();
                                     loaded();
                                 }
-
                             }
                         });
-            }else {
+            } else {
                 loaded();
             }
         });
+
     }
     private boolean validate(String email, String password){
         if (email.isEmpty()) {

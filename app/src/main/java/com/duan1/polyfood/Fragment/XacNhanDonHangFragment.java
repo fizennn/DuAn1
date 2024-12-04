@@ -47,14 +47,13 @@ public class XacNhanDonHangFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_xac_nhan_don_hang, container, false);
+        View view = inflater.inflate(R.layout.fragment_xac_nhan_don_hang1, container, false);
         HoaDonDAO hoaDonDAO = new HoaDonDAO();
 
         loading = view.findViewById(R.id.lottieLoading);
         viewLoad = view.findViewById(R.id.viewLoad);
-        linearLayout = view.findViewById(R.id.liner);
 
-        linearLayout.setVisibility(View.GONE);
+
 
         loading();
 
