@@ -30,8 +30,7 @@ public class FlashScreenActivity extends AppCompatActivity {
         Intent wellcomeIntent = new Intent(FlashScreenActivity.this, WellcomeActivity.class);
         Intent inputInfoIntent = new Intent(FlashScreenActivity.this, InputInfoActivity.class);
         Intent userMainIntent = new Intent(FlashScreenActivity.this, MainActivity.class);
-        Intent driverMainIntent = new Intent(FlashScreenActivity.this, DeliveryActivity.class);
-        Intent restaurantMainIntent = new Intent(FlashScreenActivity.this, RestaurantActivity.class);
+
 
         Handler handler = new Handler();
 
@@ -48,27 +47,11 @@ public class FlashScreenActivity extends AppCompatActivity {
                         @Override
                         public void onCallback(NguoiDung nguoiDung) {
                             if (nguoiDung == null) {
-                                // Nếu không tìm thấy thông tin người dùng, chuyển đến InputInfoActivity
+
                                 startActivity(inputInfoIntent);
                                 finish();
-                            } else {
-                                // Kiểm tra role và điều hướng
-                                int role = nguoiDung.getRole();
-                                switch (role) {
-                                    case 0: // User
-                                        startActivity(userMainIntent);
-                                        break;
-                                    case 1: // Driver
-                                        startActivity(driverMainIntent);
-                                        break;
-                                    case 2: // Restaurant
-                                        startActivity(restaurantMainIntent);
-                                        break;
-                                    default:
-                                        Log.e(TAG, "Role không hợp lệ: " + role);
-                                        startActivity(wellcomeIntent);
-                                        break;
-                                }
+                            }{
+                                startActivity(userMainIntent);
                                 finish();
                             }
                         }

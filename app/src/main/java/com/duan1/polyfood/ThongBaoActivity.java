@@ -36,7 +36,6 @@ public class ThongBaoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_thong_bao);
 
         init();
@@ -69,6 +68,10 @@ public class ThongBaoActivity extends AppCompatActivity {
         thongBaoDao.getAllThongBao(new ThongBaoDao.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<ThongBao> thongBaoList) {
+                if (thongBaoList.get(0).getId_ng()==null){
+                    loaded();
+                    return;
+                }
                 thongBaoAdapter = new ThongBaoAdapter(thongBaoList, ThongBaoActivity.this, new ThongBaoAdapter.onLoad() {
                     @Override
                     public void onLoad(int i) {

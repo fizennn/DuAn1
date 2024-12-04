@@ -87,6 +87,10 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
 
             holder.tvNoiDung.setText(thongBao.getNoidung());
             holder.tvNgayThang.setText(thongBao.getNgayThang());
+
+            if (thongBao.getId_ng()==null){
+                return;
+            }
             nguoiDungDAO.getAllNguoiDungByID(thongBao.getId_ng(), new NguoiDungDAO.FirebaseCallback() {
                 @Override
                 public void onCallback(NguoiDung nguoiDung) {

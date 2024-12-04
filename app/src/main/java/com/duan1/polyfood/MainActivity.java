@@ -276,37 +276,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setCheckedItem(R.id.nav_client);
 
     }
-
-    /** @noinspection deprecation, deprecation */
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-
-        // Thêm logic bạn muốn thực hiện khi nhấn nút Back
-        // Ví dụ: hiển thị một dialog xác nhận thoát
-        new AlertDialog.Builder(this)
-                .setMessage("Bạn có chắc chắn muốn thoát?")
-                .setCancelable(false)
-                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Kết thúc Activity
-                        finish();
-                    }
-                })
-                .setNegativeButton("Không", null)
-                .show();
-
-        // Nếu không gọi super.onBackPressed(), Activity sẽ không tự động đóng khi nhấn Back
-        // super.onBackPressed(); // Gọi nếu muốn giữ hành động mặc định
-
-        
-    }
- 
-
-
 }
