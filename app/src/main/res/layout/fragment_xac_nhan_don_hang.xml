@@ -24,6 +24,15 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/map" />
 
+        <Button
+            android:id="@+id/btnMoBanDo"
+            android:textColor="#ffff"
+            android:layout_marginHorizontal="17dp"
+            android:background="@drawable/btn1"
+            android:text="Mở bản đồ chỉ dẫn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewHoaDon"

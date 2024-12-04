@@ -29,6 +29,7 @@ public class ThongBaoDao {
     private AuthenticationFireBaseHelper authen;
     private NguoiDungDAO nguoiDungDAO;
 
+
     public ThongBaoDao() {
         database = FirebaseDatabase.getInstance().getReference();
         authen = new AuthenticationFireBaseHelper();
@@ -48,7 +49,10 @@ public class ThongBaoDao {
             database.child("ThongBao").child(thongBao.getId_nn()).child(thongBao.getId_tb()).setValue(thongBao)
                     .addOnSuccessListener(aVoid -> {
                         FirebaseNotification notification = new FirebaseNotification();
-                        notification.senNoti(context,thongBao.getRole(),thongBao.getNoidung(),thongBao.getId_nn());
+
+                        notification.sendNotification(context,thongBao.getRole(),thongBao.getNoidung(),thongBao.getId_nn());
+
+                        Log.d("zzzzzzzzzzz", "guiThongBao: Thanh Cong");
                     })
                     .addOnFailureListener(e -> Log.e("Firebase", "Thêm thong bao thất bại", e));
             nguoiDungDAO.addNoti(thongBao.getId_nn());

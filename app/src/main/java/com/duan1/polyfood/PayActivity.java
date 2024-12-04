@@ -21,11 +21,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Database.DonHangDAO;
 import com.duan1.polyfood.Database.HoaDonDAO;
+import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Fragment.BillFragment;
 import com.duan1.polyfood.Models.DonHang;
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.NguoiDung;
 import com.duan1.polyfood.Models.ThongBao;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.Other.IntToVND;
@@ -61,6 +63,8 @@ public class PayActivity extends AppCompatActivity {
 
 
 
+
+
         // Khởi tạo các view
         txtTenMonAn = findViewById(R.id.txtTenMonAn);
         txtGia = findViewById(R.id.txtGia);
@@ -77,6 +81,16 @@ public class PayActivity extends AppCompatActivity {
         ThucDonDAO thucDonDAO = new ThucDonDAO();
         thucDon1 = new ThucDon();
         hoaDonDAO = new HoaDonDAO();
+
+        NguoiDungDAO nguoiDungDAO = new NguoiDungDAO();
+
+        nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(NguoiDung nguoiDung) {
+                txtSDT.setText(nguoiDung.getSdt()+"");
+                txtDiaChi.setText(nguoiDung.getDiaChi()+"");
+            }
+        });
 
         // Khởi tạo đối tượng DatabaseReference
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();

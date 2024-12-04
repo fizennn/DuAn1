@@ -78,33 +78,48 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
             holder.btnXacNhanGiaoHang.setOnClickListener(v -> {
                 hoaDonDAO.getHoaDonByStatus("Đang giao", new HoaDonDAO.FirebaseCallback() {
                     @Override
-                    public void onCallback(ArrayList<HoaDon> hoaDonList) {
-                       if (hoaDonList.size()==0){
-                           hoaDon.setTrangThai("Đang giao");
-                           hoaDonDAO.updateHoaDon(hoaDon);
+                    public void onCallback(ArrayList<HoaDon> hoaDonList1) {
+                        try {
+                            if (hoaDonList1.size()!=0){
+                                Toast.makeText(context, "Hãy hoàn thành đơn hàng bạn đã nhận trước!", Toast.LENGTH_SHORT).show();
+                                return;
+                            }else {
+                                if (!hoaDonList.isEmpty()){
+                                    hoaDonList.remove(position);
+                                }
 
-                           // Thông báo cho fragment khác
-                           if (context instanceof DeliveryActivity) {
-                               ((DeliveryActivity) context).updateDonHangDangGiao(hoaDon);
-                           }
 
-                           hoaDonList.remove(position);
-                           notifyItemRemoved(position);
+                                hoaDon.setTrangThai("Đang giao");
+                                hoaDonDAO.updateHoaDon(hoaDon);
 
-                           ThongBao thongBao = new ThongBao();
+                                // Thông báo cho fragment khác
+                                if (context instanceof DeliveryActivity) {
+                                    ((DeliveryActivity) context).updateDonHangDangGiao(hoaDon);
+                                }
 
-                           thongBao.setId_hd(hoaDon.getId_hd());
-                           thongBao.setId_nn(hoaDon.getId_nd());
-                           thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được xác nhận giao hàng !");
-                           thongBao.setRole("Tài Xế");
-                           thongBao.setTrangThai(hoaDon.getTrangThai());
 
-                           thongBaoDao.guiThongBao(thongBao,context);
+                                notifyItemRemoved(position);
 
-                           notifyDataSetChanged();
-                       }else {
-                           Toast.makeText(context, "Hãy hoàn thành đơn hàng bạn đã nhận trước!", Toast.LENGTH_SHORT).show();
-                       }
+                                ThongBao thongBao = new ThongBao();
+
+                                thongBao.setId_hd(hoaDon.getId_hd());
+                                thongBao.setId_nn(hoaDon.getId_nd());
+                                thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được xác nhận giao hàng !");
+                                thongBao.setRole("Tài Xế");
+                                thongBao.setTrangThai(hoaDon.getTrangThai());
+
+                                thongBaoDao.guiThongBao(thongBao,context);
+
+                                notifyDataSetChanged();
+                            }
+                        }catch (Exception e){
+                            Toast.makeText(context, "Hãy hoàn thành đơn hàng bạn đã nhận trước!", Toast.LENGTH_SHORT).show();
+                        }
+
+
+
+
+
                     }
 
                     @Override

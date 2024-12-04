@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "shopcake-528de",
+  "private_key_id": "aee2fe2c8f4d4a2b0266190befd893d5f43b7332",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCveXQ+00FOK3vY\nkG9toVo/8r8iABpWHgs2KQ9bTlHK2os3DTobcbjM5i5cRNxlqcGYSfi9GDnTrLOT\nf6H1WI6q9R27hZwL/KPfEZ8Qx5wlr/Mv6EiswosftRfOkCeL7PIT+CFQFX6ypQhk\nHWnjnOP24eQwKQ1VDndus53fv9anT3b7a4a9MIfxi6/2YEKwtKO/GEiEfMBVawup\nFn/3Yk1AD138O+J+iimktOnm5cnG1QWPSZwcIvHsdRXSL/Gci4ICsIjaRmK0fDoZ\no+3/zY4lKmtfdmui8ehmJsnyr8/8UYgAA4xNaUFaSlgnNVuWkOe5gWwzhb0hGRAv\nvyMxZxHvAgMBAAECggEANlsMDE4KY7mKkoojSjV6LGb4mAKqJdUGqg9MB3+aTJko\nGLSLNGck1KvU3pYiI4fTRWZcm86+UvijY+RcehClmQV24VjA/uGSrY3a1SrQDsiT\nL1rn8EQPLpI9Pqpe5bRPRKpPP2x5I8OFduW5oF1ALIDK27RLwfZKPst68w2M46Rx\nbmdIqzIWEhL1EHRHqYNfgyRdPWmNCV4et4cpe6mW/5/Yklggdb3J++SH20kwVMRq\ngklBdLXaADVhgrmAZBgd3tzPPhleQf9yy8SxM5jzMiJabei6kyzc74A4WJb58Pzf\nworoYAx7a5csGcrodz4a05X0qIyUDKtRS0EiivieYQKBgQDhCtgJCmp+6sDObTqQ\nv10CaSykoVNUYEPdYFM+yzH4DiADuKZjxSFPjm6dov8k1+0Djga8Ujx9IcxrUIE+\n7K+tbMPavWH8g4jJHePahAgOhnllvjtgiEW4+s0YzuvcJ1bZJFXFYWQGoNkQ6tqb\nJN59UBP89Z+JtBcqorq3ONXN/wKBgQDHnQMHB7gVwsXMHk8ktf+I8OOT0yMJCBD/\nlJbngOp5+fKUDeF/z3YybPNjjwG/mrlCHnguSaaDcaawlVdySqr90kF+wAKfEj+v\ncGa4clmITqj+qmisc/9y97muzyjQnLCGibqtptE+gawydF50tIySUH/0s7NsssMy\n+6QrqFOcEQKBgQDBYCsRYbTvSFPTTgLkPLv0hWHKOaI8P9gxE0OVEs/mYmTaLcI0\nu0ELds3QgS6Tf0P4KQPasSOvNurMUEovQv0Wnf6SKOhZLsHMZ/XSYF/380+/wL6P\nDaoz8LdqmOwNqnQzdMiLKkvkcjT0F4svg3f34Ga8mGe10V2S0nB1Xs5CCwKBgAwm\nVWnXIXBJo6px6dVNMpmON/vmbQp+sDIuRCUhJqR3/zjdw2z5HrOhCAt2R9/2tfH9\nUslWeEkl4MR8wo7VVqUOaCgj3cT64l92UvpFE4gFaanei3J7uP+xbl7igxR3hRMb\nTP6G2dOZJvcHODyYRLofJjqpuXETTGhNAsgZfcVRAoGAZHg0IkOBnrTZsz68VbxI\nmQwtbLB57d02ec+WHCJtgF+/rtneoJbsbtd2VW4qWNRtPR0C8YS6LSexqCrpyXKS\nxuOQeM6iaVkoUuLigY4xZmhqq90ANnh8NHPVMifN42Qq2TtwnQLSp9EsIWZ9fmwz\neADOLxRpUf+3m54vqlFkdbY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-3cbwd@shopcake-528de.iam.gserviceaccount.com",
+  "client_id": "116711241848574344617",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3cbwd%40shopcake-528de.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

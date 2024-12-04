@@ -1,53 +1,52 @@
 package com.duan1.polyfood.Database;
 
 import android.content.Context;
+import android.util.Log;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.nio.charset.StandardCharsets;
 
-
-/** @noinspection ExtractMethodRecommender*/
 public class FirebaseNotification {
 
     private static final String PROJECT_ID = "shopcake-528de"; // Project ID của bạn
 
-    public void senNoti(Context context,String title,String body,String topic){
-        NotificationSender sender = new NotificationSender();
+    public void sendNotification(Context context, String title, String body, String topic) {
+        Log.d("FirebaseNotification", "Initiating notification process...");
+        FirebaseAuth firebaseAuth = new FirebaseAuth(context); // Firebase Auth class
 
-        FirebaseAuth firebaseAuth = new FirebaseAuth(context); // Truyền context của activity
         try {
+            // Lấy Access Token từ FirebaseAuth
             firebaseAuth.getAccessToken(new FirebaseAuth.Callback() {
                 @Override
                 public void onSuccess(String token) {
-                    FirebaseNotification firebaseNotification = new FirebaseNotification();
-                    firebaseNotification.sendPushNotification(token, title, body,topic);
+                    Log.d("FirebaseNotification", "Access token retrieved successfully");
+                    sendPushNotification(token, title, body, topic);
                 }
 
                 @Override
                 public void onFailure(Exception e) {
-
+                    Log.e("FirebaseNotification", "Failed to retrieve access token: " + e.getMessage());
                 }
-            }); // Lấy Access Token
-
-            // Tạo thông báo và gửi
-
-        } catch (IOException e) {
+            });
+        } catch (Exception e) {
+            Log.e("FirebaseNotification", "Error while initiating notification: " + e.getMessage());
         }
     }
 
-    /** @noinspection ExtractMethodRecommender*/
     public void sendPushNotification(String accessToken, String title, String body, String topic) {
+        Log.d("FirebaseNotification", "Sending push notification...");
 
         new Thread(() -> {
+            HttpURLConnection connection = null;
             try {
-                // URL FCM v1 API
+                // URL của FCM API
                 String apiUrl = "https://fcm.googleapis.com/v1/projects/" + PROJECT_ID + "/messages:send";
                 URL url = new URL(apiUrl);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
 
                 // Cấu hình HTTP Request
                 connection.setRequestMethod("POST");
@@ -55,39 +54,55 @@ public class FirebaseNotification {
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setDoOutput(true);
 
-                // JSON Payload cho Notification
-                String payload = "{"
-                        + "\"message\": {"
-                        + "\"topic\": \""+topic+"\"," // Gửi đến topic "highScores"
-                        + "\"notification\": {"
-                        + "\"title\": \"" + title + "\","
-                        + "\"body\": \"" + body + "\""
-                        + "}"
-                        + "}"
-                        + "}";
+                // JSON Payload
+                String payload = String.format(
+                        "{"
+                                + "\"message\": {"
+                                + "\"topic\": \"%s\","
+                                + "\"notification\": {"
+                                + "\"title\": \"%s\","
+                                + "\"body\": \"%s\""
+                                + "}"
+                                + "}"
+                                + "}",
+                        topic, title, body
+                );
 
-                // Gửi request
-                OutputStream outputStream = connection.getOutputStream();
-                outputStream.write(payload.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
+                // Gửi dữ liệu
+                try (OutputStream outputStream = connection.getOutputStream()) {
+                    outputStream.write(payload.getBytes(StandardCharsets.UTF_8));
+                    outputStream.flush();
+                }
 
-                // Kiểm tra phản hồi
+                // Đọc phản hồi
                 int responseCode = connection.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    String inputLine;
-                    StringBuilder response = new StringBuilder();
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
+                    try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                        String inputLine;
+                        StringBuilder response = new StringBuilder();
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        Log.d("FirebaseNotification", "Notification sent successfully: " + response);
                     }
-                    in.close();
-                    System.out.println("Response: " + response.toString()); // Thành công
                 } else {
-                    System.out.println("Failed to send notification. Response Code: " + responseCode); // Lỗi
+                    try (BufferedReader errorReader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                        String inputLine;
+                        StringBuilder errorResponse = new StringBuilder();
+                        while ((inputLine = errorReader.readLine()) != null) {
+                            errorResponse.append(inputLine);
+                        }
+                        Log.e("FirebaseNotification", "Failed to send notification. Response Code: " + responseCode +
+                                ", Error: " + errorResponse);
+                    }
                 }
 
             } catch (Exception e) {
+                Log.e("FirebaseNotification", "Exception while sending notification: " + e.getMessage());
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
             }
         }).start();
     }
