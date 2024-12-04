@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,16 +26,16 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class WellcomeActivity extends AppCompatActivity {
 
-    private Button btnLogin;
-    private TextView txvRegister;
-    private Button btnGoogleSignIn;
     private FirebaseAuth mAuth;
+    /** @noinspection deprecation*/
     private GoogleSignInClient mGoogleSignInClient;
     private NguoiDungDAO nguoiDungDAO = new NguoiDungDAO();
 
+    /** @noinspection deprecation*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_wellcome);
 
         mAuth = FirebaseAuth.getInstance();
@@ -47,9 +48,9 @@ public class WellcomeActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        btnLogin = findViewById(R.id.btnLogin);
-        txvRegister = findViewById(R.id.txvBtnRegister);
-        btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        TextView txvRegister = findViewById(R.id.txvBtnRegister);
+        Button btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
 
         btnGoogleSignIn.setOnClickListener(v -> {
             signInWithGoogle();
@@ -66,12 +67,14 @@ public class WellcomeActivity extends AppCompatActivity {
         });
     }
 
+    /** @noinspection deprecation*/
     private void signInWithGoogle() {
         // Bắt đầu quá trình đăng nhập Google
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, 1001); // Mã yêu cầu cho việc đăng nhập
     }
 
+    /** @noinspection deprecation*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

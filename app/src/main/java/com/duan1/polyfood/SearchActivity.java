@@ -1,21 +1,14 @@
 package com.duan1.polyfood;
 
-import static java.security.AccessController.getContext;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,24 +30,23 @@ public class SearchActivity extends AppCompatActivity {
     private List<ThucDon> listThucDon;
     private ThucDonNgangAdapter thucDonNgangAdapter;
     private ThucDonDAO thucDonDAO;
-    private EditText edtSearch;
-    private ImageView imgSortPrice, imgBack;
+    private ImageView imgSortPrice;
     private boolean isAscending = true; // true: Sắp xếp tăng dần, false: Giảm dần
     private RecyclerView recyclerViewSticker;
-    private StickerDao stickerDao;
     private StickerNgangAdapter stickerNgangAdapter;
     private List<ThucDon> listThucDon2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search);
 
-        edtSearch = findViewById(R.id.edtSearch);
+        EditText edtSearch = findViewById(R.id.edtSearch);
         imgSortPrice = findViewById(R.id.imgSortPrice);
-        imgBack = findViewById(R.id.imgBack);
+        ImageView imgBack = findViewById(R.id.imgBack);
         recyclerViewSticker = findViewById(R.id.recyclerViewSticker);
-        stickerDao = new StickerDao();
+        StickerDao stickerDao = new StickerDao();
 
         thucDonDAO = new ThucDonDAO();
 

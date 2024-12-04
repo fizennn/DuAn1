@@ -19,9 +19,6 @@
             android:name=".ThongBaoActivity"
             android:exported="false" />
         <activity
-            android:name=".Other.ThongBaoActivity"
-            android:exported="false" />
-        <activity
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity

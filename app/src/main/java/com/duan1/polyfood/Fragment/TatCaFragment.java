@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class TatCaFragment extends Fragment {
     private RecyclerView recyclerView;
     private HoaDonAdapter hoaDonAdapter;
-    private HoaDonDAO hoaDonDAO;
     private ArrayList<HoaDon> listHoaDon;
     private AuthenticationFireBaseHelper baseHelper;
     private LottieAnimationView loading,empty;
@@ -35,7 +34,7 @@ public class TatCaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dang_giao, container, false);
 
-        hoaDonDAO = new HoaDonDAO();
+        HoaDonDAO hoaDonDAO = new HoaDonDAO();
         baseHelper = new AuthenticationFireBaseHelper();
 
         loading = view.findViewById(R.id.lottieLoading);

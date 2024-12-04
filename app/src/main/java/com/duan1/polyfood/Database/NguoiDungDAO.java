@@ -217,5 +217,12 @@ public class NguoiDungDAO {
         });
     }
 
+    public void setImg(){
+        database.child("NguoiDung").child(auth.getUID()).child("imgUrl").setValue("https://firebasestorage.googleapis.com/v0/b/shopcake-528de.appspot.com/o/ProfileImages%2Fdefault.jpg?alt=media&token=6d2979a1-ee9c-4fb4-b6a8-574566ef31f3");
+    }
+
+
+
+
 
 }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,10 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtPassword, edtEmail;
     private ImageView ivEye;
     private boolean isPasswordVisible = false;
-    private TextView txtRegisNow;
-    private Button btnLogin;
     private FirebaseAuth auth;
-    private TextView txvForgotPass;
     private NguoiDungDAO nguoiDungDAO;
     private int login;
 
@@ -45,17 +43,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        EdgeToEdge.enable(this);
         nguoiDungDAO = new NguoiDungDAO();
 
 
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
         edtPassword = findViewById(R.id.edtPassword);
-        txtRegisNow = findViewById(R.id.txtRegisNow);
-        btnLogin = findViewById(R.id.btnLogin);
+        TextView txtRegisNow = findViewById(R.id.txtRegisNow);
+        Button btnLogin = findViewById(R.id.btnLogin);
         edtEmail = findViewById(R.id.edtEmail);
-        txvForgotPass = findViewById(R.id.txvForgotPass);
+        TextView txvForgotPass = findViewById(R.id.txvForgotPass);
         loading = findViewById(R.id.lottieLoading);
         viewLoad = findViewById(R.id.viewLoad);
 

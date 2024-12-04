@@ -34,12 +34,11 @@ public class ThucDonNgangDishAdapter extends RecyclerView.Adapter<ThucDonNgangDi
     private Sticker sticker;
     private StickerDao stickerDao;
     private GradientDrawable drawable = new GradientDrawable();
-    private GradientDrawable drawable1 = new GradientDrawable();
-    private GradientDrawable drawable2 = new GradientDrawable();
 
     private ThucDonNgangDishAdapter.OnItemClickListener listener;
 
 
+    /** @noinspection deprecation*/
     public ThucDonNgangDishAdapter(List<ThucDon> danhSachThucDon, Context context) {
         this.danhSachThucDon = danhSachThucDon;
         this.context = context;
@@ -49,8 +48,8 @@ public class ThucDonNgangDishAdapter extends RecyclerView.Adapter<ThucDonNgangDi
         drawable.setCornerRadius(5);
         drawable.setColor(context.getResources().getColor(android.R.color.white)); // Màu nền (tuỳ chỉnh)
 
-        drawable1 = drawable;
-        drawable2 = drawable;
+        GradientDrawable drawable1 = drawable;
+        GradientDrawable drawable2 = drawable;
     }
 
     private OnItemClickListener mListener;

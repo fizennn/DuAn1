@@ -14,6 +14,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.util.Log;
 
@@ -82,13 +83,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Tạo Notification
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.img)  // Đặt icon thông báo
-                .setContentTitle(title)                    // Tiêu đề thông báo
-                .setContentText(body)                      // Nội dung thông báo
-                .setAutoCancel(true)                       // Tự động hủy khi người dùng nhấn
-                .setPriority(NotificationCompat.PRIORITY_HIGH) // Đặt ưu tiên cao cho thông báo
-                .setCategory(NotificationCompat.CATEGORY_ALARM) // Đảm bảo thông báo có thể "hiện lên"
-                .setContentIntent(pendingIntent);          // Mở MainActivity khi nhấn vào thông báo
+                .setSmallIcon(R.drawable.img)
+                .setBadgeIconType(R.drawable.img)
+                .setContentTitle(title)        // Tiêu đề thông báo
+                .setContentText(body)          // Nội dung thông báo
+                .setAutoCancel(true)           // Tự động hủy khi người dùng nhấn
+                .setPriority(NotificationCompat.PRIORITY_HIGH) // Đặt ưu tiên cao
+                .setCategory(NotificationCompat.CATEGORY_ALARM) // Đảm bảo thông báo "hiện lên"
+                .setContentIntent(pendingIntent);  // Gán PendingIntent     // Mở MainActivity khi nhấn vào thông báo
+
+//        notificationBuilder.addAction(
+//                R.drawable.img, // Icon của nút
+//                "Reply",               // Văn bản hiển thị
+//                pendingIntent     // Intent khi người dùng nhấn nút
+//        );
 
         // Kiểm tra và tạo NotificationChannel cho Android 8.0 trở lên
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

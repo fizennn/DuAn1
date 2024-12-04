@@ -10,15 +10,11 @@ import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,15 +28,12 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
-import com.duan1.polyfood.Adapter.ThucDonAdapter;
-import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangDishAdapter;
 import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -150,8 +143,6 @@ public class DishFragment extends Fragment {
         EditText edtTen = dialog.findViewById(R.id.edtTen);
         EditText edtGia = dialog.findViewById(R.id.edtGia);
         EditText edtMoTa = dialog.findViewById(R.id.edtMoTa);
-//        EditText edtDanhGia = dialog.findViewById(R.id.edtDanhgia);
-//        EditText edtPhanHoi = dialog.findViewById(R.id.edtPhanhoi);
         ImageButton btnChooseImage = dialog.findViewById(R.id.btnChooseImage);
         Button btnSaveThucDon = dialog.findViewById(R.id.btnAddThucDon);
 
@@ -271,8 +262,6 @@ public class DishFragment extends Fragment {
                 return;
             }
             thucDon.setMoTa(edtMoTa.getText().toString());
-//            thucDon.setDanhGia(edtDanhGia.getText().toString());
-//            thucDon.setPhanHoi(edtPhanHoi.getText().toString());
 
             if (don==null){
 

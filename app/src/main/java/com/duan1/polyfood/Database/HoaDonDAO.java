@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.duan1.polyfood.Models.HoaDon;
+import com.duan1.polyfood.Models.ThongBao;
 import com.duan1.polyfood.Models.ThucDon;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -81,21 +83,28 @@ public class HoaDonDAO {
     }
 
     public void getHoaDonById(String id, FirebaseCallback callback) {
-        if (id==null){
-            return;
+
+        try {
+            if (id==null){
+                return;
+            }
+            database.child("HoaDon").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    HoaDon hoaDon = snapshot.getValue(HoaDon.class);
+                    callback.onCallback(hoaDon);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }catch (Exception e){
+            Log.e("zzzzz", "getHoaDonById: "+e );
         }
-        database.child("HoaDon").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                HoaDon hoaDon = snapshot.getValue(HoaDon.class);
-                callback.onCallback(hoaDon);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
     }
 
 
@@ -210,6 +219,8 @@ public class HoaDonDAO {
                                 Log.e("Firebase", "Lỗi khi xử lý ngày đặt hàng", e);
                             }
                         }
+
+
                         callback.onCallback(hoaDonList);
                     }
 
@@ -231,6 +242,44 @@ public class HoaDonDAO {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static ArrayList<HoaDon> addDateChangeText(ArrayList<HoaDon> dateList) {
+        ArrayList<HoaDon> resultList = new ArrayList<>();
+
+        // Biến để theo dõi ngày trước đó
+        String previousDate = null;
+
+        Log.e("zzzzzzzzz", "addDateChangeText: Bat Dau");
+
+
+
+        for (HoaDon hoaDon : dateList) {
+            // Lấy phần ngày của chuỗi (dùng substring để lấy "yyyy-MM-dd")
+            String currentDate = hoaDon.getNgayDatHang().substring(0, 10);  // Lấy "yyyy-MM-dd"
+
+            // Kiểm tra xem ngày có thay đổi không
+            if (previousDate != null && !currentDate.equals(previousDate)) {
+                // Nếu ngày thay đổi, thêm text "Chuyển ngày" vào
+                HoaDon thongBaoChuyen = new HoaDon();
+                thongBaoChuyen.setChuyenngay(previousDate);
+                resultList.add(thongBaoChuyen);
+                resultList.add(hoaDon);
+            } else {
+                resultList.add(hoaDon);
+            }
+
+            // Cập nhật ngày trước đó
+            previousDate = currentDate;
+        }
+
+        HoaDon thongBaoChuyen1 = new HoaDon();
+        thongBaoChuyen1.setChuyenngay(previousDate);
+        resultList.add(thongBaoChuyen1);
+
+
+
+        return resultList;
     }
 
 

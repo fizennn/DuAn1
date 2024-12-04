@@ -6,11 +6,15 @@
     android:orientation="vertical">
 
     <!-- RecyclerView để hiển thị danh sách hóa đơn theo trạng thái -->
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewHoaDon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:layout_marginBottom="50dp"
+        />
 
     <View
         android:visibility="gone"

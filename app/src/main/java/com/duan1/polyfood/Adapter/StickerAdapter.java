@@ -2,13 +2,6 @@ package com.duan1.polyfood.Adapter;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Models.Sticker;

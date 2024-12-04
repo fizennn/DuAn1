@@ -23,7 +23,6 @@ import com.duan1.polyfood.Models.NguoiDung;
 public class InputInfoActivity extends AppCompatActivity {
 
     private EditText edtName, edtAge, edtAddress, edtPhone;
-    private Button btnGetInfo;
     private String TAG = "zzzzzzzzzzzz";
     private NguoiDungDAO nguoiDungDAO;
     private AuthenticationFireBaseHelper fireBaseHelper;
@@ -33,6 +32,7 @@ public class InputInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_input_info);
 
         nguoiDungDAO = new NguoiDungDAO();
@@ -45,7 +45,7 @@ public class InputInfoActivity extends AppCompatActivity {
         edtAge = findViewById(R.id.edtAge);
         edtAddress = findViewById(R.id.edtAddress);
         edtPhone = findViewById(R.id.edtPhone);
-        btnGetInfo = findViewById(R.id.btnGetInfo);
+        Button btnGetInfo = findViewById(R.id.btnGetInfo);
 
         Spinner spinnerGender = findViewById(R.id.spinnerGender);
         String[] genders = {"Nam", "Nữ", "Khác"};

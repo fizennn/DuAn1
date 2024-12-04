@@ -22,8 +22,6 @@ public class DonHangDangGiaoFragment extends Fragment {
     private RecyclerView recyclerView;
     private NguoiGiaoAdapter nguoiGiaoAdapter;
     private ArrayList<HoaDon> listHoaDon;
-    private HoaDonDAO hoaDonDAO;
-    private AuthenticationFireBaseHelper baseHelper;
 
 
     @Override
@@ -31,9 +29,9 @@ public class DonHangDangGiaoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xac_nhan_don_hang, container, false);
-        hoaDonDAO = new HoaDonDAO();
+        HoaDonDAO hoaDonDAO = new HoaDonDAO();
 
-        baseHelper=new AuthenticationFireBaseHelper();
+        AuthenticationFireBaseHelper baseHelper = new AuthenticationFireBaseHelper();
 
         recyclerView = view.findViewById(R.id.recyclerViewHoaDon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -46,6 +44,7 @@ public class DonHangDangGiaoFragment extends Fragment {
                 listHoaDon.clear();
                 for (HoaDon don : hoaDonList) {
                     listHoaDon.add(don);
+                    break;
                 }
                 nguoiGiaoAdapter = new NguoiGiaoAdapter(getContext(), listHoaDon);
                 recyclerView.setAdapter(nguoiGiaoAdapter);

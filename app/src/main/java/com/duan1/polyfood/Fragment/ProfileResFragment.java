@@ -22,9 +22,7 @@ import java.util.ArrayList;
 public class ProfileResFragment extends Fragment {
 
 
-    private NhaHangDAO nhaHangDAO;
     private TextView txtRestaurantName,txtIntroduction,txtAddress,txtEmail,txtPhone;
-    private Button btnOut;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,14 +31,14 @@ public class ProfileResFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile_res, container, false);
 
-        nhaHangDAO = new NhaHangDAO();
+        NhaHangDAO nhaHangDAO = new NhaHangDAO();
 
         txtRestaurantName = view.findViewById(R.id.txtRestaurantName);
         txtIntroduction = view.findViewById(R.id.txtIntroduction);
         txtAddress = view.findViewById(R.id.txtAddress);
         txtEmail = view.findViewById(R.id.txtEmail);
         txtPhone = view.findViewById(R.id.txtPhone);
-        btnOut = view.findViewById(R.id.btnOut);
+        Button btnOut = view.findViewById(R.id.btnOut);
 
         btnOut.setOnClickListener(new View.OnClickListener() {
             @Override

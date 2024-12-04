@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -64,6 +65,9 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
         holder.txtSoLuong.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
         holder.txtPhuongThucThanhToan.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
 
+        holder.cv1.setVisibility(View.GONE);
+        holder.cv2.setVisibility(View.VISIBLE);
+
 
         if ("Chờ giao".equals(hoaDon.getTrangThai())) {
             holder.btnXacNhanGiaoHang.setVisibility(View.VISIBLE);
@@ -88,7 +92,7 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
                 thongBao.setRole("Tài Xế");
                 thongBao.setTrangThai(hoaDon.getTrangThai());
 
-                thongBaoDao.guiThongBao(thongBao);
+                thongBaoDao.guiThongBao(thongBao,context);
 
                 notifyDataSetChanged();
             });
@@ -119,6 +123,7 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
         TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai;
         ImageView imgMonAn;
         Button btnXacNhanGiaoHang;
+        CardView cv1,cv2;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -130,6 +135,9 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
             txtPhuongThucThanhToan = itemView.findViewById(R.id.txtPhuongThucThanhToan);
             txtTrangThai = itemView.findViewById(R.id.txtTrangThai);
             btnXacNhanGiaoHang = itemView.findViewById(R.id.btnXacNhanGiaoHang);
+            cv1 = itemView.findViewById(R.id.cv1);
+            cv2 = itemView.findViewById(R.id.cv2);
+
         }
     }
 }

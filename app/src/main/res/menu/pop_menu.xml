@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btnMask"
+        android:title="Đã Xem" />
+    <item
+        android:id="@+id/btnXoa"
+        android:title="Xóa" />
+
+</menu>

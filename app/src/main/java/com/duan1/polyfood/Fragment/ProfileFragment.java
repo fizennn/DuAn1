@@ -29,17 +29,14 @@ public class ProfileFragment extends Fragment {
     private TextView name, address, gender, age, email, phone;
     private NguoiDungDAO nguoiDungDAO;
     private ImageView imageViewProfile;
-    private Uri imageUri;
-    private StorageReference storageReference;
     private NguoiDung nguoiDungGet;
     private AuthenticationFireBaseHelper auth;
-    private Button btnOut;
 
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                    imageUri = result.getData().getData();
+                    Uri imageUri = result.getData().getData();
                     imageViewProfile.setImageURI(imageUri);
                     uploadImageToFirebase(imageUri);
                 }
@@ -59,9 +56,9 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.textViewEmail);
         phone = view.findViewById(R.id.textViewPhoneNumber);
         imageViewProfile = view.findViewById(R.id.imageViewProfile);
-        btnOut = view.findViewById(R.id.btnOut);
+        Button btnOut = view.findViewById(R.id.btnOut);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         nguoiDungDAO = new NguoiDungDAO();
 
 

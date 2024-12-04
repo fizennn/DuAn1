@@ -39,7 +39,6 @@ import java.util.List;
 public class DishSuggestFragment extends Fragment {
 
     private ImageView imgSelectedImage;
-    private Uri imageUri;
     private ThucDonDAO thucDonDAO;
     private StorageReference storageReference;
     private RecyclerView recyclerView;
@@ -74,7 +73,7 @@ public class DishSuggestFragment extends Fragment {
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    imageUri = result.getData().getData();
+                    Uri imageUri = result.getData().getData();
                     imgSelectedImage.setImageURI(imageUri);
                 }
             });

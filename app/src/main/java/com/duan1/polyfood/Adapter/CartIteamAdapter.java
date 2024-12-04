@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Models.ThucDon;
-import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.Other.IntToVND;
 import com.duan1.polyfood.PayActivity;
 import com.duan1.polyfood.R;

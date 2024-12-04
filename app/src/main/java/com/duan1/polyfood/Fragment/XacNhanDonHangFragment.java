@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +23,7 @@ public class XacNhanDonHangFragment extends Fragment {
     private RecyclerView recyclerView;
     private NguoiGiaoAdapter nguoiGiaoAdapter;
     private ArrayList<HoaDon> listHoaDon;
-    private HoaDonDAO hoaDonDAO;
+    private LottieAnimationView linearLayout;
 
     private LottieAnimationView loading;
     private View viewLoad;
@@ -47,10 +48,13 @@ public class XacNhanDonHangFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_xac_nhan_don_hang, container, false);
-        hoaDonDAO = new HoaDonDAO();
+        HoaDonDAO hoaDonDAO = new HoaDonDAO();
 
         loading = view.findViewById(R.id.lottieLoading);
         viewLoad = view.findViewById(R.id.viewLoad);
+        linearLayout = view.findViewById(R.id.liner);
+
+        linearLayout.setVisibility(View.GONE);
 
         loading();
 

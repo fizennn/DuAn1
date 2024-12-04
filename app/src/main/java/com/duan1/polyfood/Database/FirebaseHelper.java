@@ -245,9 +245,6 @@ public class FirebaseHelper {
 
     public void addDonHang(DonHang donHang) {
 //        tao tu dong id khi them
-//        String key = database.child("DonHang").push().getKey();
-//        donHang.setId_dh(key);
-//        database.child("DonHang").child(key).setValue(donHang);
 
         String idDh = donHang.getId_dh(); // Lấy id_dh từ đối tượng
         database.child("DonHang").child(idDh).setValue(donHang); // Sử dụng id_dh từ donHang

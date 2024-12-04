@@ -11,6 +11,24 @@ public class ThongBao {
     private String Role;
     private String read;
     private String id_hd;
+    private String chuyenNgay;
+    private String gone;
+
+    public String getGone() {
+        return gone;
+    }
+
+    public void setGone(String gone) {
+        this.gone = gone;
+    }
+
+    public String getChuyenNgay() {
+        return chuyenNgay;
+    }
+
+    public void setChuyenNgay(String chuyenNgay) {
+        this.chuyenNgay = chuyenNgay;
+    }
 
     public String getId_hd() {
         return id_hd;

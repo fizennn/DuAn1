@@ -16,6 +16,15 @@ public class HoaDon {
     private String trangThai;
     private String ngayDatHang;
     private String id_nd;
+    private String chuyenngay;
+
+    public String getChuyenngay() {
+        return chuyenngay;
+    }
+
+    public void setChuyenngay(String chuyenngay) {
+        this.chuyenngay = chuyenngay;
+    }
 
     // Constructor
     public HoaDon() {}

@@ -23,14 +23,13 @@ import java.util.Date;
 public class BinhLuanDao {
     private DatabaseReference database;
     private StorageReference storageReference;
-    private ThucDonDAO thucDonDAO;
     private boolean check;
 
 
     public BinhLuanDao(){
         database = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference("BinhLuanImages");
-        thucDonDAO = new ThucDonDAO();
+        ThucDonDAO thucDonDAO = new ThucDonDAO();
     }
 
     public interface FirebaseCallback {
@@ -71,16 +70,6 @@ public class BinhLuanDao {
 
                     }
                 });
-
-//        float slDanhGia = Float.parseFloat(thucDon.getDanhGia());
-//        int slPhanHoi = Integer.parseInt(thucDon.getPhanHoi());
-//
-//        slDanhGia = ((slDanhGia*slPhanHoi)+binhLuan.getSao())/(slPhanHoi+1);
-//        slPhanHoi++;
-//
-//        thucDon.setDanhGia(String.valueOf(slDanhGia));
-//        thucDon.setPhanHoi(String.valueOf(slPhanHoi));
-
 
 
     }

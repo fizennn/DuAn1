@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,8 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private String TAG = "FixLoi1";
-    private RecyclerView recyclerView, recyclerViewNgang,recyclerViewSticker;
+    private RecyclerView recyclerViewNgang;
+    private RecyclerView recyclerViewSticker;
     private FoodAdapter foodAdapter;
     private List<ThucDon> foodList, foodListNgang;
     private ThucDonNgangAdapter thucDonNgangAdapter;
@@ -49,11 +51,7 @@ public class HomeFragment extends Fragment {
     private TextView txvSl;
     private CardView txvNoti;
     private CardView imgSearch;
-    private TextView txvChao;
-    private LinearLayout linearLayout;
-    private List<Sticker> stickerList;
     private StickerNgangAdapter stickerNgangAdapter;
-    private StickerDao stickerDao;
 
     private LottieAnimationView loading;
     private View viewLoad;
@@ -71,12 +69,12 @@ public class HomeFragment extends Fragment {
         btnOpenCart = view.findViewById(R.id.btnOpenCart);
         txvSl = view.findViewById(R.id.txvSoLuongIteam);
         txvNoti = view.findViewById(R.id.txvNoti);
-        txvChao = view.findViewById(R.id.txvChao);
-        linearLayout = view.findViewById(R.id.linearLayout);
+        TextView txvChao = view.findViewById(R.id.txvChao);
+        LinearLayout linearLayout = view.findViewById(R.id.linearLayout);
         loading = view.findViewById(R.id.lottieLoading);
         viewLoad = view.findViewById(R.id.viewLoad);
-        stickerList = new ArrayList<>();
-        stickerDao = new StickerDao();
+        List<Sticker> stickerList = new ArrayList<>();
+        StickerDao stickerDao = new StickerDao();
 
 
         recyclerViewSticker = view.findViewById(R.id.recyclerViewSticker);
@@ -175,7 +173,7 @@ public class HomeFragment extends Fragment {
 
     private void setupRecyclerViews(View view) {
         // Setup cho recyclerview1
-        recyclerView = view.findViewById(R.id.recyclerview1);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerview1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         // Tải dữ liệu vào foodList và cập nhật adapter cho recyclerview1

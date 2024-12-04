@@ -14,9 +14,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -54,26 +53,28 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MonAnActivity extends AppCompatActivity {
 
     private String UID;
-    private String TAG = "FixLoi1";
     private ThucDonDAO thucDonDAO;
     private ThucDon thucDon1;
     private TextView ten, gia, mota, sao, sl;
-    private ImageView img, btnremove, btnadd;
+    private ImageView img;
     private IntToVND vnd;
     private int soLuong;
     private List<ThucDon> listCart;
     private Gson gson;
-    private LinearLayout linearLayout;
     private ImageView[] sao1 = new ImageView[5];
 
 
-    private ImageView saorate1, saorate2, saorate3, saorate4, saorate5, imgProfileComment, imgadd, imgdelete, imgBack;
-    private ImageButton btnImgAdd, btnSendComment;
+    private ImageView saorate1;
+    private ImageView saorate2;
+    private ImageView saorate3;
+    private ImageView saorate4;
+    private ImageView saorate5;
+    private ImageView imgProfileComment;
+    private ImageView imgadd;
     private EditText editTextComment;
     private int rateStar;
     private String comment;
@@ -84,7 +85,6 @@ public class MonAnActivity extends AppCompatActivity {
     private NguoiDungDAO nguoiDungDAO;
     private NguoiDung nguoiDung1;
     private RecyclerView recyclerView;
-    private List<BinhLuan> binhLuanList;
     private BinhLuanAdapter adapter;
     private TextView txvSoBinhLuan;
     private ImageView imgUnLoveDish;
@@ -125,7 +125,6 @@ public class MonAnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mon_an);
 
-
         loveAni = findViewById(R.id.loveAni);
 
 
@@ -155,10 +154,10 @@ public class MonAnActivity extends AppCompatActivity {
         sao1[2] = findViewById(R.id.imgStar3);
         sao1[3] = findViewById(R.id.imgStar4);
         sao1[4] = findViewById(R.id.imgStar5);
-        btnremove = findViewById(R.id.btnDeleChiTiet);
-        btnadd = findViewById(R.id.btnAddChiTiet);
+        ImageView btnremove = findViewById(R.id.btnDeleChiTiet);
+        ImageView btnadd = findViewById(R.id.btnAddChiTiet);
         sl = findViewById(R.id.txvSoLuongChiTiet);
-        linearLayout = findViewById(R.id.linerAddToCart);
+        LinearLayout linearLayout = findViewById(R.id.linerAddToCart);
         txvSoBinhLuan = findViewById(R.id.txvSoBinhLuan);
 
 
@@ -168,12 +167,12 @@ public class MonAnActivity extends AppCompatActivity {
         saorate4 = findViewById(R.id.saorate4);
         saorate5 = findViewById(R.id.saorate5);
         imgProfileComment = findViewById(R.id.imgProfileComment);
-        btnImgAdd = findViewById(R.id.btnImgAdd);
-        btnSendComment = findViewById(R.id.btnSendComment);
+        ImageButton btnImgAdd = findViewById(R.id.btnImgAdd);
+        ImageButton btnSendComment = findViewById(R.id.btnSendComment);
         editTextComment = findViewById(R.id.edtComment);
         imgadd = findViewById(R.id.imgAddHienThi);
-        imgBack = findViewById(R.id.imgBack);
-        imgdelete = findViewById(R.id.imgXoa);
+        ImageView imgBack = findViewById(R.id.imgBack);
+        ImageView imgdelete = findViewById(R.id.imgXoa);
         linearLayout1 = findViewById(R.id.layoutAnh);
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseRef = FirebaseDatabase.getInstance().getReference("NhaHang/FavouriteDish");
@@ -303,7 +302,7 @@ public class MonAnActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        binhLuanList = new ArrayList<>();
+        List<BinhLuan> binhLuanList = new ArrayList<>();
 
 
         // Lấy dữ liệu từ Firebase và cập nhật UI
@@ -341,7 +340,7 @@ public class MonAnActivity extends AppCompatActivity {
                     public void onCallback(ArrayList<BinhLuan> binhLuanList) {
                         adapter = new BinhLuanAdapter(MonAnActivity.this, binhLuanList);
                         recyclerView.setAdapter(adapter);
-                        loaded();
+
                     }
                 });
 
@@ -352,7 +351,9 @@ public class MonAnActivity extends AppCompatActivity {
                         if (!isFinishing()){
                             if (nguoiDung.getHoTen()!=null){
                                 imgUnLoveDish.setColorFilter(Color.parseColor("#FF4055")); // Món ăn đã yêu thích
+
                             }
+                            loaded();
                         }
 
                     }
@@ -607,6 +608,7 @@ public class MonAnActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        String TAG = "FixLoi1";
         Log.d(TAG, "MonAnActivity onDestroy ");
     }
 
@@ -624,8 +626,10 @@ public class MonAnActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         imgUnLoveDish.setColorFilter(Color.parseColor("#FF4055")); // Món ăn đã yêu thích
+                        loaded();
                     } else {
                         imgUnLoveDish.setColorFilter(Color.parseColor("#FFFFFF")); // Món ăn chưa yêu thích
+                        loaded();
                     }
                 }
 

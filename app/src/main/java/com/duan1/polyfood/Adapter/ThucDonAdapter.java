@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Models.ThucDon;
 import com.duan1.polyfood.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ThucDonAdapter extends RecyclerView.Adapter<ThucDonAdapter.ThucDonViewHolder>{

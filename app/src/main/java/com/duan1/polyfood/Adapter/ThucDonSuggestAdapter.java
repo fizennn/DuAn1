@@ -1,25 +1,18 @@
 package com.duan1.polyfood.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.ThucDon;
-import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.Other.IntToVND;
 import com.duan1.polyfood.R;
 
@@ -29,12 +22,10 @@ public class ThucDonSuggestAdapter extends RecyclerView.Adapter<ThucDonSuggestAd
 
     private List<ThucDon> danhSachThucDon;
     private IntToVND vnd;
-    private Context context;
     private ThucDonDAO thucDonDAO;
 
     public ThucDonSuggestAdapter(List<ThucDon> danhSachThucDon,Context context) {
         this.danhSachThucDon = danhSachThucDon;
-        this.context = context;
         vnd = new IntToVND();
         thucDonDAO = new ThucDonDAO();
     }

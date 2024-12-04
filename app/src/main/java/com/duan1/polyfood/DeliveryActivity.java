@@ -26,10 +26,10 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+/** @noinspection ALL*/
 public class DeliveryActivity extends AppCompatActivity {
 
 
-    private TabLayout tabLayout;
     private ViewPager viewPager;
 
 
@@ -65,7 +65,7 @@ public class DeliveryActivity extends AppCompatActivity {
 //        adapter.addFragment(fragment2, "Thông tin");
 
         viewPager.setAdapter(adapter);
-        tabLayout = findViewById(R.id.tabLayout);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -99,9 +99,11 @@ public class DeliveryActivity extends AppCompatActivity {
         }
     }
 
+    /** @noinspection deprecation*/
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            //noinspection deprecation
             onBackPressed();
             return true;
         }

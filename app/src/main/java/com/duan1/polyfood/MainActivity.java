@@ -28,50 +28,76 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
+import com.duan1.polyfood.Database.FirebaseAuth;
+import com.duan1.polyfood.Database.FirebaseNotification;
 import com.duan1.polyfood.Database.MyFirebaseMessagingService;
 import com.duan1.polyfood.Database.NguoiDungDAO;
+import com.duan1.polyfood.Database.NotificationSender;
 import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.Fragment.BillFragment;
 import com.duan1.polyfood.Fragment.FavoriteFragment;
 import com.duan1.polyfood.Fragment.HomeFragment;
 import com.duan1.polyfood.Fragment.ProfileFragment;
 import com.duan1.polyfood.Fragment.ProfileUserFragment;
+import com.duan1.polyfood.Models.NguoiDung;
 import com.duan1.polyfood.Models.ThongBao;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-
-    private String TAG = "FixLoi1";
     public ActivityResultLauncher<Intent> launcherTool;
     public NavigationView navigationView;
     public AuthenticationFireBaseHelper authHelper;
-    private MyFirebaseMessagingService myFirebaseMessagingService;
     private DrawerLayout drawer;
     private NguoiDungDAO nguoiDungDAO = new NguoiDungDAO();
 
 
-    private ImageButton imageButton;
     private ImageView ivNoti;
     private TextView tvNotiCount;
-
-    private ThongBaoDao thongBaoDao;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        
 
         super.onCreate(savedInstanceState);
 
 
+        String TAG = "FixLoi1";
+        Log.d(TAG, "MainActivity OnCreate");
 
-        myFirebaseMessagingService = new MyFirebaseMessagingService();
+        authHelper = new AuthenticationFireBaseHelper();
+
+        nguoiDungDAO.getAllNguoiDung(new NguoiDungDAO.FirebaseCallback() {
+            @Override
+            public void onCallback(NguoiDung nguoiDung) {
+                if (nguoiDung.getimgUrl()==null){
+                    nguoiDungDAO.setImg();
+                }
+            }
+        });
+
+
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic(authHelper.getUID())
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("FCM", "Subscribed to topic: "+authHelper.getUID());
+                    }
+                });
+
+
+        MyFirebaseMessagingService myFirebaseMessagingService = new MyFirebaseMessagingService();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -80,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        thongBaoDao = new ThongBaoDao();
+        ThongBaoDao thongBaoDao = new ThongBaoDao();
 
 
 
@@ -89,9 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Khai Bao
 
-        Log.d(TAG, "MainActivity OnCreate");
 
-        authHelper = new AuthenticationFireBaseHelper();
 
         //Hien Thi Thong Tin Nav
 
@@ -116,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        imageButton = toolbar.findViewById(R.id.toolbar_right_button);
+        ImageButton imageButton = toolbar.findViewById(R.id.toolbar_right_button);
         ivNoti = toolbar.findViewById(R.id.ivNoti);
         tvNotiCount = toolbar.findViewById(R.id.tvNotiCount);
 
@@ -167,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        //noinspection deprecation
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         // Set the home fragment as the default
@@ -176,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /** @noinspection deprecation, deprecation */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -253,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /** @noinspection deprecation, deprecation */
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {

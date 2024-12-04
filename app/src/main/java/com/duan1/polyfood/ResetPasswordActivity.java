@@ -14,17 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ResetPasswordActivity extends AppCompatActivity {
-    private TextView txtRegisNowReset;
     private EditText edtEmailReset;
-    private Button btnSendEmailReset;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_trungnt_reset_password);
-        txtRegisNowReset = findViewById(R.id.txtRegisNowReset);
+        TextView txtRegisNowReset = findViewById(R.id.txtRegisNowReset);
         edtEmailReset = findViewById(R.id.edtEmailReset);
-        btnSendEmailReset = findViewById(R.id.btnSendEmailReset);
+        Button btnSendEmailReset = findViewById(R.id.btnSendEmailReset);
         txtRegisNowReset.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);

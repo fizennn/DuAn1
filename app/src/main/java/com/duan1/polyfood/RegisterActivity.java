@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,10 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextView txtLoginNow;
     private boolean isPasswordVisible = false;
     private EditText edtUserNameRegis, edtEmailRegis, edtPasswordRegis, edtConfirmRegis;
-    private Button btnRegister;
     private FirebaseAuth auth;
     private LottieAnimationView loading;
     private View viewLoad;
@@ -48,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
 
         setContentView(R.layout.activity_register);
         loading = findViewById(R.id.lottieLoading);
@@ -57,8 +57,8 @@ public class RegisterActivity extends AppCompatActivity {
         edtEmailRegis = findViewById(R.id.edtEmailRegis);
         edtPasswordRegis = findViewById(R.id.edtPasswordRegis);
         edtConfirmRegis = findViewById(R.id.edtConfirmRegis);
-        txtLoginNow = findViewById(R.id.txtLoginNow);
-        btnRegister = findViewById(R.id.btnRegister);
+        TextView txtLoginNow = findViewById(R.id.txtLoginNow);
+        Button btnRegister = findViewById(R.id.btnRegister);
         txtLoginNow.setOnClickListener(view -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);

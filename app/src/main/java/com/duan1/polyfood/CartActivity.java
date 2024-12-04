@@ -4,12 +4,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.duan1.polyfood.Adapter.CartIteamAdapter;
-import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Models.ThucDon;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,9 +20,7 @@ import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private List<ThucDon> listCart = new ArrayList<>();
-    private CartIteamAdapter thucDonNgangAdapter;
     private SharedPreferences sharedPreferences;
     private Gson gson = new Gson();
     private static final String TAG = "CartActivity";
@@ -30,14 +28,15 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cart);
 
         sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
         getCart();
 
-        recyclerView = findViewById(R.id.rcyCartItem);
+        RecyclerView recyclerView = findViewById(R.id.rcyCartItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        thucDonNgangAdapter = new CartIteamAdapter(listCart, this);
+        CartIteamAdapter thucDonNgangAdapter = new CartIteamAdapter(listCart, this);
         recyclerView.setAdapter(thucDonNgangAdapter);
     }
 

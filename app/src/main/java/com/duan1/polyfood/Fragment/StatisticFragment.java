@@ -31,9 +31,7 @@ import java.util.Locale;
 public class StatisticFragment extends Fragment {
 
     private TextView tvDoanhThu, tvStartDate, tvEndDate;
-    private Button btnCalculate;
     private String startDate, endDate;
-    private RecyclerView recyclerViewTopDishes;
     private Top3Adapter top3Adapter;
     private ArrayList<ThucDon> top3DishesList;
 
@@ -63,14 +61,14 @@ public class StatisticFragment extends Fragment {
         tvDoanhThu = view.findViewById(R.id.tvDoanhThu);
         tvStartDate = view.findViewById(R.id.tvStartDate);
         tvEndDate = view.findViewById(R.id.tvEndDate);
-        btnCalculate = view.findViewById(R.id.btnCalculate);
+        Button btnCalculate = view.findViewById(R.id.btnCalculate);
 
         loading = view.findViewById(R.id.lottieLoading);
         viewLoad = view.findViewById(R.id.viewLoad);
 
         loading();
 
-        recyclerViewTopDishes = view.findViewById(R.id.recyclerViewTopDishes);
+        RecyclerView recyclerViewTopDishes = view.findViewById(R.id.recyclerViewTopDishes);
         recyclerViewTopDishes.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         // Khởi tạo danh sách món ăn top 3

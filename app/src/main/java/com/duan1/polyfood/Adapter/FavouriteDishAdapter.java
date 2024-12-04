@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,12 +30,11 @@ public class FavouriteDishAdapter extends RecyclerView.Adapter<FavouriteDishAdap
     private IntToVND vnd;
     private Context context;
     private String TAG = "zzzzzzzzzzzzzz";
-    private ThucDonDAO thucDonDAO;
 
     public FavouriteDishAdapter(List<ThucDon> danhSachThucDon, Context context) {
         this.danhSachThucDon = danhSachThucDon;
         this.context = context;
-        this.thucDonDAO = new ThucDonDAO();
+        ThucDonDAO thucDonDAO = new ThucDonDAO();
         vnd = new IntToVND();
     }
 

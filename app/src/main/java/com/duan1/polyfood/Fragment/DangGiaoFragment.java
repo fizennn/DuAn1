@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class DangGiaoFragment extends Fragment {
     private RecyclerView recyclerView;
     private HoaDonAdapter hoaDonAdapter;
-    private HoaDonDAO hoaDonDAO;
     private ArrayList<HoaDon> listHoaDon;
     private AuthenticationFireBaseHelper baseHelper;
     private LottieAnimationView loading;
@@ -40,7 +39,7 @@ public class DangGiaoFragment extends Fragment {
         viewLoad = view.findViewById(R.id.viewLoad);
         empty = view.findViewById(R.id.empty);
 
-        hoaDonDAO = new HoaDonDAO();
+        HoaDonDAO hoaDonDAO = new HoaDonDAO();
 
         baseHelper=new AuthenticationFireBaseHelper();
 

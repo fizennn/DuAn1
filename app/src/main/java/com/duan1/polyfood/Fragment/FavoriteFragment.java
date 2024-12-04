@@ -28,11 +28,8 @@ import java.util.List;
 
 
 public class FavoriteFragment extends Fragment {
-    private RecyclerView recyclerView;
     private FavouriteDishAdapter adapter;
     private List<ThucDon> favouriteDishList;
-    private DatabaseReference databaseReference;
-    private String userId;
     private LottieAnimationView loading;
     private View viewLoad,empty;
 
@@ -49,7 +46,7 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         loading = view.findViewById(R.id.lottieLoading);
         viewLoad = view.findViewById(R.id.viewLoad);
@@ -60,7 +57,7 @@ public class FavoriteFragment extends Fragment {
 
 
         // Initialize RecyclerView
-        recyclerView = view.findViewById(R.id.rycFavouriteDish);
+        RecyclerView recyclerView = view.findViewById(R.id.rycFavouriteDish);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Initialize the list
@@ -71,7 +68,7 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         // Set up Firebase Database reference
-        databaseReference = FirebaseDatabase.getInstance().getReference("NhaHang").child("FavouriteDish").child(userId);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("NhaHang").child("FavouriteDish").child(userId);
 
 
         loading();

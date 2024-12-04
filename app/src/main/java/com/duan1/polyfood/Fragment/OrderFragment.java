@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.duan1.polyfood.Adapter.HoaDonAdapter;
 import com.duan1.polyfood.Adapter.NhaHangHDAdapter;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Models.HoaDon;
@@ -24,7 +23,6 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private NhaHangHDAdapter nhaHangHDAdapter;
     private ArrayList<HoaDon> listHoaDon;
-    private HoaDonDAO hoaDonDAO;
 
 
     @Override
@@ -32,7 +30,7 @@ public class OrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order, container, false);
-        hoaDonDAO = new HoaDonDAO();
+        HoaDonDAO hoaDonDAO = new HoaDonDAO();
 
         recyclerView = view.findViewById(R.id.recyclerViewHoaDon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

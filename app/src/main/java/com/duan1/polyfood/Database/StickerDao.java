@@ -66,17 +66,7 @@ public class StickerDao {
     public void updateSticker(Sticker sticker,Uri img) {
         String stickerId = String.valueOf(sticker.getId());
         // Cập nhật sticker với ID tương ứng
-//        mDatabase.child(stickerId).setValue(sticker)
-//                .addOnSuccessListener(aVoid -> {
-//                    // Xử lý nếu cập nhật thành công
-//                    Log.d("StickerDao", "Sticker updated successfully");
-//                })
-//                .addOnFailureListener(e -> {
-//                    // Xử lý nếu thất bại
-//                    Log.e("StickerDao", "Error updating sticker: " + e.getMessage());
 
-
-//                });
 
         if (img == null){
             Log.d("zzzzzzzzzz", "updateSticker: "+stickerId);

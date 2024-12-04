@@ -132,7 +132,8 @@ public class ProfileUserFragment extends Fragment {
                     tvName.setText(nguoiDung.getHoTen());
                     tvSDT.setText("+"+nguoiDung.getSdt());
 
-                    if (context != null) {
+
+
                         Glide.with(context)
                                 .load(nguoiDung.getimgUrl())
                                 .placeholder(R.drawable.load)
@@ -155,7 +156,7 @@ public class ProfileUserFragment extends Fragment {
 
 
                 }
-            }
+
         });
     }
 

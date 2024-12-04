@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class ChoXuLyFragment extends Fragment {
     private RecyclerView recyclerView;
     private HoaDonAdapter hoaDonAdapter;
-    private HoaDonDAO hoaDonDAO;
     private ArrayList<HoaDon> listHoaDon;
     private AuthenticationFireBaseHelper baseHelper;
     private LottieAnimationView loading;
@@ -37,7 +36,7 @@ public class ChoXuLyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cho_xu_li, container, false);
 
-        hoaDonDAO = new HoaDonDAO();
+        HoaDonDAO hoaDonDAO = new HoaDonDAO();
 
         loading = view.findViewById(R.id.lottieLoading);
         viewLoad = view.findViewById(R.id.viewLoad);

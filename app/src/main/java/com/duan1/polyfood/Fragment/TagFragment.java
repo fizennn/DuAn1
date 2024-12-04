@@ -3,7 +3,6 @@ package com.duan1.polyfood.Fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +26,6 @@ import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TagFragment extends Fragment {
@@ -39,7 +35,6 @@ public class TagFragment extends Fragment {
     private StickerAdapter adapter;
     private List<Sticker> stickerList;
 
-    private Button btnAdd;
     private Sticker editingSticker;
     private ImageView[] mau = new ImageView[6];
     private String[] mauString = {"#FFC0CB","#ADD8E6","#98FB98","#FFFF0A","#FD9A42","#673AB7"};
@@ -123,7 +118,7 @@ public class TagFragment extends Fragment {
             }
         });
 
-        btnAdd = view.findViewById(R.id.btnAdd);
+        Button btnAdd = view.findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(v -> showStickerDialog(null));
 
     return view;

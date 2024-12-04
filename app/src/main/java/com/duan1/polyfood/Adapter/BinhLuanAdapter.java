@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,8 +17,6 @@ import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Models.BinhLuan;
 import com.duan1.polyfood.Models.NguoiDung;
 import com.duan1.polyfood.R;
-
-import org.w3c.dom.Comment;
 
 import java.util.Collections;
 import java.util.Comparator;

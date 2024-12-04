@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +43,10 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull NhaHangHDAdapter.ViewHolder holder, int position) {
+
+        holder.cv1.setVisibility(View.GONE);
+        holder.cv2.setVisibility(View.VISIBLE);
+
         HoaDon hoaDon = hoaDonList.get(position);
         holder.txtTenMonAn.setText(hoaDon.getTenMonAn());
         holder.txtGia.setText("Giá: " +formatToVND(hoaDon.getGia()));
@@ -59,6 +64,7 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
         holder.txtGia.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
         holder.txtSoLuong.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
         holder.txtPhuongThucThanhToan.setVisibility(View.VISIBLE);  // Đảm bảo không bị ẩn
+        holder.imgMonAn.setVisibility(View.GONE);
 
 
 
@@ -81,7 +87,7 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
                 thongBao.setRole("Nhà Hàng");
                 thongBao.setTrangThai(hoaDon.getTrangThai());
 
-                thongBaoDao.guiThongBao(thongBao);
+                thongBaoDao.guiThongBao(thongBao,context);
             });
         } else {
             holder.btnXacNhanXuLy.setVisibility(View.GONE);
@@ -102,6 +108,7 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
         TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai;
         ImageView imgMonAn;
         Button btnDaNhanHang, btnXacNhanXuLy;
+        CardView cv1,cv2;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -114,6 +121,8 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
             txtTrangThai = itemView.findViewById(R.id.txtTrangThai);
             btnDaNhanHang = itemView.findViewById(R.id.btnDaNhanHang);
             btnXacNhanXuLy = itemView.findViewById(R.id.btnXacNhanXuLy);
+            cv2 = itemView.findViewById(R.id.cv2);
+            cv1 = itemView.findViewById(R.id.cv1);
         }
     }
 }

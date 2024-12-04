@@ -44,16 +44,12 @@ import java.util.List;
 
 public class PayActivity extends AppCompatActivity {
 
-    private String UID;
     private int soLuong;
     private TextView txtTenMonAn, txtGia, txtSoluong, txtTongTien;
     private Spinner spinnerPaymentMethod;
     private EditText txtSDT, txtDiaChi;
-    private Button btnPay;
-    private ThucDonDAO thucDonDAO;
     private ThucDon thucDon1;
     private ImageView img;
-    private DatabaseReference database;
     private HoaDonDAO hoaDonDAO;
     private SharedPreferences sharedPreferences;
 
@@ -62,29 +58,31 @@ public class PayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
 
+
+
         // Khởi tạo các view
         txtTenMonAn = findViewById(R.id.txtTenMonAn);
         txtGia = findViewById(R.id.txtGia);
         txtSoluong = findViewById(R.id.txtSoluong);
         txtTongTien = findViewById(R.id.txtTongTien);
-        btnPay = findViewById(R.id.btnPay);
+        Button btnPay = findViewById(R.id.btnPay);
         img = findViewById(R.id.img);
         spinnerPaymentMethod = findViewById(R.id.spinnerPaymentMethod);
         txtSDT = findViewById(R.id.txtSDT);
         txtDiaChi = findViewById(R.id.txtDiaChi);
 
         // Khởi tạo đối tượng DAO và ThucDon
-        thucDonDAO = new ThucDonDAO();
+        ThucDonDAO thucDonDAO = new ThucDonDAO();
         thucDon1 = new ThucDon();
         hoaDonDAO = new HoaDonDAO();
 
         // Khởi tạo đối tượng DatabaseReference
-        database = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
         // Lấy dữ liệu từ Intent
         Intent intent = getIntent();
         soLuong = intent.getIntExtra("SO_LUONG", 0);
-        UID = getIntent().getStringExtra("UID");
+        String UID = getIntent().getStringExtra("UID");
 
         sharedPreferences = getSharedPreferences("cart", MODE_PRIVATE);
 
@@ -162,7 +160,7 @@ public class PayActivity extends AppCompatActivity {
             hoaDon.setTrangThai("Chờ xử lý");
 
             // Thiết lập ngày đặt hàng (ngày hiện tại)
-            String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+            String currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
             hoaDon.setNgayDatHang(currentDate);
 
             // Gọi phương thức addDonHang để thêm đơn hàng vào Firebase
@@ -179,7 +177,7 @@ public class PayActivity extends AppCompatActivity {
             thongBao.setTrangThai(hoaDon.getTrangThai());
 
 
-            thongBaoDao.guiThongBao(thongBao);
+            thongBaoDao.guiThongBao(thongBao,PayActivity.this);
 
             // Xóa món ăn khỏi giỏ hàng (SharedPreferences)
             removeFromCart();

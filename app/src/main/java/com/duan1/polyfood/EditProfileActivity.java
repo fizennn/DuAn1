@@ -36,18 +36,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private EditText name, address, gender, age, email, phone;
     private NguoiDungDAO nguoiDungDAO;
-    private ImageView imageViewProfile,imgBack;
+    private ImageView imageViewProfile;
     private Uri imageUri;
-    private StorageReference storageReference;
     private NguoiDung nguoiDungGet;
-    private AuthenticationFireBaseHelper auth;
-    private Button btnOut,btnUpdate;
+    private Button btnOut;
 
     private LottieAnimationView loading;
     private View viewLoad;
 
-
-    private ImageButton button;
 
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -62,15 +58,16 @@ public class EditProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_edit_profile);
 
         //loading
         loading = findViewById(R.id.lottieLoading);
         viewLoad = findViewById(R.id.viewLoad);
 
-        button = findViewById(R.id.imgBack);
+        ImageButton button1 = findViewById(R.id.imgBack);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -80,7 +77,7 @@ public class EditProfileActivity extends AppCompatActivity {
         loading();
 
 
-        auth = new AuthenticationFireBaseHelper();
+        AuthenticationFireBaseHelper auth = new AuthenticationFireBaseHelper();
 
         name = findViewById(R.id.textViewFullName);
         address = findViewById(R.id.textViewAddress);
@@ -89,12 +86,12 @@ public class EditProfileActivity extends AppCompatActivity {
         email = findViewById(R.id.textViewEmail);
         phone = findViewById(R.id.textViewPhoneNumber);
         imageViewProfile = findViewById(R.id.imageViewProfile);
-        imgBack = findViewById(R.id.imgBack);
+        ImageView imgBack = findViewById(R.id.imgBack);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         nguoiDungDAO = new NguoiDungDAO();
 
-        btnUpdate = findViewById(R.id.btnUpdate);
+        Button btnUpdate = findViewById(R.id.btnUpdate);
 
 
         loadProfileImage();

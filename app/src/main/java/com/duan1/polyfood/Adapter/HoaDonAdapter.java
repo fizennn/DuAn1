@@ -12,20 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.ChiTietHoaDonActivity;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Database.ThongBaoDao;
-import com.duan1.polyfood.Fragment.ChoGiaoFragment;
-import com.duan1.polyfood.Fragment.ChoXuLyFragment;
-import com.duan1.polyfood.Fragment.DangGiaoFragment;
-import com.duan1.polyfood.Fragment.HoanThanhFragment;
 import com.duan1.polyfood.Models.HoaDon;
 import com.duan1.polyfood.Models.ThongBao;
 import com.duan1.polyfood.R;
@@ -61,6 +53,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
         holder.txtPhuongThucThanhToan.setText("Phương thức thanh toán: " + hoaDon.getPhuongThucThanhToan());
         holder.txtTrangThai.setText("Trạng thái: " + hoaDon.getTrangThai());
 
+
         Glide.with(context)
                 .load(hoaDon.getHinhAnh())
                 .placeholder(R.drawable.load)
@@ -69,6 +62,8 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
 
         // Thiết lập hiển thị theo trạng thái
         if ("Đang giao".equals(hoaDon.getTrangThai())) {
+
+
             holder.btnDaNhanHang.setVisibility(View.VISIBLE); // Hiện nút "Đã nhận được hàng"
             holder.btnDaNhanHang.setOnClickListener(v -> {
                 // Cập nhật trạng thái đơn hàng thành "Hoàn thành"
@@ -89,7 +84,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
                 thongBao.setRole("Tài Xế");
                 thongBao.setTrangThai(hoaDon.getTrangThai());
 
-                thongBaoDao.guiThongBao(thongBao);
+                thongBaoDao.guiThongBao(thongBao,context);
 
                 notifyDataSetChanged();
 
@@ -123,6 +118,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
         ImageView imgMonAn;
         Button btnDaNhanHang, btnXacNhanXuLy;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             txtTenMonAn = itemView.findViewById(R.id.txtTenMonAn);
@@ -132,8 +128,10 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
             imgMonAn = itemView.findViewById(R.id.imgMonAn);
             txtPhuongThucThanhToan = itemView.findViewById(R.id.txtPhuongThucThanhToan);
             txtTrangThai = itemView.findViewById(R.id.txtTrangThai);
-            btnDaNhanHang = itemView.findViewById(R.id.btnDaNhanHang);
+            btnDaNhanHang = itemView.findViewById(R.id.btnDaNhanDcHang);
             btnXacNhanXuLy = itemView.findViewById(R.id.btnXacNhanXuLy);
+
+
         }
     }
 

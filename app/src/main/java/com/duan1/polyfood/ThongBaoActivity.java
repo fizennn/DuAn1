@@ -1,24 +1,20 @@
 package com.duan1.polyfood;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.duan1.polyfood.Adapter.ThongBaoAdapter;
 import com.duan1.polyfood.Database.ThongBaoDao;
 import com.duan1.polyfood.Models.ThongBao;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class ThongBaoActivity extends AppCompatActivity {
 
@@ -29,13 +25,23 @@ public class ThongBaoActivity extends AppCompatActivity {
 
     private ImageButton imageButton;
 
+    private LottieAnimationView loading;
+    private View viewLoad;
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_thong_bao);
 
         init();
+
+        loading();
 
         loadThongBao();
 
@@ -50,8 +56,11 @@ public class ThongBaoActivity extends AppCompatActivity {
     public void init(){
         rcvThongBao = findViewById(R.id.rcvThongBao);
         imageButton = findViewById(R.id.imgBack);
+        loading = findViewById(R.id.lottieLoading);
+        viewLoad = findViewById(R.id.viewLoad);
 
         thongBaoDao = new ThongBaoDao();
+
 
 
     }
@@ -60,18 +69,24 @@ public class ThongBaoActivity extends AppCompatActivity {
         thongBaoDao.getAllThongBao(new ThongBaoDao.FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<ThongBao> thongBaoList) {
-                Collections.sort(thongBaoList, new Comparator<ThongBao>() {
+                thongBaoAdapter = new ThongBaoAdapter(thongBaoList, ThongBaoActivity.this, new ThongBaoAdapter.onLoad() {
                     @Override
-                    public int compare(ThongBao p1, ThongBao p2) {
-                        return p2.getNgayThang().compareTo(p1.getNgayThang());
+                    public void onLoad(int i) {
+                        loaded();
                     }
                 });
-
-
-                thongBaoAdapter = new ThongBaoAdapter(thongBaoList,ThongBaoActivity.this);
-                rcvThongBao.setLayoutManager(new LinearLayoutManager(ThongBaoActivity.this));
+                rcvThongBao.setLayoutManager(new LinearLayoutManager(ThongBaoActivity.this, LinearLayoutManager.VERTICAL, false));
                 rcvThongBao.setAdapter(thongBaoAdapter);
             }
         });
+    }
+    public void loading(){
+        loading.setVisibility(View.VISIBLE);
+        viewLoad.setVisibility(View.VISIBLE);
+    }
+
+    public void loaded(){
+        loading.setVisibility(View.GONE);
+        viewLoad.setVisibility(View.GONE);
     }
 }

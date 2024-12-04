@@ -30,6 +30,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    packagingOptions.resources.excludes.add("META-INF/io.netty.versions.properties")
+    packagingOptions.resources.excludes.add("META-INF/INDEX.LIST")
+    packagingOptions.resources.excludes.add("mozilla/public-suffix-list.txt")
+    packagingOptions.resources.excludes.add("META-INF/DEPENDENCIES")
+
+
 }
 
 dependencies {
@@ -43,23 +50,29 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Firebase BOM và các thư viện Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-storage")
+    implementation(libs.firebase.bom)
+    implementation(libs.google.firebase.database)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.storage)
 
     // Thư viện Google Sign-In
-    implementation("com.google.android.gms:play-services-auth:20.5.0")
+    implementation(libs.play.services.auth)
 
     // Gson dùng để xử lý JSON
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation(libs.gson)
 
     // Glide dùng để tải hình ảnh
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 
 
-    implementation ("com.airbnb.android:lottie:6.0.0")
+    // https://mvnrepository.com/artifact/com.google.firebase/firebase-messaging
+    implementation(libs.firebase.messaging)
 
-    implementation ("com.google.firebase:firebase-messaging")
+    implementation (libs.lottie)
+
+    implementation ("com.google.auth:google-auth-library-oauth2-http:1.20.0")
+    implementation(kotlin("script-runtime"))
+
+
 }
