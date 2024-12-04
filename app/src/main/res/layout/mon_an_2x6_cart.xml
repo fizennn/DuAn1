@@ -19,12 +19,13 @@
     <ImageView
         android:src="@drawable/nemran"
         android:id="@+id/imgFood"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
 
         android:scaleType="centerCrop" />
 
     <LinearLayout
+        android:gravity="center|right"
         android:layout_marginLeft="3dp"
         android:paddingHorizontal="10dp"
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginTop="8dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -48,14 +49,14 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 android:maxLines="1"
                 android:textStyle="bold"
                 android:ellipsize="end"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="6dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -71,12 +72,12 @@
                 android:text="10 Suất"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="6dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -92,27 +93,17 @@
                 android:text="10.000VND"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="17sp"
+                android:textSize="14sp"
               />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/red"
-            android:text="Xóa"
-            android:textColor="@android:color/white"
-            android:visibility="gone"/> <!-- Ẩn khi không vuốt -->
-
-
-
-
-
-
-
-
     </LinearLayout>
+        <CheckBox
+            android:visibility="gone"
+            android:id="@+id/cbSelect"
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
     </LinearLayout>
     </androidx.cardview.widget.CardView>
 

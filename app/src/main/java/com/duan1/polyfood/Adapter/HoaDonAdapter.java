@@ -47,11 +47,16 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         HoaDon hoaDon = hoaDonList.get(position);
         holder.txtTenMonAn.setText(hoaDon.getTenMonAn());
+
         holder.txtGia.setText("Giá: " +formatToVND(hoaDon.getGia()));
         holder.txtSoLuong.setText("Số lương: x" + hoaDon.getSoLuong());
         holder.txtTongTien.setText("Tổng tiền: " + formatToVND(hoaDon.getTongTien()));
+
         holder.txtPhuongThucThanhToan.setText("Phương thức thanh toán: " + hoaDon.getPhuongThucThanhToan());
         holder.txtTrangThai.setText("Trạng thái: " + hoaDon.getTrangThai());
+        holder.txtTrangThai1.setText("Trạng thái: " + hoaDon.getTrangThai());
+        holder.txtTenMonAn1.setText(hoaDon.getTenMonAn());
+        holder.txtTongTien1.setText("Tổng tiền: " + formatToVND(hoaDon.getTongTien()));
 
 
         Glide.with(context)
@@ -114,7 +119,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai;
+        TextView txtTenMonAn,txtTenMonAn1, txtGia, txtSoLuong, txtTongTien,txtTongTien1, txtPhuongThucThanhToan, txtTrangThai,txtTrangThai1;
         ImageView imgMonAn;
         Button btnDaNhanHang, btnXacNhanXuLy;
 
@@ -131,6 +136,9 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHolder
             btnDaNhanHang = itemView.findViewById(R.id.btnDaNhanDcHang);
             btnXacNhanXuLy = itemView.findViewById(R.id.btnXacNhanXuLy);
 
+            txtTenMonAn1 = itemView.findViewById(R.id.txtTenMonAn1);
+            txtTongTien1 = itemView.findViewById(R.id.txtTongTien1);
+            txtTrangThai1 = itemView.findViewById(R.id.txtTrangThai1);
 
         }
     }

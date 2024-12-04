@@ -12,7 +12,15 @@ public class ThucDon {
     private int soLuong;
     private String sticker1,sticker2,sticker3;
     private String goiY;
+    private String selected;
 
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
 
     public ThucDon() {}
 

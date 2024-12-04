@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -54,6 +55,9 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
         holder.txtTongTien.setText("Tổng tiền: " + formatToVND(hoaDon.getTongTien()));
         holder.txtPhuongThucThanhToan.setText("Phương thức thanh toán: " + hoaDon.getPhuongThucThanhToan());
         holder.txtTrangThai.setText("Trạng thái: " + hoaDon.getTrangThai());
+        holder.txtTrangThai1.setText("Trạng thái: " + hoaDon.getTrangThai());
+        holder.txtTenMonAn1.setText(hoaDon.getTenMonAn());
+        holder.txtTongTien1.setText("Tổng tiền: " + formatToVND(hoaDon.getTongTien()));
 
         Glide.with(context)
                 .load(hoaDon.getHinhAnh())
@@ -72,29 +76,44 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
         if ("Chờ giao".equals(hoaDon.getTrangThai())) {
             holder.btnXacNhanGiaoHang.setVisibility(View.VISIBLE);
             holder.btnXacNhanGiaoHang.setOnClickListener(v -> {
+                hoaDonDAO.getHoaDonByStatus("Đang giao", new HoaDonDAO.FirebaseCallback() {
+                    @Override
+                    public void onCallback(ArrayList<HoaDon> hoaDonList) {
+                       if (hoaDonList.size()==0){
+                           hoaDon.setTrangThai("Đang giao");
+                           hoaDonDAO.updateHoaDon(hoaDon);
 
-                hoaDon.setTrangThai("Đang giao");
-                hoaDonDAO.updateHoaDon(hoaDon);
+                           // Thông báo cho fragment khác
+                           if (context instanceof DeliveryActivity) {
+                               ((DeliveryActivity) context).updateDonHangDangGiao(hoaDon);
+                           }
 
-                // Thông báo cho fragment khác
-                if (context instanceof DeliveryActivity) {
-                    ((DeliveryActivity) context).updateDonHangDangGiao(hoaDon);
-                }
+                           hoaDonList.remove(position);
+                           notifyItemRemoved(position);
 
-                hoaDonList.remove(position);
-                notifyItemRemoved(position);
+                           ThongBao thongBao = new ThongBao();
 
-                ThongBao thongBao = new ThongBao();
+                           thongBao.setId_hd(hoaDon.getId_hd());
+                           thongBao.setId_nn(hoaDon.getId_nd());
+                           thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được xác nhận giao hàng !");
+                           thongBao.setRole("Tài Xế");
+                           thongBao.setTrangThai(hoaDon.getTrangThai());
 
-                thongBao.setId_hd(hoaDon.getId_hd());
-                thongBao.setId_nn(hoaDon.getId_nd());
-                thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được xác nhận giao hàng !");
-                thongBao.setRole("Tài Xế");
-                thongBao.setTrangThai(hoaDon.getTrangThai());
+                           thongBaoDao.guiThongBao(thongBao,context);
 
-                thongBaoDao.guiThongBao(thongBao,context);
+                           notifyDataSetChanged();
+                       }else {
+                           Toast.makeText(context, "Hãy hoàn thành đơn hàng bạn đã nhận trước!", Toast.LENGTH_SHORT).show();
+                       }
+                    }
 
-                notifyDataSetChanged();
+                    @Override
+                    public void onCallback(HoaDon hoaDon) {
+
+                    }
+                });
+
+                
             });
         } else {
             holder.btnXacNhanGiaoHang.setVisibility(View.GONE);
@@ -120,7 +139,7 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai;
+        TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai,txtTenMonAn1,txtTongTien1,txtTrangThai1;
         ImageView imgMonAn;
         Button btnXacNhanGiaoHang;
         CardView cv1,cv2;
@@ -137,6 +156,10 @@ public class NguoiGiaoAdapter extends RecyclerView.Adapter<NguoiGiaoAdapter.View
             btnXacNhanGiaoHang = itemView.findViewById(R.id.btnXacNhanGiaoHang);
             cv1 = itemView.findViewById(R.id.cv1);
             cv2 = itemView.findViewById(R.id.cv2);
+
+            txtTenMonAn1 = itemView.findViewById(R.id.txtTenMonAn1);
+            txtTongTien1 = itemView.findViewById(R.id.txtTongTien1);
+            txtTrangThai1 = itemView.findViewById(R.id.txtTrangThai1);
 
         }
     }

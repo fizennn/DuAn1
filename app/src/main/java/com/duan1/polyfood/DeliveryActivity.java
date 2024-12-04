@@ -3,7 +3,7 @@ package com.duan1.polyfood;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,13 +12,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.duan1.polyfood.Fragment.DishFragment;
-import com.duan1.polyfood.Fragment.DishSuggestFragment;
+
 import com.duan1.polyfood.Fragment.DonHangDangGiaoFragment;
-import com.duan1.polyfood.Fragment.OrderFragment;
-import com.duan1.polyfood.Fragment.ProfileFragment;
-import com.duan1.polyfood.Fragment.ProfileResFragment;
-import com.duan1.polyfood.Fragment.StatisticFragment;
 import com.duan1.polyfood.Fragment.XacNhanDonHangFragment;
 import com.duan1.polyfood.Models.HoaDon;
 import com.google.android.material.tabs.TabLayout;
@@ -57,7 +52,6 @@ public class DeliveryActivity extends AppCompatActivity {
 
         // Tái sử dụng một instance của HomeFragment cho tất cả các tab, nếu không cần các fragment khác nhau
         XacNhanDonHangFragment fragment1 = new XacNhanDonHangFragment();
-//        ProfileFragment fragment2 = new ProfileFragment();
         DonHangDangGiaoFragment fragment3 = new DonHangDangGiaoFragment();
         adapter.addFragment(fragment1, "Đơn hàng");
         adapter.addFragment(fragment3, "Đơn hàng đang giao");

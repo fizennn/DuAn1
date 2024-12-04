@@ -52,6 +52,7 @@ public class PayActivity extends AppCompatActivity {
     private ImageView img;
     private HoaDonDAO hoaDonDAO;
     private SharedPreferences sharedPreferences;
+    private Button buttonSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class PayActivity extends AppCompatActivity {
         spinnerPaymentMethod = findViewById(R.id.spinnerPaymentMethod);
         txtSDT = findViewById(R.id.txtSDT);
         txtDiaChi = findViewById(R.id.txtDiaChi);
+        buttonSave = findViewById(R.id.btnSave);
 
         // Khởi tạo đối tượng DAO và ThucDon
         ThucDonDAO thucDonDAO = new ThucDonDAO();
@@ -186,6 +188,14 @@ public class PayActivity extends AppCompatActivity {
             Toast.makeText(PayActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
 
             Intent intent1 = new Intent(PayActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent1);
+        });
+
+        buttonSave.setOnClickListener(v -> {
+            Toast.makeText(PayActivity.this, "Lưu đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+            Intent intent1 = new Intent(PayActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent1);
         });
 

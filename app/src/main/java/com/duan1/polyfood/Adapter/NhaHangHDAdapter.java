@@ -49,11 +49,14 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
 
         HoaDon hoaDon = hoaDonList.get(position);
         holder.txtTenMonAn.setText(hoaDon.getTenMonAn());
+        holder.txtTenMonAn1.setText(hoaDon.getTenMonAn());
         holder.txtGia.setText("Giá: " +formatToVND(hoaDon.getGia()));
         holder.txtSoLuong.setText("Số lương: x" + hoaDon.getSoLuong());
         holder.txtTongTien.setText("Tổng tiền: " + formatToVND(hoaDon.getTongTien()));
+        holder.txtTongTien1.setText("Tổng tiền: " + formatToVND(hoaDon.getTongTien()));
         holder.txtPhuongThucThanhToan.setText("Phương thức thanh toán: " + hoaDon.getPhuongThucThanhToan());
         holder.txtTrangThai.setText("Trạng thái: " + hoaDon.getTrangThai());
+        holder.txtTrangThai1.setText("Trạng thái: " + hoaDon.getTrangThai());
 
         Glide.with(context)
                 .load(hoaDon.getHinhAnh())
@@ -105,7 +108,7 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai;
+        TextView txtTenMonAn, txtGia, txtSoLuong, txtTongTien, txtPhuongThucThanhToan, txtTrangThai,txtTenMonAn1,txtTongTien1,txtTrangThai1;
         ImageView imgMonAn;
         Button btnDaNhanHang, btnXacNhanXuLy;
         CardView cv1,cv2;
@@ -123,6 +126,9 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
             btnXacNhanXuLy = itemView.findViewById(R.id.btnXacNhanXuLy);
             cv2 = itemView.findViewById(R.id.cv2);
             cv1 = itemView.findViewById(R.id.cv1);
+            txtTenMonAn1 = itemView.findViewById(R.id.txtTenMonAn1);
+            txtTongTien1 = itemView.findViewById(R.id.txtTongTien1);
+            txtTrangThai1 = itemView.findViewById(R.id.txtTrangThai1);
         }
     }
 }

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,6 +49,32 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
         holder.soSaoTextView.setText(String.valueOf(ThucDon.getSoLuong() + " Suất"));
         holder.txvGia.setText(vnd.convertToVND(ThucDon.getGia() * ThucDon.getSoLuong()));
 
+        holder.cbSelect.setVisibility(View.GONE);
+
+        holder.cbSelect.setChecked(false);
+        if (ThucDon.getSelected()!=null){
+            if (ThucDon.getSelected().equalsIgnoreCase("VISIBLE")){
+                holder.cbSelect.setVisibility(View.VISIBLE);
+
+            }
+        }
+
+        holder.cbSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    ThucDon.setSelected("DELETE");
+                }else {
+                    ThucDon.setSelected("VISIBLE");
+                }
+            }
+        });
+
+
+
+
+
+
         if (context != null) {
             Glide.with(context)
                     .load(ThucDon.getHinhAnh())
@@ -82,6 +110,7 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
         TextView tenTextView, soSaoTextView, txvGia;
         ImageView imageView;
         LinearLayout layout;
+        CheckBox cbSelect;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +119,7 @@ public class CartIteamAdapter extends RecyclerView.Adapter<CartIteamAdapter.View
             txvGia = itemView.findViewById(R.id.txvgia);
             imageView = itemView.findViewById(R.id.imgFood);
             layout = itemView.findViewById(R.id.linearLayoutChitiet);
+            cbSelect = itemView.findViewById(R.id.cbSelect);
         }
     }
 }

@@ -204,6 +204,15 @@
                 android:gravity="bottom"
                 android:orientation="vertical"
                 android:layout_marginTop="20dp">
+                <Button
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lưu Đơn Hàng"
+                    android:background="@drawable/rounded_background"
+                    android:textColor="#9B9B9B"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/btnPay"

@@ -43,6 +43,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
                                         Log.e("FirebaseAuthError", "Gửi email khôi phục thất bại", task.getException());
                                         Toast.makeText(this, "Gửi email khôi phục thất bại", Toast.LENGTH_SHORT).show();
                                     }
+                                    Intent intent = new Intent(ResetPasswordActivity.this, WellcomeActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
                     });
         });
 
