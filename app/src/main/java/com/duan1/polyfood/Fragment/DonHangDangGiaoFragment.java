@@ -66,7 +66,7 @@ public class DonHangDangGiaoFragment extends Fragment{
 
 
 
-        getDirections("Hà Nội","Phú Thọ");
+
 
 
         return view;
