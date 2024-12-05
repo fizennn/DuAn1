@@ -27,8 +27,14 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
     private ArrayList<HoaDon> hoaDonList;
     private HoaDonDAO hoaDonDAO;
     private ThongBaoDao thongBaoDao;
+    private callBack callBack;
 
-    public NhaHangHDAdapter(Context context, ArrayList<HoaDon> hoaDonList) {
+    public interface callBack{
+        void huyHoaDon(int i);
+    }
+
+    public NhaHangHDAdapter(Context context, ArrayList<HoaDon> hoaDonList,callBack callBack) {
+        this.callBack = callBack;
         this.context = context;
         this.hoaDonList = hoaDonList;
         this.hoaDonDAO = new HoaDonDAO();
@@ -95,6 +101,14 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
         } else {
             holder.btnXacNhanXuLy.setVisibility(View.GONE);
         }
+
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hoaDonDAO.addDisable(hoaDon);
+                callBack.huyHoaDon(position);
+            }
+        });
     }
 
 
@@ -112,6 +126,7 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
         ImageView imgMonAn;
         Button btnDaNhanHang, btnXacNhanXuLy;
         CardView cv1,cv2;
+        Button button;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -129,6 +144,7 @@ public class NhaHangHDAdapter extends RecyclerView.Adapter<NhaHangHDAdapter.View
             txtTenMonAn1 = itemView.findViewById(R.id.txtTenMonAn1);
             txtTongTien1 = itemView.findViewById(R.id.txtTongTien1);
             txtTrangThai1 = itemView.findViewById(R.id.txtTrangThai1);
+            button = itemView.findViewById(R.id.btnHuy);
         }
     }
 }

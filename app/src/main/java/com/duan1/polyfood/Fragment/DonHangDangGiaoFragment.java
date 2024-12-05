@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ public class DonHangDangGiaoFragment extends Fragment{
     private String to;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,13 +64,24 @@ public class DonHangDangGiaoFragment extends Fragment{
                     listHoaDon.add(don);
                     break;
                 }
-                if (listHoaDon.size()==0){
-                    button.setVisibility(View.GONE);
-                }else {
-                    button.setVisibility(View.VISIBLE);
-                }
-                nguoiGiaoAdapter = new NguoiGiaoAdapter(getContext(), listHoaDon);
+
+                nguoiGiaoAdapter = new NguoiGiaoAdapter(getContext(), listHoaDon, new NguoiGiaoAdapter.CallBack() {
+                    @Override
+                    public void delete(int i) {
+                        listHoaDon.remove(i);
+                        nguoiGiaoAdapter.notifyItemRemoved(i);
+                        Toast.makeText( getContext(), "Hủy Đơn Hàng Thành Công!", Toast.LENGTH_SHORT).show();
+
+                        nguoiGiaoAdapter.notifyDataSetChanged();
+
+                        button.setVisibility(View.GONE);
+                        
+                       
+
+                    }
+                });
                 recyclerView.setAdapter(nguoiGiaoAdapter);
+
             }
 
             @Override
@@ -132,27 +145,17 @@ public class DonHangDangGiaoFragment extends Fragment{
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
+        
+        
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (listHoaDon.size()==0){
+            button.setVisibility(View.GONE);
+        }else {
+            button.setVisibility(View.VISIBLE);
+        }
+    }
 }

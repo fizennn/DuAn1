@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.duan1.polyfood.Adapter.NhaHangHDAdapter;
 import com.duan1.polyfood.Database.HoaDonDAO;
@@ -45,7 +46,15 @@ public class OrderFragment extends Fragment {
                 for (HoaDon don : hoaDonList) {
                     listHoaDon.add(don);
                 }
-                nhaHangHDAdapter = new NhaHangHDAdapter(getContext(), listHoaDon);
+                nhaHangHDAdapter = new NhaHangHDAdapter(getContext(), listHoaDon, new NhaHangHDAdapter.callBack() {
+                    @Override
+                    public void huyHoaDon(int i) {
+                        listHoaDon.remove(i);
+                        nhaHangHDAdapter.notifyDataSetChanged();
+                        Toast.makeText(getContext(), "Hủy Đơn Hàng Thành Công!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
                 recyclerView.setAdapter(nhaHangHDAdapter);
             }
 

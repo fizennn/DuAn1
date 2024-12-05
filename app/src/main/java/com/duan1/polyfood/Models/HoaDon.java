@@ -17,6 +17,15 @@ public class HoaDon {
     private String ngayDatHang;
     private String id_nd;
     private String chuyenngay;
+    private String disabale;
+
+    public String getDisabale() {
+        return disabale;
+    }
+
+    public void setDisabale(String disabale) {
+        this.disabale = disabale;
+    }
 
     public String getChuyenngay() {
         return chuyenngay;

@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -72,7 +73,14 @@ public class HoaDonDAO {
                             hoaDon.setId_hd(snapshot.getKey());
                             hoaDonList.add(hoaDon);
                         }
-                        callback.onCallback(hoaDonList);
+
+                        ArrayList<HoaDon> list = new ArrayList<>();
+                        for (HoaDon don: hoaDonList){
+                            if (don.getDisabale()==null){
+                                list.add(don);
+                            }
+                        }
+                        callback.onCallback(list);
                     }
 
                     @Override
@@ -280,6 +288,17 @@ public class HoaDonDAO {
 
 
         return resultList;
+    }
+
+    public void addDisable(HoaDon hoaDon) {
+        String key = hoaDon.getId_hd();
+        if (key != null) {
+            database.child("HoaDon").child(key).child("disabale").setValue("TRUE")
+                    .addOnSuccessListener(aVoid -> Log.d("Firebase", "Thêm hóa đơn thành công"))
+                    .addOnFailureListener(e -> Log.e("Firebase", "Thêm hóa đơn thất bại", e));
+        } else {
+            Log.e("Firebase", "Không thể tạo key cho hóa đơn mới");
+        }
     }
 
 
