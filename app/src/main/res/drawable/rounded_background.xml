@@ -1,7 +1,7 @@
 <!-- res/drawable/rounded_background.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#FFFFFF" /> <!-- Màu nền cho ô nhập liệu -->
-    <corners android:radius="10dp" /> <!-- Bo góc cho EditText -->
+    <corners android:radius="8dp" /> <!-- Bo góc cho EditText -->
     <stroke
         android:width="1dp"
         android:color="#D3D3D3" /> <!-- Màu viền xám nhạt -->

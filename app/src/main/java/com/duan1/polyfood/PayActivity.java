@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Database.DonHangDAO;
+import com.duan1.polyfood.Database.GetRole;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Database.ThongBaoDao;
@@ -138,72 +139,85 @@ public class PayActivity extends AppCompatActivity {
         // Xử lý sự kiện thanh toán
         btnPay.setOnClickListener(v -> {
 
-            String sdt = txtSDT.getText().toString().trim();
-            String diaChi = txtDiaChi.getText().toString().trim();
-
-            if (sdt.isEmpty()) {
-                txtSDT.setError("Số điện thoại không được để trống");
-                txtSDT.requestFocus();
-                return;
-            } else if (!sdt.matches("\\d{10,11}")) {
-                txtSDT.setError("Số điện thoại không hợp lệ (10-11 số)");
-                txtSDT.requestFocus();
-                return;
-            }
-
-            // Kiểm tra địa chỉ
-            if (diaChi.isEmpty()) {
-                txtDiaChi.setError("Địa chỉ không được để trống");
-                txtDiaChi.requestFocus();
-                return;
-            }
-
-            HoaDon hoaDon = new HoaDon();
-            hoaDon.setId_hd(FirebaseDatabase.getInstance().getReference().push().getKey());
-            hoaDon.setTenMonAn(thucDon1.getTen());
-            hoaDon.setSoLuong(soLuong);
-            hoaDon.setGia(thucDon1.getGia());
-            hoaDon.setTongTien(thucDon1.getGia() * soLuong);
-            hoaDon.setHinhAnh(thucDon1.getHinhAnh());
-            hoaDon.setSdt(txtSDT.getText().toString());
-            hoaDon.setDiaChi(txtDiaChi.getText().toString());
-
-            // Lấy phương thức thanh toán từ Spinner
-            String selectedPaymentMethod = spinnerPaymentMethod.getSelectedItem().toString();
-            hoaDon.setPhuongThucThanhToan(selectedPaymentMethod);
-
-            // Thiết lập trạng thái mặc định là "Chờ xử lý"
-            hoaDon.setTrangThai("Chờ xử lý");
-
-            // Thiết lập ngày đặt hàng (ngày hiện tại)
-            String currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
-            hoaDon.setNgayDatHang(currentDate);
-
-            // Gọi phương thức addDonHang để thêm đơn hàng vào Firebase
-            hoaDonDAO.addHoaDon(hoaDon);
-
-            ThongBaoDao thongBaoDao = new ThongBaoDao();
-
-            ThongBao thongBao = new ThongBao();
-
-            thongBao.setId_hd(hoaDon.getId_hd());
-            thongBao.setId_nn(hoaDon.getId_nd());
-            thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được đặt!");
-            thongBao.setRole("Bạn");
-            thongBao.setTrangThai(hoaDon.getTrangThai());
+            GetRole role = new GetRole();
 
 
-            thongBaoDao.guiThongBao(thongBao,PayActivity.this);
+            role.getRole(new GetRole.CALLBACK() {
+                @Override
+                public void getRole(int role) {
+                    if (role!=0){
+                        Toast.makeText(PayActivity.this, "Bạn Không Thể Thực Hiện Thành Động !", Toast.LENGTH_SHORT).show();
+                    }else {
+                        String sdt = txtSDT.getText().toString().trim();
+                        String diaChi = txtDiaChi.getText().toString().trim();
 
-            // Xóa món ăn khỏi giỏ hàng (SharedPreferences)
-            removeFromCart();
+                        if (sdt.isEmpty()) {
+                            txtSDT.setError("Số điện thoại không được để trống");
+                            txtSDT.requestFocus();
+                            return;
+                        } else if (!sdt.matches("\\d{10,11}")) {
+                            txtSDT.setError("Số điện thoại không hợp lệ (10-11 số)");
+                            txtSDT.requestFocus();
+                            return;
+                        }
 
-            // Thông báo và chuyển sang màn hình BillFragment
-            Toast.makeText(PayActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+                        // Kiểm tra địa chỉ
+                        if (diaChi.isEmpty()) {
+                            txtDiaChi.setError("Địa chỉ không được để trống");
+                            txtDiaChi.requestFocus();
+                            return;
+                        }
 
-            Intent intent1 = new Intent(PayActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent1);
+                        HoaDon hoaDon = new HoaDon();
+                        hoaDon.setId_hd(FirebaseDatabase.getInstance().getReference().push().getKey());
+                        hoaDon.setTenMonAn(thucDon1.getTen());
+                        hoaDon.setSoLuong(soLuong);
+                        hoaDon.setGia(thucDon1.getGia());
+                        hoaDon.setTongTien(thucDon1.getGia() * soLuong);
+                        hoaDon.setHinhAnh(thucDon1.getHinhAnh());
+                        hoaDon.setSdt(txtSDT.getText().toString());
+                        hoaDon.setDiaChi(txtDiaChi.getText().toString());
+
+                        // Lấy phương thức thanh toán từ Spinner
+                        String selectedPaymentMethod = spinnerPaymentMethod.getSelectedItem().toString();
+                        hoaDon.setPhuongThucThanhToan(selectedPaymentMethod);
+
+                        // Thiết lập trạng thái mặc định là "Chờ xử lý"
+                        hoaDon.setTrangThai("Chờ xử lý");
+
+                        // Thiết lập ngày đặt hàng (ngày hiện tại)
+                        String currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date());
+                        hoaDon.setNgayDatHang(currentDate);
+
+                        // Gọi phương thức addDonHang để thêm đơn hàng vào Firebase
+                        hoaDonDAO.addHoaDon(hoaDon);
+
+                        ThongBaoDao thongBaoDao = new ThongBaoDao();
+
+                        ThongBao thongBao = new ThongBao();
+
+                        thongBao.setId_hd(hoaDon.getId_hd());
+                        thongBao.setId_nn(hoaDon.getId_nd());
+                        thongBao.setNoidung("Đơn hàng "+hoaDon.getTenMonAn()+" (sl:"+hoaDon.getSoLuong()+") của bạn đã được đặt!");
+                        thongBao.setRole("Bạn");
+                        thongBao.setTrangThai(hoaDon.getTrangThai());
+
+
+                        thongBaoDao.guiThongBao(thongBao,PayActivity.this);
+
+                        // Xóa món ăn khỏi giỏ hàng (SharedPreferences)
+                        removeFromCart();
+
+                        // Thông báo và chuyển sang màn hình BillFragment
+                        Toast.makeText(PayActivity.this, "Đặt hàng thành công!", Toast.LENGTH_SHORT).show();
+
+                        Intent intent1 = new Intent(PayActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                    }
+                }
+            });
+
         });
 
         buttonSave.setOnClickListener(v -> {

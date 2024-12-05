@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.duan1.polyfood.Adapter.ThongKeAdapter;
 import com.duan1.polyfood.Adapter.Top3Adapter;
 import com.duan1.polyfood.Database.HoaDonDAO;
 import com.duan1.polyfood.Database.ThucDonDAO;
@@ -37,18 +39,14 @@ public class StatisticFragment extends Fragment {
 
     private LottieAnimationView loading;
     private View viewLoad;
+    private RecyclerView recyclerView;
+    private ThongKeAdapter thongKeAdapter;
+    private ArrayList<HoaDon> list;
+    private LinearLayout linear1,linear2;
 
 
 
-    public void loading(){
-        loading.setVisibility(View.VISIBLE);
-        viewLoad.setVisibility(View.VISIBLE);
-    }
 
-    public void loaded(){
-        loading.setVisibility(View.GONE);
-        viewLoad.setVisibility(View.GONE);
-    }
 
 
     @Override
@@ -58,49 +56,35 @@ public class StatisticFragment extends Fragment {
 //        return inflater.inflate(R.layout.fragment_statistic, container, false);
         View view = inflater.inflate(R.layout.fragment_statistic, container, false);
 
-        tvDoanhThu = view.findViewById(R.id.tvDoanhThu);
+        tvDoanhThu = view.findViewById(R.id.txtTongTien);
         tvStartDate = view.findViewById(R.id.tvStartDate);
         tvEndDate = view.findViewById(R.id.tvEndDate);
         Button btnCalculate = view.findViewById(R.id.btnCalculate);
+        linear1 = view.findViewById(R.id.linerHead);
+        linear2 = view.findViewById(R.id.linerFoot);
 
-        loading = view.findViewById(R.id.lottieLoading);
-        viewLoad = view.findViewById(R.id.viewLoad);
-
-        loading();
-
-        RecyclerView recyclerViewTopDishes = view.findViewById(R.id.recyclerViewTopDishes);
-        recyclerViewTopDishes.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        // Khởi tạo danh sách món ăn top 3
-        top3DishesList = new ArrayList<>();
-        top3Adapter = new Top3Adapter(getContext(), top3DishesList);
-        recyclerViewTopDishes.setAdapter(top3Adapter);
-
-        // Gọi phương thức lấy top 3 món ăn từ Firebase
-        ThucDonDAO thucDonDAO = new ThucDonDAO();
-        thucDonDAO.getTop3ThucDon(new ThucDonDAO.FirebaseCallback() {
-            @Override
-            public void onCallback(ArrayList<ThucDon> top3ThucDon) {
-                // Cập nhật danh sách top 3 món ăn
-                top3DishesList.clear();
-                top3DishesList.addAll(top3ThucDon);
-
-                // Cập nhật adapter để hiển thị dữ liệu
-                top3Adapter.notifyDataSetChanged();
-                loaded();
-            }
-
-            @Override
-            public void onCallback(ThucDon thucDon) {
-            }
-
-            @Override
-            public void onCallback(Float star) {
-            }
-        });
+        list = new ArrayList<>();
 
 
-        // Set Date Picker Dialog for start date
+
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        thongKeAdapter = new ThongKeAdapter(list);
+        recyclerView.setAdapter(thongKeAdapter);
+
+
+
+
+
+
+
+
+
+
+
+
         tvStartDate.setOnClickListener(v -> showDatePicker(true));
         tvEndDate.setOnClickListener(v -> showDatePicker(false));
 
@@ -111,14 +95,24 @@ public class StatisticFragment extends Fragment {
                 hoaDonDAO.getDoanhThuByDateRange("Hoàn thành", startDate, endDate, new HoaDonDAO.FirebaseCallback() {
                     @Override
                     public void onCallback(ArrayList<HoaDon> hoaDonList) {
+                        list.clear();
+
                         int tongTienDoanhThu = 0;
                         for (HoaDon hoaDon : hoaDonList) {
+                            list.add(hoaDon);
                             tongTienDoanhThu += hoaDon.getTongTien();
                         }
+                        thongKeAdapter.notifyDataSetChanged();
+
                         if (tongTienDoanhThu == 0) {
-                            tvDoanhThu.setText("Không có doanh thu trong khoảng thời gian này.");
+                            Toast.makeText(getContext(), "Không có doanh thu trong thời gian này", Toast.LENGTH_SHORT).show();
+                            linear1.setVisibility(View.GONE);
+                            linear2.setVisibility(View.GONE);
                         } else {
-                            tvDoanhThu.setText(String.format("Doanh Thu: %d đ", tongTienDoanhThu));
+                            tvDoanhThu.setText(String.valueOf(tongTienDoanhThu));
+
+                            linear1.setVisibility(View.VISIBLE);
+                            linear2.setVisibility(View.VISIBLE);
                         }
                     }
 

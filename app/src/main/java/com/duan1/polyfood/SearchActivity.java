@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.duan1.polyfood.Adapter.StickerNgangAdapter;
+import com.duan1.polyfood.Adapter.StickerTimKiemAdapter;
 import com.duan1.polyfood.Adapter.ThucDonNgangAdapter;
 import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Database.ThucDonDAO;
@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -33,13 +36,14 @@ public class SearchActivity extends AppCompatActivity {
     private ImageView imgSortPrice;
     private boolean isAscending = true; // true: Sắp xếp tăng dần, false: Giảm dần
     private RecyclerView recyclerViewSticker;
-    private StickerNgangAdapter stickerNgangAdapter;
+    private StickerTimKiemAdapter StickerTimKiemAdapter;
     private List<ThucDon> listThucDon2;
+    private List<Sticker> stickerList;
+    private ImageView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_search);
 
         EditText edtSearch = findViewById(R.id.edtSearch);
@@ -47,6 +51,15 @@ public class SearchActivity extends AppCompatActivity {
         ImageView imgBack = findViewById(R.id.imgBack);
         recyclerViewSticker = findViewById(R.id.recyclerViewSticker);
         StickerDao stickerDao = new StickerDao();
+        stickerList = new ArrayList<>();
+        view = findViewById(R.id.imgBack);
+
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         thucDonDAO = new ThucDonDAO();
 
@@ -116,9 +129,13 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<Sticker> stickerList1) {
 
+                stickerList.clear();
+
+                stickerList.addAll(stickerList1);
+
                 recyclerViewSticker.setLayoutManager(new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.HORIZONTAL, false));
 
-                stickerNgangAdapter = new StickerNgangAdapter(stickerList1, SearchActivity.this, new StickerNgangAdapter.OnItemClickListener() {
+                StickerTimKiemAdapter = new StickerTimKiemAdapter(stickerList1, SearchActivity.this, new StickerTimKiemAdapter.OnItemClickListener() {
                     @Override
                     public void onEdit(Sticker sticker) {
 
@@ -129,20 +146,47 @@ public class SearchActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onClick(Sticker sticker) {
+                    public void onClick(Sticker sticker,String check) {
                         thucDonDAO.getAllThucDon(new ThucDonDAO.FirebaseCallback() {
                             @Override
                             public void onCallback(ArrayList<ThucDon> thucDonList) {
                                 listThucDon2.clear();
                                 listThucDon.clear();
                                 listThucDon.addAll(thucDonList);
-                                for (ThucDon thucDon : listThucDon) {
-                                    if (sticker.getId().equals(thucDon.getSticker1()) || sticker.getId().equals(thucDon.getSticker2()) || sticker.getId().equals(thucDon.getSticker3()) ) {
-                                        listThucDon2.add(thucDon);
-                                    } else {
-                                        thucDonNgangAdapter.notifyDataSetChanged();
-                                    }
+
+                                List<Sticker> stickerTimKiem = new ArrayList<>();
+                                if (check==null){
+                                    stickerTimKiem.remove(sticker);
+                                }else {
+                                    stickerTimKiem.add(sticker);
                                 }
+
+
+                                if (!stickerTimKiem.isEmpty()) {
+                                    // Tạo tập hợp các ID sticker để kiểm tra nhanh hơn
+                                    Set<String> stickerIds = stickerTimKiem.stream()
+                                            .map(Sticker::getId)
+                                            .filter(Objects::nonNull) // Loại bỏ các giá trị null
+                                            .map(String::toLowerCase) // Đồng bộ chữ hoa/thường
+                                            .collect(Collectors.toSet());
+
+                                    for (ThucDon thucDon : listThucDon) {
+                                        // Lấy sticker1, sticker2, sticker3 và kiểm tra null trước khi so sánh
+                                        String sticker1 = thucDon.getSticker1() != null ? thucDon.getSticker1().toLowerCase() : "";
+                                        String sticker2 = thucDon.getSticker2() != null ? thucDon.getSticker2().toLowerCase() : "";
+                                        String sticker3 = thucDon.getSticker3() != null ? thucDon.getSticker3().toLowerCase() : "";
+
+                                        // Kiểm tra nếu bất kỳ sticker nào khớp
+                                        if (stickerIds.contains(sticker1) || stickerIds.contains(sticker2) || stickerIds.contains(sticker3)) {
+                                            listThucDon2.add(thucDon);
+                                        }
+                                    }
+                                } else {
+                                    // Thêm toàn bộ `listThucDon` khi `stickerTimKiem` rỗng
+                                    listThucDon2.addAll(listThucDon);
+                                }
+
+
 
                                 if(listThucDon2 != null){
                                     listThucDon.clear();
@@ -165,7 +209,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
                 });
-                recyclerViewSticker.setAdapter(stickerNgangAdapter);
+                recyclerViewSticker.setAdapter(StickerTimKiemAdapter);
 
 
             }

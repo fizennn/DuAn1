@@ -178,7 +178,12 @@ public class HomeFragment extends Fragment {
 
         // Tải dữ liệu vào foodList và cập nhật adapter cho recyclerview1
         foodList = new ArrayList<>();
-        foodAdapter = new FoodAdapter(getContext(), foodList);
+        foodAdapter = new FoodAdapter(getContext(), foodList, new FoodAdapter.click() {
+            @Override
+            public void click(ThucDon thucDon) {
+
+            }
+        });
         recyclerView.setAdapter(foodAdapter);
 
 

@@ -329,13 +329,9 @@ public class ThucDonDAO {
                         });
 
                         // Lấy top 3 món ăn
-                        ArrayList<ThucDon> top3ThucDon = new ArrayList<>();
-                        for (int i = 0; i < Math.min(3, allThucDonList.size()); i++) {
-                            top3ThucDon.add(allThucDonList.get(i));
-                        }
 
                         // Gửi top 3 món ăn đến callback
-                        callback.onCallback(top3ThucDon);
+                        callback.onCallback(allThucDonList);
                     }
 
                     @Override

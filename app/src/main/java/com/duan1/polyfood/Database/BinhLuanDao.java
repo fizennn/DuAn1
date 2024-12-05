@@ -18,6 +18,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class BinhLuanDao {
@@ -87,6 +89,15 @@ public class BinhLuanDao {
                                 binhLuanList.add(binhLuan);
                             }
                         }
+
+                        Collections.sort(binhLuanList, new Comparator<BinhLuan>() {
+                            @Override
+                            public int compare(BinhLuan o1, BinhLuan o2) {
+                                // So sánh ngày tháng trực tiếp vì định dạng yyyy-MM-dd có thể so sánh đúng
+                                return o1.getNgay().compareTo(o2.getNgay());
+                            }
+                        });
+
                         callback.onCallback(binhLuanList);
                     }
 

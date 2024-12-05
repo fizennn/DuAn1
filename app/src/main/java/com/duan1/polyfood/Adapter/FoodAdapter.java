@@ -1,6 +1,7 @@
 package com.duan1.polyfood.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.duan1.polyfood.Database.StickerDao;
 import com.duan1.polyfood.Models.Sticker;
 import com.duan1.polyfood.Models.ThucDon;
+import com.duan1.polyfood.MonAnActivity;
 import com.duan1.polyfood.R;
 
 import java.util.List;
@@ -27,11 +30,17 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     private List<ThucDon> foodList;
     private StickerDao stickerDao;
     private GradientDrawable drawable = new GradientDrawable();
+    private click click;
 
-    public FoodAdapter(Context context, List<ThucDon> foodList) {
+    public interface click{
+        void click(ThucDon thucDon);
+    }
+
+    public FoodAdapter(Context context, List<ThucDon> foodList,click click) {
         this.context = context;
         this.foodList = foodList;
         stickerDao = new StickerDao();
+        this.click = click;
     }
 
     @NonNull
@@ -43,6 +52,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
+
         ThucDon food = foodList.get(position);
         holder.tvName.setText(food.getTen());
         holder.tvPrice.setText(food.getDanhGia()+"");
@@ -50,6 +60,16 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                 .load(food.getHinhAnh()) // Đảm bảo đây là URL hoặc đường dẫn hợp lệ
                 .into(holder.imgFood);
 //        holder.imgFood.setImageResource();
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MonAnActivity.class);
+                intent.putExtra("UID", food.getId_td()+"");
+                context.startActivity(intent);
+
+            }
+        });
+
 
 
         holder.tag1.setVisibility(View.INVISIBLE);
@@ -76,6 +96,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
         ImageView imgFood;
         TextView tvName, tvPrice, tvLabel,tag1,tag2,tag3;
+        LinearLayout linearLayout;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +107,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             tag1 = itemView.findViewById(R.id.tag1);
             tag2 = itemView.findViewById(R.id.tag2);
             tag3 = itemView.findViewById(R.id.tag3);
+            linearLayout = itemView.findViewById(R.id.linerClick);
         }
     }
 

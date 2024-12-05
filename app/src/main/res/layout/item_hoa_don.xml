@@ -15,102 +15,120 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp">
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- Hình ảnh món ăn bên trái -->
-        <ImageView
-            android:id="@+id/imgMonAn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/phobo"
-            android:contentDescription="Hình ảnh món ăn" />
-
-        <!-- Thông tin món ăn bên phải -->
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_gravity="center"
-            android:padding="8dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
+                <!-- Hình ảnh món ăn bên trái -->
                 <ImageView
-                    android:src="@drawable/shieldfood"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
-                <TextView
-                    android:layout_marginLeft="2dp"
-                    android:fontFamily="@font/spline_sans"
-                    android:gravity="center"
-                    android:text="Phở Bò Việt Nam - Không Ngon Không Lấy Tien"
-                    android:id="@+id/txtTenMonAn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="13sp"
-                    android:maxLines="1"
-                    android:textStyle="bold"
-                    android:ellipsize="end"/>
+                    android:id="@+id/imgMonAn"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/phobo"
+                    android:contentDescription="Hình ảnh món ăn" />
+
+                <!-- Thông tin món ăn bên phải -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:padding="8dp">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:src="@drawable/shieldfood"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+                        <TextView
+                            android:layout_marginLeft="2dp"
+                            android:fontFamily="@font/spline_sans"
+                            android:gravity="center"
+                            android:text="Phở Bò Việt Nam - Không Ngon Không Lấy Tien"
+                            android:id="@+id/txtTenMonAn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="13sp"
+                            android:maxLines="1"
+                            android:textStyle="bold"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_marginTop="6dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:src="@drawable/money"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+                        <TextView
+                            android:layout_marginLeft="3dp"
+                            android:fontFamily="@font/spline_sans"
+                            android:gravity="center"
+                            android:text="100.000VND"
+                            android:id="@+id/txtTongTien"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="13sp"
+                            android:maxLines="1"
+                            android:textStyle="bold"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="6dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:src="@drawable/deliviry"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"/>
+                        <TextView
+                            android:layout_marginLeft="3dp"
+                            android:fontFamily="@font/spline_sans"
+                            android:gravity="center"
+                            android:text="Đang Giao"
+                            android:id="@+id/txtTrangThai"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="12sp"
+                            android:maxLines="1"
+                            android:textStyle="bold"
+                            android:ellipsize="end"/>
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_marginTop="6dp"
+            <Button
+                android:visibility="gone"
+                android:id="@+id/btnDaNhanDcHang"
+                android:text="Đã Nhận Được Hàng"
+                android:textColor="#ffff"
+                android:background="@color/baseColor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:src="@drawable/money"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
-                <TextView
-                    android:layout_marginLeft="3dp"
-                    android:fontFamily="@font/spline_sans"
-                    android:gravity="center"
-                    android:text="100.000VND"
-                    android:id="@+id/txtTongTien"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="13sp"
-                    android:maxLines="1"
-                    android:textStyle="bold"
-                    android:ellipsize="end"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="6dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:src="@drawable/deliviry"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"/>
-                <TextView
-                    android:layout_marginLeft="3dp"
-                    android:fontFamily="@font/spline_sans"
-                    android:gravity="center"
-                    android:text="Đang Giao"
-                    android:id="@+id/txtTrangThai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:textStyle="bold"
-                    android:ellipsize="end"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-    </LinearLayout>
+
+
+
+
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -331,11 +349,5 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btnDaNhanDcHang"
-        android:text="Đã nhận được hàng"
-        android:visibility="gone"
-        android:layout_marginHorizontal="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 </LinearLayout>

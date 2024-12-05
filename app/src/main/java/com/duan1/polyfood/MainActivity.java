@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.Manifest;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -32,6 +33,7 @@ import androidx.fragment.app.Fragment;
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.FirebaseAuth;
 import com.duan1.polyfood.Database.FirebaseNotification;
+import com.duan1.polyfood.Database.GetRole;
 import com.duan1.polyfood.Database.MyFirebaseMessagingService;
 import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Database.NotificationSender;
@@ -243,18 +245,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
 
+        GetRole role = new GetRole();
 
+        role.getRole(new GetRole.CALLBACK() {
+            @Override
+            public void getRole(int role) {
+                int id = item.getItemId();
+
+                if (id==R.id.nav_delivery){
+                    if (role==1){
+                        Intent intent = new Intent(MainActivity.this,DeliveryActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(MainActivity.this, "Bạn Không Thể Thực Hiện Thành Động !", Toast.LENGTH_SHORT).show();
+                        navigationView.setCheckedItem(R.id.nav_client);
+
+                    }
+
+                }
+                if (id==R.id.nav_restaurant){
+                    if (role==2){
+                        Intent intent = new Intent(MainActivity.this,RestaurantActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Toast.makeText(MainActivity.this, "Bạn Không Thể Thực Hiện Thành Động !", Toast.LENGTH_SHORT).show();
+                        navigationView.setCheckedItem(R.id.nav_client);
+
+                    }
+
+                }
+            }
+        });
 //
-        int id = item.getItemId();
 
-        if (id==R.id.nav_delivery){
-            Intent intent = new Intent(MainActivity.this,DeliveryActivity.class);
-            startActivity(intent);
-        }
-        if (id==R.id.nav_restaurant){
-            Intent intent = new Intent(MainActivity.this,RestaurantActivity.class);
-            startActivity(intent);
-        }
 //
 //
 

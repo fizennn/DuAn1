@@ -20,6 +20,7 @@ import com.duan1.polyfood.Fragment.ProfileFragment;
 import com.duan1.polyfood.Fragment.ProfileResFragment;
 import com.duan1.polyfood.Fragment.StatisticFragment;
 import com.duan1.polyfood.Fragment.TagFragment;
+import com.duan1.polyfood.Fragment.Top3Fragment;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +56,16 @@ public class RestaurantActivity extends AppCompatActivity {
         StatisticFragment fragment3 = new StatisticFragment();
 //        ProfileResFragment fragment4 = new ProfileResFragment();
         TagFragment fragment6 = new TagFragment();
+        Top3Fragment fragmenttop3 = new Top3Fragment();
+
+
         adapter.addFragment(fragment1, "Món ăn");
         adapter.addFragment(fragment6, "Nhãn Dán");
         adapter.addFragment(fragment5, "Món ăn gợi ý");
         adapter.addFragment(fragment2, "Đơn hàng");
         adapter.addFragment(fragment3, "Thống kê");
+        adapter.addFragment(fragmenttop3, "Bảng Xếp Hạng");
+
 //        adapter.addFragment(fragment4, "Thông tin");
 
         viewPager.setAdapter(adapter);

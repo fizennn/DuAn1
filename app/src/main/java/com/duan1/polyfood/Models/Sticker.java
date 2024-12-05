@@ -6,6 +6,15 @@ public class Sticker {
     private String color; // Lưu màu dạng ARGB
 
     private String imageUri;
+    private String selected;
+
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
 
     public String getImageUri() {
         return imageUri;

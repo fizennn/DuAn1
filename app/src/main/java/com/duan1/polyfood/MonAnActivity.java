@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.duan1.polyfood.Adapter.BinhLuanAdapter;
 import com.duan1.polyfood.Database.AuthenticationFireBaseHelper;
 import com.duan1.polyfood.Database.BinhLuanDao;
+import com.duan1.polyfood.Database.GetRole;
 import com.duan1.polyfood.Database.NguoiDungDAO;
 import com.duan1.polyfood.Database.ThucDonDAO;
 import com.duan1.polyfood.Models.BinhLuan;
@@ -217,28 +218,42 @@ public class MonAnActivity extends AppCompatActivity {
         btnSendComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GetRole role = new GetRole();
 
-                Toast.makeText(MonAnActivity.this, "Đã Gửi Bình Luận", Toast.LENGTH_SHORT).show();
-                BinhLuan binhLuan = new BinhLuan();
-                binhLuan.setId(baseHelper.getUID());
-                binhLuan.setBl(editTextComment.getText().toString().trim());
-                binhLuan.setSao(rateStar);
-                binhLuan.setTen(nguoiDung1.getHoTen());
-                binhLuanDao.addBinhLuan(binhLuan, thucDon1.getId_td(), imageUri);
+                role.getRole(new GetRole.CALLBACK() {
+                    @Override
+                    public void getRole(int role) {
+                        if (role!=0){
+                            Toast.makeText(MonAnActivity.this, "Bạn Không Thể Thực Hiện Thành Động !", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MonAnActivity.this, "Đã Gửi Bình Luận", Toast.LENGTH_SHORT).show();
+                            BinhLuan binhLuan = new BinhLuan();
+                            binhLuan.setId(baseHelper.getUID());
+                            binhLuan.setBl(editTextComment.getText().toString().trim());
+                            binhLuan.setSao(rateStar);
+                            binhLuan.setTen(nguoiDung1.getHoTen());
+                            binhLuanDao.addBinhLuan(binhLuan, thucDon1.getId_td(), imageUri);
 
-                rateStar = 0;
-                cancleAll();
-                linearLayout1.setVisibility(View.GONE);
-                editTextComment.setText("");
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            rateStar = 0;
+                            cancleAll();
+                            linearLayout1.setVisibility(View.GONE);
+                            editTextComment.setText("");
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                // Nếu bàn phím đang hiển thị, ẩn nó
-                if (imm != null && getCurrentFocus() != null) {
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                }
+                            // Nếu bàn phím đang hiển thị, ẩn nó
+                            if (imm != null && getCurrentFocus() != null) {
+                                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                            }
 
 
-                thucDonDAO.updateStar(thucDon1.getId_td());
+                            thucDonDAO.updateStar(thucDon1.getId_td());
+
+
+                            imageUri = null;
+                        }
+                    }
+                });
+
             }
         });
 

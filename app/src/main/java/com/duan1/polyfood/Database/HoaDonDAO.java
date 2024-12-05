@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -46,8 +47,22 @@ public class HoaDonDAO {
                     hoaDon.setId_hd(data.getKey());
                     hoaDonList.add(hoaDon);
                 }
-                if(hoaDonList != null) {
-                    callback.onCallback(hoaDonList);
+                ArrayList<HoaDon> list = new ArrayList<>();
+                for (HoaDon don: hoaDonList){
+                    if (don.getDisabale()==null){
+                        list.add(don);
+                    }
+                }
+
+                Collections.sort(list, new Comparator<HoaDon>() {
+                    @Override
+                    public int compare(HoaDon o1, HoaDon o2) {
+                        // So sánh ngày tháng trực tiếp vì định dạng yyyy-MM-dd có thể so sánh đúng
+                        return o2.getNgayDatHang().compareTo(o1.getNgayDatHang());
+                    }
+                });
+                if(list != null) {
+                    callback.onCallback(list);
                 }else {
                     Log.d("TAG", "onDataChange: " + null);
                 }
@@ -80,6 +95,13 @@ public class HoaDonDAO {
                                 list.add(don);
                             }
                         }
+                        Collections.sort(list, new Comparator<HoaDon>() {
+                            @Override
+                            public int compare(HoaDon o1, HoaDon o2) {
+                                // So sánh ngày tháng trực tiếp vì định dạng yyyy-MM-dd có thể so sánh đúng
+                                return o2.getNgayDatHang().compareTo(o1.getNgayDatHang());
+                            }
+                        });
                         callback.onCallback(list);
                     }
 
@@ -100,6 +122,7 @@ public class HoaDonDAO {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     HoaDon hoaDon = snapshot.getValue(HoaDon.class);
+
                     callback.onCallback(hoaDon);
                 }
 
@@ -228,6 +251,22 @@ public class HoaDonDAO {
                             }
                         }
 
+                        ArrayList<HoaDon> list = new ArrayList<>();
+                        for (HoaDon don: hoaDonList){
+                            if (don.getDisabale()==null){
+                                list.add(don);
+                            }
+                        }
+                        hoaDonList.clear();
+                        hoaDonList.addAll(list);
+
+                        Collections.sort(hoaDonList, new Comparator<HoaDon>() {
+                            @Override
+                            public int compare(HoaDon o1, HoaDon o2) {
+                                // So sánh ngày tháng trực tiếp vì định dạng yyyy-MM-dd có thể so sánh đúng
+                                return o2.getNgayDatHang().compareTo(o1.getNgayDatHang());
+                            }
+                        });
 
                         callback.onCallback(hoaDonList);
                     }
