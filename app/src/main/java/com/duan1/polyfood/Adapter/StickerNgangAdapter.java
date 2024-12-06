@@ -3,6 +3,7 @@ package com.duan1.polyfood.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ public class StickerNgangAdapter extends RecyclerView.Adapter<StickerNgangAdapte
     public interface OnItemClickListener {
         void onEdit(Sticker sticker);
         void onDelete(Sticker sticker);
-        void onClick(Sticker sticker);
+        void onClick(int  i);
 
     }
 
@@ -54,19 +55,13 @@ public class StickerNgangAdapter extends RecyclerView.Adapter<StickerNgangAdapte
 
         holder.tag.setColorFilter(Color.parseColor(sticker.getColor()), PorterDuff.Mode.SRC_IN);
 
-        holder.btnEditLiner.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
 
-                listener.onEdit(sticker);
-                return true;
-            }
-        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(sticker);
+                Log.d("zzzzzzzzz", "onClick: Click");
+                listener.onClick(position);
             }
         });
 
@@ -79,6 +74,8 @@ public class StickerNgangAdapter extends RecyclerView.Adapter<StickerNgangAdapte
                     .into(holder.sticker);
         }
 
+
+
     }
 
     @Override
@@ -89,7 +86,7 @@ public class StickerNgangAdapter extends RecyclerView.Adapter<StickerNgangAdapte
     static class StickerViewHolder extends RecyclerView.ViewHolder {
         TextView tvContent;
         TextView btnEdit, btnDelete;
-        LinearLayout btnEditLiner;
+        LinearLayout btnEditLiner,liner;
         ImageView tag,sticker;
 
         public StickerViewHolder(@NonNull View itemView) {
@@ -100,6 +97,7 @@ public class StickerNgangAdapter extends RecyclerView.Adapter<StickerNgangAdapte
             btnEditLiner = itemView.findViewById(R.id.Liner);
             tag = itemView.findViewById(R.id.tag);
             sticker = itemView.findViewById(R.id.imgSticker);
+
         }
     }
 }

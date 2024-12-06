@@ -93,17 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 int role = nguoiDung.getRole(); // Lấy role từ object NguoiDung
                                                 Log.e("Role", "Role hien tai la" + role);
                                                 Intent intent;
-                                                switch (role) {
-                                                    case 1: // Driver
-                                                        intent = new Intent(LoginActivity.this, DeliveryActivity.class);
-                                                        break;
-                                                    case 2: // Restaurant
-                                                        intent = new Intent(LoginActivity.this, RestaurantActivity.class);
-                                                        break;
-                                                    default: // Default là User
-                                                        intent = new Intent(LoginActivity.this, MainActivity.class);
-                                                        break;
-                                                }
+                                                intent = new Intent(LoginActivity.this, MainActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
                                             }

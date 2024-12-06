@@ -1,6 +1,8 @@
 package com.duan1.polyfood.Models;
 
-public class Sticker {
+import java.io.Serializable;
+
+public class Sticker implements Serializable {
     private String id;
     private String content;
     private String color; // Lưu màu dạng ARGB

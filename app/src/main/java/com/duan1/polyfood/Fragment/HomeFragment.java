@@ -139,8 +139,10 @@ public class HomeFragment extends Fragment {
                     }
 
                     @Override
-                    public void onClick(Sticker sticker) {
-
+                    public void onClick(int i) {
+                        Intent intent = new Intent(getContext(), SearchActivity.class);
+                        intent.putExtra("user_model", i);
+                        startActivity(intent);
                     }
                 });
                 recyclerViewSticker.setAdapter(stickerNgangAdapter);

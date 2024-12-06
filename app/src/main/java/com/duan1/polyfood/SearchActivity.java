@@ -1,8 +1,10 @@
 package com.duan1.polyfood;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,6 +42,8 @@ public class SearchActivity extends AppCompatActivity {
     private List<ThucDon> listThucDon2;
     private List<Sticker> stickerList;
     private ImageView view;
+    private Sticker stickerIntent;
+    private int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,14 @@ public class SearchActivity extends AppCompatActivity {
         StickerDao stickerDao = new StickerDao();
         stickerList = new ArrayList<>();
         view = findViewById(R.id.imgBack);
+
+
+        Intent intent = getIntent();
+        i = intent.getIntExtra("user_model",-1);
+
+        if (stickerIntent!=null){
+            Log.d("zzzzzzz", "onCreate: Lay Sticker Thanh Congz");
+        }
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +143,17 @@ public class SearchActivity extends AppCompatActivity {
 
                 stickerList.clear();
 
+                if (i!=-1){
+                    Log.d("zzzzzzzzzzzz", "onSuccess: "+i);
+                    stickerList1.get(i).setSelected("SELE");
+                }
+
+
+
+
+
+
+
                 stickerList.addAll(stickerList1);
 
                 recyclerViewSticker.setLayoutManager(new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.HORIZONTAL, false));
@@ -160,6 +183,10 @@ public class SearchActivity extends AppCompatActivity {
                                 }else {
                                     stickerTimKiem.add(sticker);
                                 }
+//                                if (stickerIntent!=null){
+//                                    stickerTimKiem.add(stickerIntent);
+//                                    stickerIntent=null;
+//                                }
 
 
                                 if (!stickerTimKiem.isEmpty()) {

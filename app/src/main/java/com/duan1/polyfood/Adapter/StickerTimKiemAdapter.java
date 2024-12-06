@@ -55,7 +55,14 @@ public class StickerTimKiemAdapter extends RecyclerView.Adapter<StickerTimKiemAd
 
 
 
-
+        if (sticker.getSelected()!=null){
+            if (sticker.getSelected().equalsIgnoreCase("SELE")){
+                holder.img.setVisibility(View.VISIBLE);
+                holder.liner.setBackgroundResource(R.drawable.sticker_timkiem1);
+                holder.tvContent.setTextColor(Color.parseColor("#FE724C"));
+                listener.onClick(sticker,"");
+            }
+        }
 
 
 
