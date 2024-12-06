@@ -49,9 +49,13 @@ public class FlashScreenActivity extends AppCompatActivity {
                             if (nguoiDung == null) {
 
                                 startActivity(inputInfoIntent);
+
+
                                 finish();
                             }{
                                 startActivity(userMainIntent);
+
+
                                 finish();
                             }
                         }

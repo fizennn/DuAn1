@@ -119,7 +119,7 @@ public class PayActivity extends AppCompatActivity {
                 // Hiển thị tổng tiền
                 txtTongTien.setText("" + formatToVND(tongTien));
 
-                if (PayActivity.this != null) {
+                if (PayActivity.this.isDestroyed()) {
                     Glide.with(PayActivity.this)
                             .load(thucDon.getHinhAnh())
                             .placeholder(R.drawable.load)
